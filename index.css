@@ -1,0 +1,58 @@
+body {
+    background: black;
+}
+
+.square {
+    position: absolute;
+    z-index: 10;
+    width: 124px;
+    height: 124px;
+    opacity: 0;
+}
+
+.yui3-tic-tac-toe-board-content {
+    width: 500px;
+    height: 500px;
+    background-image: url("Images/Background.png");
+    position: relative;
+    z-index: 0;
+}
+
+.x {
+    background-image: url("Images/x.png");
+}
+
+.o {
+
+    background-image: url("Images/o.png");
+}
+
+.topHeight {
+
+    top: 8.8%;
+
+}
+
+.middleHeight {
+
+    top: 35.5%;
+
+}
+
+.bottomHeight {
+
+    top: 61.5%;
+
+}
+
+.left {
+    left: 9.2%;
+}
+
+.center {
+    left: 35.6%;
+}
+
+.right {
+    left: 62%;
+}
