@@ -87,12 +87,26 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 isTheGameOver = function () {
 
-                    console.log("it works");
+                    console.log("Hello World");
 
                 },
 
                 listenForPlayedTurn = function () {
-                    that.after('topRowLeftChange', isTheGameOver, that);
+                    var setSpaceChangeEvent = function (changingSquare) {
+                        that.after(changingSquare + 'Change', isTheGameOver, that);
+                    }
+                    setSpaceChangeEvent('topRowLeft');
+                    setSpaceChangeEvent('topRowCenter');
+                    setSpaceChangeEvent('topRowRight');
+
+                    setSpaceChangeEvent('middleRowLeft');
+                    setSpaceChangeEvent('middleRowCenter');
+                    setSpaceChangeEvent('middleRowRight');
+
+                    setSpaceChangeEvent('bottomRowLeft');
+                    setSpaceChangeEvent('bottomRowMiddle');
+                    setSpaceChangeEvent('bottomRowRight');
+
                 };
 
             listenForAndChangeTurns();
