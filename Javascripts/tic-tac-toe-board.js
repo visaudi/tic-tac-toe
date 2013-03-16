@@ -83,9 +83,21 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     listenForClickAndChangeTurn('bottomRowLeft');
                     listenForClickAndChangeTurn('bottomRowCenter');
                     listenForClickAndChangeTurn('bottomRowRight');
+                },
+
+                isTheGameOver = function () {
+
+                    console.log("it works");
+
+                },
+
+                listenForPlayedTurn = function () {
+                    that.after('topRowLeftChange', isTheGameOver, that);
                 };
 
             listenForAndChangeTurns();
+
+            listenForPlayedTurn();
 
             connectBoardClicksToSquareValues();
 
