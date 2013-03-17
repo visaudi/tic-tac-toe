@@ -102,7 +102,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 listenForPlayedTurn = function () {
                     var setSpaceChangeEvent = function (changingSquare) {
                         that.after(changingSquare + 'Change', isTheGameOver, that);
-                    }
+                    };
                     setSpaceChangeEvent('topRowLeft');
                     setSpaceChangeEvent('topRowCenter');
                     setSpaceChangeEvent('topRowRight');
