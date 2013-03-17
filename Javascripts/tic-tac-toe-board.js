@@ -12,7 +12,8 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             var board = [[this.get('topRowLeft'), this.get('topRowCenter'), this.get('topRowRight')],
                         [this.get('middleRowLeft'), this.get('middleRowCenter'), this.get('middleRowRight')],
-                        [this.get('bottomRowLeft'), this.get('bottomRowCenter'), this.get('bottomRowRight')]];
+                        [this.get('bottomRowLeft'), this.get('bottomRowCenter'), this.get('bottomRowRight')]],
+            row = [];
 
             board.possibleMoveLocations = function () {
 
