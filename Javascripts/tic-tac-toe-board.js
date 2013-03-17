@@ -13,6 +13,103 @@ YUI.add('tic-tac-toe-board', function (Y) {
             var board = [[this.get('topRowLeft'), this.get('topRowCenter'), this.get('topRowRight')],
                         [this.get('middleRowLeft'), this.get('middleRowCenter'), this.get('middleRowRight')],
                         [this.get('bottomRowLeft'), this.get('bottomRowCenter'), this.get('bottomRowRight')]];
+
+            board.possibleMoveLocations = function () {
+
+                var possibilities = [], x, y;
+
+                for (x = 0; x < 3; x += 1) {
+                    for (y = 0; y < 3; y += 1) {
+
+                        if (this[x][y] === 'n') {
+
+                            possibilities.push([x, y]);
+
+
+                        }
+                    }
+                }
+
+                return possibilities;
+
+            };
+
+            board.getColumn = function (columnPosition) {
+
+                var x, column = [];
+
+                for (x = 0; x < 3; x += 1) {
+
+                    column[x] = this[x][columnPosition];
+
+
+                }
+
+                return column;
+
+
+            };
+
+            board.getRow = function (rowPosition) {
+
+                var y, extractedRow = [];
+
+                for (y = 0; y < 3; y += 1) {
+
+                    extractedRow[y] = this[rowPosition][y];
+
+
+                }
+
+                return extractedRow;
+
+            };
+
+            board.getHighLeftDiagonal = function () {
+
+                var xAndY, diagonal = [];
+
+                for (xAndY = 0; xAndY < 3; xAndY += 1) {
+
+                    diagonal[xAndY] = this[xAndY][xAndY];
+
+                }
+
+                return diagonal;
+
+            };
+
+            board.getLowLeftDiagonal = function () {
+
+                var x, y = 2, diagonal = [];
+
+
+                for (x = 0; x < 3; x += 1) {
+                    diagonal[x] = this[y][x];
+
+                    y -= 1;
+
+                }
+
+                return diagonal;
+
+            };
+
+            board.rowLossCheck = function (row) {
+
+                var square, loss = true;
+
+                for (square = 0; square < row.length; square += 1) {
+                    if (row[square] !== 'o') {
+                        loss = false;
+                    }
+
+                }
+
+                return loss;
+
+            };
+
             return board;
 
         },
@@ -96,7 +193,8 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 isTheGameOver = function () {
 
                     console.log(that.makeBoardArrayFromSquareAttrs());
-
+                    var boardTest = that.makeBoardArrayFromSquareAttrs();
+                    console.log(boardTest.getLowLeftDiagonal());
                 },
 
                 listenForPlayedTurn = function () {
@@ -112,7 +210,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     setSpaceChangeEvent('middleRowRight');
 
                     setSpaceChangeEvent('bottomRowLeft');
-                    setSpaceChangeEvent('bottomRowMiddle');
+                    setSpaceChangeEvent('bottomRowCenter');
                     setSpaceChangeEvent('bottomRowRight');
 
                 };
