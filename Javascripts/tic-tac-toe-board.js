@@ -8,6 +8,14 @@ YUI.add('tic-tac-toe-board', function (Y) {
         initializer: function () {
 
         },
+        makeBoardArrayFromSquareAttrs: function () {
+
+            var board = [[this.get('topRowLeft'), this.get('topRowCenter'), this.get('topRowRight')],
+                        [this.get('middleRowLeft'), this.get('middleRowCenter'), this.get('middleRowRight')],
+                        [this.get('bottomRowLeft'), this.get('bottomRowCenter'), this.get('bottomRowRight')]];
+            return board;
+
+        },
 
         renderUI: function () {
             this.get('contentBox')
@@ -87,7 +95,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 isTheGameOver = function () {
 
-                    console.log("Hello World");
+                    console.log(that.makeBoardArrayFromSquareAttrs());
 
                 },
 
@@ -114,6 +122,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
             listenForPlayedTurn();
 
             connectBoardClicksToSquareValues();
+
 
         },
         syncUI: function () {
