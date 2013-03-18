@@ -12,7 +12,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             var board = [[this.get('topRowLeft'), this.get('topRowCenter'), this.get('topRowRight')],
                         [this.get('middleRowLeft'), this.get('middleRowCenter'), this.get('middleRowRight')],
-                        [this.get('bottomRowLeft'), this.get('bottomRowCenter'), this.get('bottomRowRight')]];
+                        [this.get('bottomRowLeft'), this.get('bottomRowCenter'), this.get('bottomRowRight')]],
+
+                currentTurn = this.get('currentTurn');
 
             board.possibleMoveLocations = function () {
 
@@ -192,6 +194,16 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             };
 
+	    board.findMoveToMaximizeOsPerRow = function () {
+                var futureBoard, consideredPossibility, i;
+                for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
+                    futureBoard = Y.clone(board);
+                    consideredPossibility = board.possibleMoveLocations()[i];
+                    futureBoard[consideredPossibility[0]][consideredPossibility[1]] = 'x'; 
+                } 
+                return futureBoard;
+            };
+
             return board;
 
         },
@@ -276,7 +288,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                     console.log(that.makeBoardArrayFromSquareAttrs());
                     var boardTest = that.makeBoardArrayFromSquareAttrs();
-                    console.log(boardTest.checkGameTie());
+                    console.log(boardTest.findMoveToMaximizeOsPerRow());
                 },
 
                 listenForPlayedTurn = function () {
@@ -399,4 +411,4 @@ YUI.add('tic-tac-toe-board', function (Y) {
         }
     });
 
-}, '0.0.1', { requires: [ 'base-build', 'widget', 'transition', 'node-event-delegate'] });
+}, '0.0.1', { requires: [ 'base-build', 'widget', 'oop', 'transition', 'node-event-delegate'] });
