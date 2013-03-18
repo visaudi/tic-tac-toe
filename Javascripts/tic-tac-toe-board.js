@@ -125,16 +125,66 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             };
 
+            board.checkForMixedRow = function (row) {
+
+                var mixed = false;
+                if ((this.rowXCount(row) > 0) && (this.rowOCount(row) > 0)) {
+                    mixed = true;
+                }
+
+                return mixed;
+
+            };
+
+
+            board.checkGameTie = function () {
+
+                var tie = false;
+                if ((this.checkForMixedRow(this.getColumn(0))) &&
+                        (this.checkForMixedRow(this.getColumn(1))) &&
+                        (this.checkForMixedRow(this.getColumn(2))) &&
+                        (this.checkForMixedRow(this.getRow(0))) &&
+                        (this.checkForMixedRow(this.getRow(1))) &&
+                        (this.checkForMixedRow(this.getRow(2))) &&
+                        (this.checkForMixedRow(this.getHighLeftDiagonal())) &&
+                        (this.checkForMixedRow(this.getLowLeftDiagonal()))) {
+                    tie = true;
+                }
+
+                return tie;
+
+            };
+
 
             board.checkGameWinForX = function () {
 
                 var win = false;
                 if ((this.rowXCount(this.getColumn(0)) === 3) ||
-                    (this.rowXCount(this.getColumn(1)) === 3) ||
-                    (this.rowXCount(this.getColumn(2)) === 3) ||
-                    (this.rowXCount(this.getRow(0)) === 3) ||
-                    (this.rowXCount(this.getRow(1)) === 3) ||
-                    (this.rowXCount(this.getRow(2)) === 3)) {
+                        (this.rowXCount(this.getColumn(1)) === 3) ||
+                        (this.rowXCount(this.getColumn(2)) === 3) ||
+                        (this.rowXCount(this.getRow(0)) === 3) ||
+                        (this.rowXCount(this.getRow(1)) === 3) ||
+                        (this.rowXCount(this.getRow(2)) === 3) ||
+                        (this.rowXCount(this.getHighLeftDiagonal()) === 3) ||
+                        (this.rowXCount(this.getLowLeftDiagonal()) === 3)) {
+                    win = true;
+                }
+
+                return win;
+
+            };
+
+            board.checkGameWinForO = function () {
+
+                var win = false;
+                if ((this.rowOCount(this.getColumn(0)) === 3) ||
+                        (this.rowOCount(this.getColumn(1)) === 3) ||
+                        (this.rowOCount(this.getColumn(2)) === 3) ||
+                        (this.rowOCount(this.getRow(0)) === 3) ||
+                        (this.rowOCount(this.getRow(1)) === 3) ||
+                        (this.rowOCount(this.getRow(2)) === 3) ||
+                        (this.rowOCount(this.getHighLeftDiagonal()) === 3) ||
+                        (this.rowOCount(this.getLowLeftDiagonal()) === 3)) {
                     win = true;
                 }
 
@@ -226,7 +276,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                     console.log(that.makeBoardArrayFromSquareAttrs());
                     var boardTest = that.makeBoardArrayFromSquareAttrs();
-                    console.log(boardTest.checkGameWinForX());
+                    console.log(boardTest.checkGameTie());
                 },
 
                 listenForPlayedTurn = function () {
