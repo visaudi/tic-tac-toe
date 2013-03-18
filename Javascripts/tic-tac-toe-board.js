@@ -124,6 +124,24 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 return xNumber;
 
             };
+
+
+            board.checkGameWinForX = function () {
+
+                var win = false;
+                if ((this.rowXCount(this.getColumn(0)) === 3) ||
+                    (this.rowXCount(this.getColumn(1)) === 3) ||
+                    (this.rowXCount(this.getColumn(2)) === 3) ||
+                    (this.rowXCount(this.getRow(0)) === 3) ||
+                    (this.rowXCount(this.getRow(1)) === 3) ||
+                    (this.rowXCount(this.getRow(2)) === 3)) {
+                    win = true;
+                }
+
+                return win;
+
+            };
+
             return board;
 
         },
@@ -208,7 +226,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                     console.log(that.makeBoardArrayFromSquareAttrs());
                     var boardTest = that.makeBoardArrayFromSquareAttrs();
-                    console.log(boardTest.getLowLeftDiagonal());
+                    console.log(boardTest.checkGameWinForX());
                 },
 
                 listenForPlayedTurn = function () {
