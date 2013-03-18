@@ -95,21 +95,35 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             };
 
-            board.rowLossCheck = function (row) {
+            board.rowOCount = function (row) {
 
-                var square, loss = true;
+                var square, oNumber  = 0;
 
                 for (square = 0; square < row.length; square += 1) {
-                    if (row[square] !== 'o') {
-                        loss = false;
+                    if (row[square] === 'o') {
+                        oNumber  += 1;
                     }
 
                 }
 
-                return loss;
+                return oNumber;
 
             };
 
+            board.rowXCount = function (row) {
+
+                var square, xNumber  = 0;
+
+                for (square = 0; square < row.length; square += 1) {
+                    if (row[square] === 'x') {
+                        xNumber  += 1;
+                    }
+
+                }
+
+                return xNumber;
+
+            };
             return board;
 
         },
