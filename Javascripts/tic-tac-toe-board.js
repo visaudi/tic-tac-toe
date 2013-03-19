@@ -194,8 +194,47 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             };
 
+            board.twoToWinForO = function () {
+                var twoToWinOccurrences = 0;
+                if ((this.rowOCount(this.getColumn(0)) === 2) && (this.rowXCount(this.getColumn(0)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getColumn(1)) === 2) && (this.rowXCount(this.getColumn(1)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getColumn(2)) === 2) && (this.rowXCount(this.getColumn(2)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+                if ((this.rowOCount(this.getRow(0)) === 2) && (this.rowXCount(this.getRow(0)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+                
+                if ((this.rowOCount(this.getRow(1)) === 2) && (this.rowXCount(this.getRow(1)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }                
+
+                if ((this.rowOCount(this.getRow(2)) === 2) && (this.rowXCount(this.getColumn(2)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getHighLeftDiagonal()) === 2) && (this.rowXCount(this.getHighLeftDiagonal()) === 0)) {
+                    twoToWinOccurrences += 1;
+                }               
+
+                if ((this.rowOCount(this.getLowLeftDiagonal()) === 2) && (this.rowXCount(this.getLowLeftDiagonal()) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                return twoToWinOccurrences;
+            };
+
 	    board.findMoveToMaximizeOsPerRow = function () {
-                var futureBoard, consideredPossibility, i;
+                var futureBoard,
+                    consideredPossibility,
+                    i,
+                    oneMoveToWinList;
                 for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
                     futureBoard = Y.clone(board);
                     consideredPossibility = board.possibleMoveLocations()[i];
@@ -288,7 +327,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                     console.log(that.makeBoardArrayFromSquareAttrs());
                     var boardTest = that.makeBoardArrayFromSquareAttrs();
-                    console.log(boardTest.findMoveToMaximizeOsPerRow());
+                    console.log(boardTest.twoToWinForX());
                 },
 
                 listenForPlayedTurn = function () {
