@@ -196,41 +196,151 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.twoToWinForO = function () {
                 var twoToWinOccurrences = 0;
-                if ((this.rowOCount(this.getColumn(0)) === 2) && (this.rowXCount(this.getColumn(0)) === 0)) {
+                if ((this.rowOCount(this.getColumn(0)) === 1) && (this.rowXCount(this.getColumn(0)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getColumn(1)) === 2) && (this.rowXCount(this.getColumn(1)) === 0)) {
+                if ((this.rowOCount(this.getColumn(1)) === 1) && (this.rowXCount(this.getColumn(1)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getColumn(2)) === 2) && (this.rowXCount(this.getColumn(2)) === 0)) {
+                if ((this.rowOCount(this.getColumn(2)) === 1) && (this.rowXCount(this.getColumn(2)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
-                if ((this.rowOCount(this.getRow(0)) === 2) && (this.rowXCount(this.getRow(0)) === 0)) {
-                    twoToWinOccurrences += 1;
-                }
-                
-                if ((this.rowOCount(this.getRow(1)) === 2) && (this.rowXCount(this.getRow(1)) === 0)) {
-                    twoToWinOccurrences += 1;
-                }                
-
-                if ((this.rowOCount(this.getRow(2)) === 2) && (this.rowXCount(this.getColumn(2)) === 0)) {
+                if ((this.rowOCount(this.getRow(0)) === 1) && (this.rowXCount(this.getRow(0)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getHighLeftDiagonal()) === 2) && (this.rowXCount(this.getHighLeftDiagonal()) === 0)) {
+                if ((this.rowOCount(this.getRow(1)) === 1) && (this.rowXCount(this.getRow(1)) === 0)) {
                     twoToWinOccurrences += 1;
-                }               
+                }
 
-                if ((this.rowOCount(this.getLowLeftDiagonal()) === 2) && (this.rowXCount(this.getLowLeftDiagonal()) === 0)) {
+                if ((this.rowOCount(this.getRow(2)) === 1) && (this.rowXCount(this.getRow(2)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getHighLeftDiagonal()) === 1) && (this.rowXCount(this.getHighLeftDiagonal()) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getLowLeftDiagonal()) === 1) && (this.rowXCount(this.getLowLeftDiagonal()) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
                 return twoToWinOccurrences;
             };
 
-	    board.findMoveToMaximizeOsPerRow = function () {
+
+
+            board.twoToWinForX = function () {
+                var twoToWinOccurrences = 0;
+                if ((this.rowXCount(this.getColumn(0)) === 1) && (this.rowOCount(this.getColumn(0)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getColumn(1)) === 1) && (this.rowOCount(this.getColumn(1)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getColumn(2)) === 1) && (this.rowOCount(this.getColumn(2)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+                if ((this.rowXCount(this.getRow(0)) === 1) && (this.rowOCount(this.getRow(0)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getRow(1)) === 1) && (this.rowOCount(this.getRow(1)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getRow(2)) === 1) && (this.rowOCount(this.getRow(2)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getHighLeftDiagonal()) === 1) && (this.rowOCount(this.getHighLeftDiagonal()) === 0)) {
+                    twoToWinOccurrences += 1;
+                }             
+
+                if ((this.rowXCount(this.getLowLeftDiagonal()) === 1) && (this.rowOCount(this.getLowLeftDiagonal()) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                return twoToWinOccurrences;
+            };
+
+            board.oneToWinForX = function () {
+                var oneToWinOccurrences = 0;
+                if ((this.rowXCount(this.getColumn(0)) === 2) && (this.rowOCount(this.getColumn(0)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getColumn(1)) === 2) && (this.rowOCount(this.getColumn(1)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getColumn(2)) === 2) && (this.rowOCount(this.getColumn(2)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+                if ((this.rowXCount(this.getRow(0)) === 2) && (this.rowOCount(this.getRow(0)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getRow(1)) === 2) && (this.rowOCount(this.getRow(1)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getRow(2)) === 2) && (this.rowOCount(this.getColumn(2)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getHighLeftDiagonal()) === 2) && (this.rowOCount(this.getHighLeftDiagonal()) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getLowLeftDiagonal()) === 2) && (this.rowOCount(this.getLowLeftDiagonal()) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                return oneToWinOccurrences;
+            };
+
+            board.oneToWinForO = function () {
+                var oneToWinOccurrences = 0;
+                if ((this.rowOCount(this.getColumn(0)) === 2) && (this.rowXCount(this.getColumn(0)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getColumn(1)) === 2) && (this.rowXCount(this.getColumn(1)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getColumn(2)) === 2) && (this.rowXCount(this.getColumn(2)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+                if ((this.rowOCount(this.getRow(0)) === 2) && (this.rowXCount(this.getRow(0)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getRow(1)) === 2) && (this.rowXCount(this.getRow(1)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getRow(2)) === 2) && (this.rowXCount(this.getColumn(2)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getHighLeftDiagonal()) === 2) && (this.rowXCount(this.getHighLeftDiagonal()) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getLowLeftDiagonal()) === 2) && (this.rowXCount(this.getLowLeftDiagonal()) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                return oneToWinOccurrences;
+            };
+
+            board.findMoveToMaximizeOsPerRow = function () {
                 var futureBoard,
                     consideredPossibility,
                     i,
@@ -238,8 +348,8 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
                     futureBoard = Y.clone(board);
                     consideredPossibility = board.possibleMoveLocations()[i];
-                    futureBoard[consideredPossibility[0]][consideredPossibility[1]] = 'x'; 
-                } 
+                    futureBoard[consideredPossibility[0]][consideredPossibility[1]] = 'x';
+                }
                 return futureBoard;
             };
 
@@ -325,9 +435,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 isTheGameOver = function () {
 
-                    console.log(that.makeBoardArrayFromSquareAttrs());
+                    Y.log(that.makeBoardArrayFromSquareAttrs());
                     var boardTest = that.makeBoardArrayFromSquareAttrs();
-                    console.log(boardTest.twoToWinForX());
+                    Y.log(boardTest.oneToWinForO());
                 },
 
                 listenForPlayedTurn = function () {
