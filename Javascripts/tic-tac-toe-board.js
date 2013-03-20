@@ -14,7 +14,21 @@ YUI.add('tic-tac-toe-board', function (Y) {
                         [this.get('middleRowLeft'), this.get('middleRowCenter'), this.get('middleRowRight')],
                         [this.get('bottomRowLeft'), this.get('bottomRowCenter'), this.get('bottomRowRight')]],
 
-                currentTurn = this.get('currentTurn');
+                currentTurn = this.get('currentTurn'),
+
+                projectAllPossibleBoardsThisTurn () {
+                    var futureBoard,
+                        consideredPossibilityLocation,
+                        i,
+                        possibleBoardList = [];
+                    for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
+                        futureBoard = Y.clone(board);
+                        consideredPossibilityLocation = board.possibleMoveLocations()[i];
+                        futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
+                        possibleBoardList.push(futureBoard);
+                    }
+                    return possibleBoardList;
+                };
 
             board.possibleMoveLocations = function () {
 
@@ -341,17 +355,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
             };
 
             board.findMoveToMaximizeOsPerRow = function () {
-                var futureBoard,
-                    consideredPossibility,
-                    i,
-                    oneMoveToWinList;
-                for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
-                    futureBoard = Y.clone(board);
-                    consideredPossibility = board.possibleMoveLocations()[i];
-                    futureBoard[consideredPossibility[0]][consideredPossibility[1]] = 'x';
-                }
-                return futureBoard;
-            };
+                //
+            }
+
 
             return board;
 
@@ -437,7 +443,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                     Y.log(that.makeBoardArrayFromSquareAttrs());
                     var boardTest = that.makeBoardArrayFromSquareAttrs();
-                    Y.log(boardTest.oneToWinForO());
+                    Y.log(boardTest.findMoveToMaximizeOsPerRow());
                 },
 
                 listenForPlayedTurn = function () {
