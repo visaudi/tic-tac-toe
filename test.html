@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Tic Tac Toe</title>
+    </head>
+
+    <body>
+
+        <div class="yui3-skin-sam" id="console"></div>
+
+        <script src="http://yui.yahooapis.com/3.8.1/build/yui/yui-min.js"></script>
+        <script>
+
+            YUI({
+                modules: {
+                    'tic-tac-toe-board': {
+                        fullpath: 'Javascripts/tic-tac-toe-board.js',
+                        requires: ['base-build', 'widget']
+                    }
+                }
+            }).use('tic-tac-toe-board', 'test-console', function (Y) {
+                "use strict";
+
+
+                var testPossibilities = new Y.Test.Case({
+                    name: 'possibilities() Tests',
+
+                    'Array should have nine members that correspond to each of the nine x, y coordinates': function () {
+                        var board = [['n', 'n', 'n'],
+                                    ['n', 'n', 'n'],
+                                    ['n', 'n', 'n']],
+
+                            testGame = new Y. ticTacToeBoard,
+                            result = testGame.possibleMoveLocations(board);
+                            Y.Assert.areSame([[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]], result);
+                    } 
+                })
+                new Y.Test.Console().render('#console');
+                Y.Test.Runner.add(testPossibilities);
+                Y.Test.Runner.run();
+            });
+
+        </script>
+    </body>
+</html>
