@@ -397,6 +397,27 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
         },
 
+        
+        possibleMoveLocations: function (board) {
+
+            var possibilities = [], x, y;
+
+            for (x = 0; x < 3; x += 1) {
+                for (y = 0; y < 3; y += 1) {
+
+                    if (board[x][y] === 'n') {
+
+                        possibilities.push([x, y]);
+
+
+                    }
+                }
+            }
+
+            return possibilities;
+
+        },
+
         renderUI: function () {
             this.get('contentBox')
                 .append('<div class="square topHeight left topRowLeft"></div>')
