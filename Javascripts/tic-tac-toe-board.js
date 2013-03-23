@@ -11,7 +11,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
         makeBoardArrayFromSquareAttrs: function (transferredBoard) {
 
             var board = Y.clone(transferredBoard.board),
-            currentTurn = transferredBoard.currentTurn, 
+                currentTurn = transferredBoard.currentTurn, 
 
                 projectAllPossibleBoardsThisTurn = function () {
                     var futureBoard,
@@ -354,39 +354,39 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.findMoveToMaximizeOsPerRow = function () {
                 var possibleBoardProjection = Y.clone(projectAllPossibleBoardsThisTurn()),
-                    i,
+                    i = 0,
                     highestNumberOfOneOToWin,
                     highestNumberOfTwoOsToWin,
-                    highestNumberOfOneXToWin,
                     highestNumberOfTwoXsToWin,
                     moveSelectionFromPossibilities,
-                    impossibleChoice;
+                    impossibleChoice,
+                    removePossibility = function (boardIndex) {
+                        possibleBoardProjection = (function () {
+                            var firstPart,
+                                secondPart,
+                                newTotal;
+                            firstPart = possibleBoardProjection.slice(0, i);
+                            secondPart = possibleBoardProjection.slice(i + 1, possibleBoardProjection.length);
+                            newTotal = [].push.apply(firstPart, secondPart);
+                            return newTotal; 
+                        })();
+                    };
 
-                highestNumberOfOneOToWin = {
-                    highest: 0,
-                    containersOfTheHighest: []
-                };
-
-                highestNumberOfTwoOsToWin = {
-                    highest: 0,
-                    containersOfTheHighest: []
-                };
-
-                highestNumberOfOneXToWin = {
-                    highest: 0,
-                    containersOfTheHighest: []
-                };
-
-                highestNumberOfTwoXsToWin = {
-                    highest: 0,
-                    containersOfTheHighest: []
-                };
+                highestNumberOfOneOToWin = 0;
+                highestNumberOfTwoOsToWin = 0;
+                highestNumberOfTwoXsToWin = 8;
                 for (i = 0; i < possibleBoardProjection.length; i += 1) {
-                    if (this.checkGameWinForO(this) === true) {
-                        moveSelectionFromPossibilities = i;
+
+                    if (possibleBoardProjection[i].checkGameWinForO(possibleBoardProjection[i]) === true) {
+                        possibleBoardProjection = [].push(possibleBoardProjection[i]);
                     } else {
-                        if (this.oneToWinForX(this) === true) {
-                        // 
+                        if (possibleBoardProjection[i].oneToWinForX() === true) {
+                             removePossibility(i); 
+                        }
+                        if (possibleBoardProjection[i].twoToWinForX() <=  highestNumberOfTwoXsToWin) {
+                            highestNumberOfTwoXsToWin = possibleBoardProjection[i].twoToWinForX(); 
+                        } else {
+                            removePossibility(i);
                         }
                     }
                 }
