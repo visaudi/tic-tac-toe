@@ -30,8 +30,15 @@
                                     ['n', 'n', 'n']],
 
                             testGame = new Y. ticTacToeBoard,
-                            result = testGame.possibleMoveLocations(board);
-                            Y.Assert.areSame([[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]], result);
+                            literalListToEqual = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
+                            result = testGame.possibleMoveLocations(board),
+                            i,
+                            j;
+                            for(i = 0; i < literalListToEqual.length; i += 1) {
+                                for(j = 0; j < literalListToEqual.length[i]; j += 1) {
+                                    Y.Assert.areSame(literalListToEqual[i][j], result[i][j]);
+                                }
+                            }
                     } 
                 })
                 new Y.Test.Console().render('#console');
