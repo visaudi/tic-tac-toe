@@ -8,15 +8,12 @@ YUI.add('tic-tac-toe-board', function (Y) {
         initializer: function () {
 
         },
-        makeBoardArrayFromSquareAttrs: function () {
+        makeBoardArrayFromSquareAttrs: function (transferredBoard) {
 
-            var board = [[this.get('topRowLeft'), this.get('topRowCenter'), this.get('topRowRight')],
-                        [this.get('middleRowLeft'), this.get('middleRowCenter'), this.get('middleRowRight')],
-                        [this.get('bottomRowLeft'), this.get('bottomRowCenter'), this.get('bottomRowRight')]],
+            var board = Y.clone(transferredBoard.board),
+            currentTurn = transferredBoard.currentTurn, 
 
-                currentTurn = this.get('currentTurn'),
-
-                projectAllPossibleBoardsThisTurn () {
+                projectAllPossibleBoardsThisTurn = function () {
                     var futureBoard,
                         consideredPossibilityLocation,
                         i,
@@ -26,6 +23,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                         consideredPossibilityLocation = board.possibleMoveLocations()[i];
                         futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
                         possibleBoardList.push(futureBoard);
+                        possibleBoardList.possibleMoveLocations[i] = consideredPossibilityLocation;
                     }
                     return possibleBoardList;
                 };
@@ -172,17 +170,17 @@ YUI.add('tic-tac-toe-board', function (Y) {
             };
 
 
-            board.checkGameWinForX = function () {
+            board.checkGameWinForX = function (anyBoard) {
 
                 var win = false;
-                if ((this.rowXCount(this.getColumn(0)) === 3) ||
-                        (this.rowXCount(this.getColumn(1)) === 3) ||
-                        (this.rowXCount(this.getColumn(2)) === 3) ||
-                        (this.rowXCount(this.getRow(0)) === 3) ||
-                        (this.rowXCount(this.getRow(1)) === 3) ||
-                        (this.rowXCount(this.getRow(2)) === 3) ||
-                        (this.rowXCount(this.getHighLeftDiagonal()) === 3) ||
-                        (this.rowXCount(this.getLowLeftDiagonal()) === 3)) {
+                if ((anyBoard.rowXCount(anyBoard.getColumn(0)) === 3) ||
+                        (anyBoard.rowXCount(anyBoard.getColumn(1)) === 3) ||
+                        (anyBoard.rowXCount(anyBoard.getColumn(2)) === 3) ||
+                        (anyBoard.rowXCount(anyBoard.getRow(0)) === 3) ||
+                        (anyBoard.rowXCount(anyBoard.getRow(1)) === 3) ||
+                        (anyBoard.rowXCount(anyBoard.getRow(2)) === 3) ||
+                        (anyBoard.rowXCount(anyBoard.getHighLeftDiagonal()) === 3) ||
+                        (anyBoard.rowXCount(anyBoard.getLowLeftDiagonal()) === 3)) {
                     win = true;
                 }
 
@@ -190,17 +188,17 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             };
 
-            board.checkGameWinForO = function () {
+            board.checkGameWinForO = function (anyBoard) {
 
                 var win = false;
-                if ((this.rowOCount(this.getColumn(0)) === 3) ||
-                        (this.rowOCount(this.getColumn(1)) === 3) ||
-                        (this.rowOCount(this.getColumn(2)) === 3) ||
-                        (this.rowOCount(this.getRow(0)) === 3) ||
-                        (this.rowOCount(this.getRow(1)) === 3) ||
-                        (this.rowOCount(this.getRow(2)) === 3) ||
-                        (this.rowOCount(this.getHighLeftDiagonal()) === 3) ||
-                        (this.rowOCount(this.getLowLeftDiagonal()) === 3)) {
+                if ((anyBoard.rowOCount(anyBoard.getColumn(0)) === 3) ||
+                        (anyBoard.rowOCount(anyBoard.getColumn(1)) === 3) ||
+                        (anyBoard.rowOCount(anyBoard.getColumn(2)) === 3) ||
+                        (anyBoard.rowOCount(anyBoard.getRow(0)) === 3) ||
+                        (anyBoard.rowOCount(anyBoard.getRow(1)) === 3) ||
+                        (anyBoard.rowOCount(anyBoard.getRow(2)) === 3) ||
+                        (anyBoard.rowOCount(anyBoard.getHighLeftDiagonal()) === 3) ||
+                        (anyBoard.rowOCount(anyBoard.getLowLeftDiagonal()) === 3)) {
                     win = true;
                 }
 
@@ -273,7 +271,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 if ((this.rowXCount(this.getHighLeftDiagonal()) === 1) && (this.rowOCount(this.getHighLeftDiagonal()) === 0)) {
                     twoToWinOccurrences += 1;
-                }             
+                }
 
                 if ((this.rowXCount(this.getLowLeftDiagonal()) === 1) && (this.rowOCount(this.getLowLeftDiagonal()) === 0)) {
                     twoToWinOccurrences += 1;
@@ -355,8 +353,44 @@ YUI.add('tic-tac-toe-board', function (Y) {
             };
 
             board.findMoveToMaximizeOsPerRow = function () {
-                //
-            }
+                var possibleBoardProjection = Y.clone(projectAllPossibleBoardsThisTurn()),
+                    i,
+                    highestNumberOfOneOToWin,
+                    highestNumberOfTwoOsToWin,
+                    highestNumberOfOneXToWin,
+                    highestNumberOfTwoXsToWin,
+                    moveSelectionFromPossibilities,
+                    impossibleChoice;
+
+                highestNumberOfOneOToWin = {
+                    highest: 0,
+                    containersOfTheHighest: []
+                };
+
+                highestNumberOfTwoOsToWin = {
+                    highest: 0,
+                    containersOfTheHighest: []
+                };
+
+                highestNumberOfOneXToWin = {
+                    highest: 0,
+                    containersOfTheHighest: []
+                };
+
+                highestNumberOfTwoXsToWin = {
+                    highest: 0,
+                    containersOfTheHighest: []
+                };
+                for (i = 0; i < possibleBoardProjection.length; i += 1) {
+                    if (this.checkGameWinForO(this) === true) {
+                        moveSelectionFromPossibilities = i;
+                    } else {
+                        if (this.oneToWinForX(this) === true) {
+                        // 
+                        }
+                    }
+                }
+            };
 
 
             return board;
@@ -411,6 +445,16 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     connectSquareClickToSquareValue('bottomRowRight');
                 },
 
+                convertWidgetBoardToBoardArray = function () {
+
+                    var widgetBoard = [[that.get('topRowLeft'), that.get('topRowCenter'), that.get('topRowRight')],
+                                [that.get('middleRowLeft'), that.get('middleRowCenter'), that.get('middleRowRight')],
+                                [that.get('bottomRowLeft'), that.get('bottomRowCenter'), that.get('bottomRowRight')]],
+
+                    widgetCurrentTurn = that.get('currentTurn');
+                    return {board: widgetBoard, currentTurn: widgetCurrentTurn};
+                },
+
                 changeTurn = function () {
                     if ((that.get("currentTurn")) === 'x') {
                         that.set("currentTurn", 'o');
@@ -441,9 +485,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 isTheGameOver = function () {
 
-                    Y.log(that.makeBoardArrayFromSquareAttrs());
-                    var boardTest = that.makeBoardArrayFromSquareAttrs();
-                    Y.log(boardTest.findMoveToMaximizeOsPerRow());
+                    Y.log(that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArray()));
+                    var boardTest = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArray());
+                    Y.log(boardTest);
                 },
 
                 listenForPlayedTurn = function () {
