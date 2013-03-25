@@ -11,19 +11,22 @@ YUI.add('tic-tac-toe-board', function (Y) {
         makeBoardArrayFromSquareAttrs: function (transferredBoard) {
 
             var board = Y.clone(transferredBoard.board),
-                currentTurn = transferredBoard.currentTurn, 
+                currentTurn = transferredBoard.currentTurn;
 
-                projectAllPossibleBoardsThisTurn = function () {
+                board.projectAllPossibleBoardsThisTurn = function () {
+
                     var futureBoard,
                         consideredPossibilityLocation,
                         i,
                         possibleBoardList = [];
+
                     for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
                         futureBoard = Y.clone(board);
                         consideredPossibilityLocation = board.possibleMoveLocations()[i];
-                        futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
+                        futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'o';
                         possibleBoardList.push(futureBoard);
-                        possibleBoardList.possibleMoveLocations[i] = consideredPossibilityLocation;
+                        possibleBoardList.possibleMoveLocations = [];
+                        possibleBoardList.possibleMoveLocations.push(consideredPossibilityLocation);
                     }
                     return possibleBoardList;
                 };
@@ -43,18 +46,17 @@ YUI.add('tic-tac-toe-board', function (Y) {
                         }
                     }
                 }
-
                 return possibilities;
 
             };
 
-            board.getColumn = function (columnPosition) {
+            board.getColumn = function (columnPosition, gameBoard) {
 
                 var x, column = [];
 
                 for (x = 0; x < 3; x += 1) {
 
-                    column[x] = this[x][columnPosition];
+                    column[x] = gameBoard[x][columnPosition];
 
 
                 }
@@ -64,13 +66,13 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             };
 
-            board.getRow = function (rowPosition) {
+            board.getRow = function (rowPosition, gameBoard) {
 
                 var y, extractedRow = [];
 
                 for (y = 0; y < 3; y += 1) {
 
-                    extractedRow[y] = this[rowPosition][y];
+                    extractedRow[y] = gameBoard[rowPosition][y];
 
 
                 }
@@ -79,13 +81,13 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             };
 
-            board.getHighLeftDiagonal = function () {
+            board.getHighLeftDiagonal = function (gameBoard) {
 
                 var xAndY, diagonal = [];
 
                 for (xAndY = 0; xAndY < 3; xAndY += 1) {
 
-                    diagonal[xAndY] = this[xAndY][xAndY];
+                    diagonal[xAndY] = gameBoard[xAndY][xAndY];
 
                 }
 
@@ -93,13 +95,13 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             };
 
-            board.getLowLeftDiagonal = function () {
+            board.getLowLeftDiagonal = function (gameBoard) {
 
                 var x, y = 2, diagonal = [];
 
 
                 for (x = 0; x < 3; x += 1) {
-                    diagonal[x] = this[y][x];
+                    diagonal[x] = gameBoard[y][x];
 
                     y -= 1;
 
@@ -151,17 +153,17 @@ YUI.add('tic-tac-toe-board', function (Y) {
             };
 
 
-            board.checkGameTie = function () {
+            board.checkGameTie = function (gameBoard) {
 
                 var tie = false;
-                if ((this.checkForMixedRow(this.getColumn(0))) &&
-                        (this.checkForMixedRow(this.getColumn(1))) &&
-                        (this.checkForMixedRow(this.getColumn(2))) &&
-                        (this.checkForMixedRow(this.getRow(0))) &&
-                        (this.checkForMixedRow(this.getRow(1))) &&
-                        (this.checkForMixedRow(this.getRow(2))) &&
-                        (this.checkForMixedRow(this.getHighLeftDiagonal())) &&
-                        (this.checkForMixedRow(this.getLowLeftDiagonal()))) {
+                if ((this.checkForMixedRow(this.getColumn(0, gameBoard))) &&
+                        (this.checkForMixedRow(this.getColumn(1, gameBoard))) &&
+                        (this.checkForMixedRow(this.getColumn(2, gameBoard))) &&
+                        (this.checkForMixedRow(this.getRow(0, gameBoard))) &&
+                        (this.checkForMixedRow(this.getRow(1, gameBoard))) &&
+                        (this.checkForMixedRow(this.getRow(2, gameBoard))) &&
+                        (this.checkForMixedRow(this.getHighLeftDiagonal(gameBoard))) &&
+                        (this.checkForMixedRow(this.getLowLeftDiagonal(gameBoard)))) {
                     tie = true;
                 }
 
@@ -170,17 +172,17 @@ YUI.add('tic-tac-toe-board', function (Y) {
             };
 
 
-            board.checkGameWinForX = function (anyBoard) {
+            board.checkGameWinForX = function (gameBoard) {
 
                 var win = false;
-                if ((anyBoard.rowXCount(anyBoard.getColumn(0)) === 3) ||
-                        (anyBoard.rowXCount(anyBoard.getColumn(1)) === 3) ||
-                        (anyBoard.rowXCount(anyBoard.getColumn(2)) === 3) ||
-                        (anyBoard.rowXCount(anyBoard.getRow(0)) === 3) ||
-                        (anyBoard.rowXCount(anyBoard.getRow(1)) === 3) ||
-                        (anyBoard.rowXCount(anyBoard.getRow(2)) === 3) ||
-                        (anyBoard.rowXCount(anyBoard.getHighLeftDiagonal()) === 3) ||
-                        (anyBoard.rowXCount(anyBoard.getLowLeftDiagonal()) === 3)) {
+                if ((this.rowXCount(this.getColumn(0, gameBoard)) === 3) ||
+                        (this.rowXCount(this.getColumn(1, gameBoard)) === 3) ||
+                        (this.rowXCount(this.getColumn(2, gameBoard)) === 3) ||
+                        (this.rowXCount(this.getRow(0, gameBoard)) === 3) ||
+                        (this.rowXCount(this.getRow(1, gameBoard)) === 3) ||
+                        (this.rowXCount(this.getRow(2, gameBoard)) === 3) ||
+                        (this.rowXCount(this.getHighLeftDiagonal(gameBoard)) === 3) ||
+                        (this.rowXCount(this.getLowLeftDiagonal(gameBoard)) === 3)) {
                     win = true;
                 }
 
@@ -188,17 +190,17 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             };
 
-            board.checkGameWinForO = function (anyBoard) {
+            board.checkGameWinForO = function (gameBoard) {
 
                 var win = false;
-                if ((anyBoard.rowOCount(anyBoard.getColumn(0)) === 3) ||
-                        (anyBoard.rowOCount(anyBoard.getColumn(1)) === 3) ||
-                        (anyBoard.rowOCount(anyBoard.getColumn(2)) === 3) ||
-                        (anyBoard.rowOCount(anyBoard.getRow(0)) === 3) ||
-                        (anyBoard.rowOCount(anyBoard.getRow(1)) === 3) ||
-                        (anyBoard.rowOCount(anyBoard.getRow(2)) === 3) ||
-                        (anyBoard.rowOCount(anyBoard.getHighLeftDiagonal()) === 3) ||
-                        (anyBoard.rowOCount(anyBoard.getLowLeftDiagonal()) === 3)) {
+                if ((this.rowOCount(this.getColumn(0, gameBoard)) === 3) ||
+                        (this.rowOCount(this.getColumn(1, gameBoard)) === 3) ||
+                        (this.rowOCount(this.getColumn(2, gameBoard)) === 3) ||
+                        (this.rowOCount(this.getRow(0, gameBoard)) === 3) ||
+                        (this.rowOCount(this.getRow(1, gameBoard)) === 3) ||
+                        (this.rowOCount(this.getRow(2, gameBoard)) === 3) ||
+                        (this.rowOCount(this.getHighLeftDiagonal(gameBoard)) === 3) ||
+                        (this.rowOCount(this.getLowLeftDiagonal(gameBoard)) === 3)) {
                     win = true;
                 }
 
@@ -206,36 +208,36 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             };
 
-            board.twoToWinForO = function () {
+            board.twoToWinForO = function (gameBoard) {
                 var twoToWinOccurrences = 0;
-                if ((this.rowOCount(this.getColumn(0)) === 1) && (this.rowXCount(this.getColumn(0)) === 0)) {
+                if ((this.rowOCount(this.getColumn(0, gameBoard)) === 1) && (this.rowXCount(this.getColumn(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getColumn(1)) === 1) && (this.rowXCount(this.getColumn(1)) === 0)) {
+                if ((this.rowOCount(this.getColumn(1, gameBoard)) === 1) && (this.rowXCount(this.getColumn(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getColumn(2)) === 1) && (this.rowXCount(this.getColumn(2)) === 0)) {
+                if ((this.rowOCount(this.getColumn(2, gameBoard)) === 1) && (this.rowXCount(this.getColumn(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
-                if ((this.rowOCount(this.getRow(0)) === 1) && (this.rowXCount(this.getRow(0)) === 0)) {
-                    twoToWinOccurrences += 1;
-                }
-
-                if ((this.rowOCount(this.getRow(1)) === 1) && (this.rowXCount(this.getRow(1)) === 0)) {
+                if ((this.rowOCount(this.getRow(0, gameBoard)) === 1) && (this.rowXCount(this.getRow(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getRow(2)) === 1) && (this.rowXCount(this.getRow(2)) === 0)) {
+                if ((this.rowOCount(this.getRow(1, gameBoard)) === 1) && (this.rowXCount(this.getRow(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getHighLeftDiagonal()) === 1) && (this.rowXCount(this.getHighLeftDiagonal()) === 0)) {
+                if ((this.rowOCount(this.getRow(2, gameBoard)) === 1) && (this.rowXCount(this.getRow(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getLowLeftDiagonal()) === 1) && (this.rowXCount(this.getLowLeftDiagonal()) === 0)) {
+                if ((this.rowOCount(this.getHighLeftDiagonal(gameBoard)) === 1) && (this.rowXCount(this.getHighLeftDiagonal(gameBoard)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getLowLeftDiagonal(gameBoard)) === 1) && (this.rowXCount(this.getLowLeftDiagonal(gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
@@ -244,108 +246,108 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
 
 
-            board.twoToWinForX = function () {
+            board.twoToWinForX = function (gameBoard) {
                 var twoToWinOccurrences = 0;
-                if ((this.rowXCount(this.getColumn(0)) === 1) && (this.rowOCount(this.getColumn(0)) === 0)) {
+                if ((this.rowXCount(this.getColumn(0, gameBoard)) === 1) && (this.rowOCount(this.getColumn(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getColumn(1)) === 1) && (this.rowOCount(this.getColumn(1)) === 0)) {
+                if ((this.rowXCount(this.getColumn(1, gameBoard)) === 1) && (this.rowOCount(this.getColumn(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getColumn(2)) === 1) && (this.rowOCount(this.getColumn(2)) === 0)) {
+                if ((this.rowXCount(this.getColumn(2, gameBoard)) === 1) && (this.rowOCount(this.getColumn(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
-                if ((this.rowXCount(this.getRow(0)) === 1) && (this.rowOCount(this.getRow(0)) === 0)) {
-                    twoToWinOccurrences += 1;
-                }
-
-                if ((this.rowXCount(this.getRow(1)) === 1) && (this.rowOCount(this.getRow(1)) === 0)) {
+                if ((this.rowXCount(this.getRow(0, gameBoard)) === 1) && (this.rowOCount(this.getRow(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getRow(2)) === 1) && (this.rowOCount(this.getRow(2)) === 0)) {
+                if ((this.rowXCount(this.getRow(1, gameBoard)) === 1) && (this.rowOCount(this.getRow(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getHighLeftDiagonal()) === 1) && (this.rowOCount(this.getHighLeftDiagonal()) === 0)) {
+                if ((this.rowXCount(this.getRow(2, gameBoard)) === 1) && (this.rowOCount(this.getRow(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getLowLeftDiagonal()) === 1) && (this.rowOCount(this.getLowLeftDiagonal()) === 0)) {
+                if ((this.rowXCount(this.getHighLeftDiagonal(gameBoard)) === 1) && (this.rowOCount(this.getHighLeftDiagonal(gameBoard)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getLowLeftDiagonal(gameBoard)) === 1) && (this.rowOCount(this.getLowLeftDiagonal(gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
                 return twoToWinOccurrences;
             };
 
-            board.oneToWinForX = function () {
+            board.oneToWinForX = function (gameBoard) {
                 var oneToWinOccurrences = 0;
-                if ((this.rowXCount(this.getColumn(0)) === 2) && (this.rowOCount(this.getColumn(0)) === 0)) {
+                if ((this.rowXCount(this.getColumn(0, gameBoard)) === 2) && (this.rowOCount(this.getColumn(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getColumn(1)) === 2) && (this.rowOCount(this.getColumn(1)) === 0)) {
+                if ((this.rowXCount(this.getColumn(1, gameBoard)) === 2) && (this.rowOCount(this.getColumn(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getColumn(2)) === 2) && (this.rowOCount(this.getColumn(2)) === 0)) {
+                if ((this.rowXCount(this.getColumn(2, gameBoard)) === 2) && (this.rowOCount(this.getColumn(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
-                if ((this.rowXCount(this.getRow(0)) === 2) && (this.rowOCount(this.getRow(0)) === 0)) {
-                    oneToWinOccurrences += 1;
-                }
-
-                if ((this.rowXCount(this.getRow(1)) === 2) && (this.rowOCount(this.getRow(1)) === 0)) {
+                if ((this.rowXCount(this.getRow(0, gameBoard)) === 2) && (this.rowOCount(this.getRow(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getRow(2)) === 2) && (this.rowOCount(this.getColumn(2)) === 0)) {
+                if ((this.rowXCount(this.getRow(1, gameBoard)) === 2) && (this.rowOCount(this.getRow(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getHighLeftDiagonal()) === 2) && (this.rowOCount(this.getHighLeftDiagonal()) === 0)) {
+                if ((this.rowXCount(this.getRow(2, gameBoard)) === 2) && (this.rowOCount(this.getRow(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getLowLeftDiagonal()) === 2) && (this.rowOCount(this.getLowLeftDiagonal()) === 0)) {
+                if ((this.rowXCount(this.getHighLeftDiagonal(gameBoard)) === 2) && (this.rowOCount(this.getHighLeftDiagonal(gameBoard)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowXCount(this.getLowLeftDiagonal(gameBoard)) === 2) && (this.rowOCount(this.getLowLeftDiagonal(gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
                 return oneToWinOccurrences;
             };
 
-            board.oneToWinForO = function () {
+            board.oneToWinForO = function (gameBoard) {
                 var oneToWinOccurrences = 0;
-                if ((this.rowOCount(this.getColumn(0)) === 2) && (this.rowXCount(this.getColumn(0)) === 0)) {
+                if ((this.rowOCount(this.getColumn(0, gameBoard)) === 2) && (this.rowXCount(this.getColumn(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getColumn(1)) === 2) && (this.rowXCount(this.getColumn(1)) === 0)) {
+                if ((this.rowOCount(this.getColumn(1, gameBoard)) === 2) && (this.rowXCount(this.getColumn(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getColumn(2)) === 2) && (this.rowXCount(this.getColumn(2)) === 0)) {
+                if ((this.rowOCount(this.getColumn(2, gameBoard)) === 2) && (this.rowXCount(this.getColumn(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
-                if ((this.rowOCount(this.getRow(0)) === 2) && (this.rowXCount(this.getRow(0)) === 0)) {
-                    oneToWinOccurrences += 1;
-                }
-
-                if ((this.rowOCount(this.getRow(1)) === 2) && (this.rowXCount(this.getRow(1)) === 0)) {
+                if ((this.rowOCount(this.getRow(0, gameBoard)) === 2) && (this.rowXCount(this.getRow(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getRow(2)) === 2) && (this.rowXCount(this.getColumn(2)) === 0)) {
+                if ((this.rowOCount(this.getRow(1, gameBoard)) === 2) && (this.rowXCount(this.getRow(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getHighLeftDiagonal()) === 2) && (this.rowXCount(this.getHighLeftDiagonal()) === 0)) {
+                if ((this.rowOCount(this.getRow(2, gameBoard)) === 2) && (this.rowXCount(this.getRow(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getLowLeftDiagonal()) === 2) && (this.rowXCount(this.getLowLeftDiagonal()) === 0)) {
+                if ((this.rowOCount(this.getHighLeftDiagonal(gameBoard)) === 2) && (this.rowXCount(this.getHighLeftDiagonal(gameBoard)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((this.rowOCount(this.getLowLeftDiagonal(gameBoard)) === 2) && (this.rowXCount(this.getLowLeftDiagonal(gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
@@ -353,51 +355,94 @@ YUI.add('tic-tac-toe-board', function (Y) {
             };
 
             board.findMoveToMaximizeOsPerRow = function () {
-                var possibleBoardProjection = Y.clone(projectAllPossibleBoardsThisTurn()),
-                    i = 0,
+
+               var possibleBoardProjection = Y.clone(board.projectAllPossibleBoardsThisTurn()),
+                    possibilityIndex = 0,
+                    carefulness,
                     highestNumberOfOneOToWin,
                     highestNumberOfTwoOsToWin,
                     highestNumberOfTwoXsToWin,
-                    moveSelectionFromPossibilities,
-                    impossibleChoice,
+                    that = this,
                     removePossibility = function (boardIndex) {
                         possibleBoardProjection = (function () {
                             var firstPart,
                                 secondPart,
-                                newTotal;
-                            firstPart = possibleBoardProjection.slice(0, i);
-                            secondPart = possibleBoardProjection.slice(i + 1, possibleBoardProjection.length);
-                            newTotal = [].push.apply(firstPart, secondPart);
-                            return newTotal; 
-                        })();
-                    };
+                                newTotal = [];
+                            firstPart = possibleBoardProjection.slice(0, possibilityIndex);
+                            secondPart = possibleBoardProjection.slice(possibilityIndex + 1, possibleBoardProjection.length);
+                            newTotal= [].concat(firstPart, secondPart);
 
+                            return newTotal;
+                        }());
+
+                    };
                 highestNumberOfOneOToWin = 0;
                 highestNumberOfTwoOsToWin = 0;
                 highestNumberOfTwoXsToWin = 8;
-                for (i = 0; i < possibleBoardProjection.length; i += 1) {
+                for (possibilityIndex = 0; possibilityIndex < possibleBoardProjection.length; possibilityIndex += 1) {
+                    if (that.checkGameWinForO(possibleBoardProjection[possibilityIndex]) === true) {
+                        possibleBoardProjection = [].push(possibleBoardProjection[possibilityIndex]);
 
-                    if (possibleBoardProjection[i].checkGameWinForO(possibleBoardProjection[i]) === true) {
-                        possibleBoardProjection = [].push(possibleBoardProjection[i]);
                     } else {
-                        if (possibleBoardProjection[i].oneToWinForX() === true) {
-                             removePossibility(i); 
+
+                        if (that.oneToWinForX(possibleBoardProjection[possibilityIndex]) >=  1) {
+                            removePossibility(possibilityIndex);
+                            possibilityIndex -= 1;
                         }
-                        if (possibleBoardProjection[i].twoToWinForX() <=  highestNumberOfTwoXsToWin) {
-                            highestNumberOfTwoXsToWin = possibleBoardProjection[i].twoToWinForX(); 
-                        } else {
-                            removePossibility(i);
+
+                    }
+                }
+
+
+                if (possibleBoardProjection.length > 1) {
+
+                    for (carefulness = 0; carefulness < 2; carefulness += 1) {
+
+                        for (possibilityIndex = 0; possibilityIndex < possibleBoardProjection.length; possibilityIndex += 1) {
+                            if (that.twoToWinForX(possibleBoardProjection[possibilityIndex]) <=  highestNumberOfTwoXsToWin) {
+                                highestNumberOfTwoXsToWin = this.twoToWinForX(possibleBoardProjection[possibilityIndex]);
+                            } else {
+                                removePossibility(possibilityIndex);
+                                possibilityIndex -=1;
+                            }
                         }
                     }
                 }
-            };
 
+                if (possibleBoardProjection.length > 1) {
+                    for (carefulness = 0; carefulness < 2; carefulness += 1) {
+                        for (possibilityIndex = 0; possibilityIndex < possibleBoardProjection.length; possibilityIndex += 1) {
+                            if (this.oneToWinForO(possibleBoardProjection[possibilityIndex]) >= highestNumberOfOneOToWin) {
+                                highestNumberOfOneOToWin = this.oneToWinForO(possibleBoardProjection[possibilityIndex]);
+                            } else {
+                                removePossibility(possibilityIndex);
+                                possibilityIndex -= 1;
+                            }
+                        }
+                    }
+                }
+
+
+                if (possibleBoardProjection.length > 1) {
+                    for (carefulness = 0; carefulness < 2; carefulness += 1) {
+                        for (possibilityIndex = 0; possibilityIndex < possibleBoardProjection.length; possibilityIndex += 1) {
+                            if (this.twoToWinForO(possibleBoardProjection[possibilityIndex]) >= highestNumberOfTwoOsToWin) {
+                                highestNumberOfTwoOsToWin = this.twoToWinForO(possibleBoardProjection[possibilityIndex]);
+                            } else {
+                                removePossibility(possibilityIndex);
+                                possibilityIndex -= 1;
+                            }
+                        }
+                    }
+                }
+
+                return possibleBoardProjection[0];
+            };
 
             return board;
 
         },
 
-        
         possibleMoveLocations: function (board) {
 
             var possibilities = [], x, y;
@@ -472,7 +517,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                                 [that.get('middleRowLeft'), that.get('middleRowCenter'), that.get('middleRowRight')],
                                 [that.get('bottomRowLeft'), that.get('bottomRowCenter'), that.get('bottomRowRight')]],
 
-                    widgetCurrentTurn = that.get('currentTurn');
+                        widgetCurrentTurn = that.get('currentTurn');
                     return {board: widgetBoard, currentTurn: widgetCurrentTurn};
                 },
 
@@ -506,9 +551,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 isTheGameOver = function () {
 
-                    Y.log(that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArray()));
+                    //Y.log(that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArray()));
                     var boardTest = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArray());
-                    Y.log(boardTest);
+                    Y.log(boardTest.findMoveToMaximizeOsPerRow());
                 },
 
                 listenForPlayedTurn = function () {
