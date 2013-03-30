@@ -4,7 +4,7 @@ body {
 
 .square {
     position: absolute;
-    z-index: 10;
+    z-index: 2;
     width: 124px;
     height: 124px;
     opacity: 0;
@@ -55,4 +55,26 @@ body {
 
 .right {
     left: 62%;
+}
+
+#gameMessage {
+
+    background-color:FFFFFF;
+    width: 250px;
+    height: 250px;
+    z-index: 20;
+    top: 10%;
+	left: auto;
+	right: auto;
+	position: absolute;
+}
+
+.messageBeginning {
+    visibility: hidden;
+
+}
+
+.gameEnding {
+
+    visibility: visible;
 }

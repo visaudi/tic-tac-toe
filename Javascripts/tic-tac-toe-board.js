@@ -373,9 +373,22 @@ YUI.add('tic-tac-toe-board', function (Y) {
                             newTotal= [].concat(firstPart, secondPart);
 
                             return newTotal;
-                        }());
+                        }())
+                    },
 
+                    convertPossibilityToMove = function () {
+                        var x, y;
+
+                        for (x = 0; x < 3; x += 1) {
+                            for (y = 0; y < 3; y +=1) {
+                                if (that[x][y] !== possibleBoardProjection[0][x][y]) {
+                                   return [x, y];
+                                }
+                            }
+                        } 
                     };
+
+                    
                 highestNumberOfOneOToWin = 0;
                 highestNumberOfTwoOsToWin = 0;
                 highestNumberOfTwoXsToWin = 8;
@@ -436,9 +449,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     }
                 }
 
+Y.log(convertPossibilityToMove());
                 return possibleBoardProjection[0];
             };
-
             return board;
 
         },
@@ -476,6 +489,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 .append('<div class="square bottomHeight left bottomRowLeft"></div>')
                 .append('<div class="square bottomHeight center bottomRowCenter"></div>')
                 .append('<div class="square bottomHeight right bottomRowRight"></div>');
+
+            this.get('contentBox')
+                .append('<h1 id="gameMessage">Game Over</h1>');
         },
         bindUI: function () {
 
@@ -551,9 +567,18 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 isTheGameOver = function () {
 
-                    //Y.log(that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArray()));
-                    var boardTest = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArray());
-                    Y.log(boardTest.findMoveToMaximizeOsPerRow());
+                    var board = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArray());
+                    if (board.checkGameTie(board) === true ||
+                        board.checkGameWinForX(board) === true ||
+                        board.checkGameWinForO(board) === true) {
+
+                        gameMessage = Y.one('#gameMessage');
+
+                        gameMessage.addClass('gameEnding');
+                        gameMessage.show(true);
+
+
+                    }
                 },
 
                 listenForPlayedTurn = function () {
