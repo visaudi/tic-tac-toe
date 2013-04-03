@@ -491,7 +491,7 @@ Y.log(convertPossibilityToMove());
                 .append('<div class="square bottomHeight right bottomRowRight"></div>');
 
             this.get('contentBox')
-                .append('<h1 id="gameMessage">Game Over</h1>');
+                .append('<div id="gameMessage"></div>');
         },
         bindUI: function () {
 
@@ -567,7 +567,8 @@ Y.log(convertPossibilityToMove());
 
                 isTheGameOver = function () {
 
-                    var board = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArray());
+                    var board = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArray()),
+                        gameMessage;
                     if (board.checkGameTie(board) === true ||
                         board.checkGameWinForX(board) === true ||
                         board.checkGameWinForO(board) === true) {
