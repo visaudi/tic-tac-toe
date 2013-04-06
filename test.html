@@ -30,20 +30,50 @@
                                     ['n', 'n', 'n'],
                                     ['n', 'n', 'n']],
 
-                            testGame = new Y. ticTacToeBoard,
-                            literalListToEqual = [[2, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
+                            testGame = new Y.ticTacToeBoard,
+                            literalListToEqual = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
                             result = testGame.possibleMoveLocations(board),
                             i,
                             j;
                             for(i = 0; i < literalListToEqual.length; i += 1) {
-                                for(j = 0; j < literalListToEqual.length[i]; j += 1) {
+                                for(j = 0; j < literalListToEqual[i].length; j += 1) {
                                     Y.Assert.areSame(literalListToEqual[i][j], result[i][j]);
                                 }
                             }
-                    } 
-                })
+                    }
+                }),
+
+                filteringForAI = new Y.Test.Case({
+                    name: 'AI Filtering Tests',
+
+                    'Function should take an Array of boards and return an array of the boards where x is winning': function () {
+                        var winningBoard, notWinningBoard, multiWinningBoard,
+
+                            testGame = new Y.ticTacToeBoard;
+
+                        winningBoard = testGame.makeBoardArrayFromSquareAttrs([['x', 'x', 'n'],
+                                                                               ['n', 'o', 'n'],
+                                                                               ['n', 'o', 'n']]);
+
+                        notWinningBoard = testGame.makeBoardArrayFromSquareAttrs([['x', 'o', 'x'],
+                                                                                  ['n', 'n', 'n'],
+                                                                                  ['n', 'n', 'n']]);
+
+
+                        multiWinningBoard = testGame.makeBoardArrayFromSquareAttrs([['x', 'o', 'x'],
+                                                                                   ['x', 'x', 'n'],
+                                                                                   ['n', 'n', 'n']]);
+
+                        console.log(winningBoard.projectAllPossibleXMoveBoardsThisTurn());
+                        Y.Assert.areSame(1, (winningBoard.filterForWinX(winningBoard.projectAllPossibleXMoveBoardsThisTurn())).length);
+                        Y.Assert.areSame(0, (notWinningBoard.filterForWinX(notWinningBoard.projectAllPossibleXMoveBoardsThisTurn())).length);
+                        Y.Assert.areSame(3, (multiWinningBoard.filterForWinX(multiWinningBoard.projectAllPossibleXMoveBoardsThisTurn())).length);
+
+                    }
+                });
                 new Y.Test.Console().render('#console');
                 Y.Test.Runner.add(testPossibilities);
+                Y.Test.Runner.add(filteringForAI);
                 Y.Test.Runner.run();
             });
 

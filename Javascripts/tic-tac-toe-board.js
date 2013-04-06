@@ -28,6 +28,23 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     return possibleBoardList;
                 };
 
+
+                board.projectAllPossibleXMoveBoardsThisTurn = function () {
+
+                    var futureBoard,
+                        consideredPossibilityLocation,
+                        i,
+                        possibleBoardList = [];
+
+                    for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
+                        futureBoard = Y.clone(board);
+                        consideredPossibilityLocation = board.possibleMoveLocations()[i];
+                        futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
+                        possibleBoardList.push(futureBoard);
+                    }
+                    return possibleBoardList;
+                };
+
             board.possibleMoveLocations = function () {
 
                 var possibilities = [], x, y;
@@ -358,6 +375,21 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 }
 
+            };
+
+            board.filterForWinX = function (arrayOfBoards) {
+
+                var winningXBoards;
+                winningXBoards = Y.Array.filter(arrayOfBoards, this.checkGameWinForX, this); 
+                return winningXBoards;
+            };
+
+
+            board.filterForWinO = function (arrayOfBoards) {
+
+                var winningXBoards;
+                winningXBoards = Y.Array.filter(arrayOfBoards, this.checkGameWinForX, this); 
+                return winningXBoards;
             };
 
             board.findMoveToMaximizeOsPerRow = function () {
@@ -751,4 +783,4 @@ YUI.add('tic-tac-toe-board', function (Y) {
         }
     });
 
-}, '0.0.1', { requires: [ 'base-build', 'widget', 'oop', 'transition', 'node-event-delegate'] });
+}, '0.0.1', { requires: [ 'base-build', 'widget', 'oop', 'array-extras', 'transition', 'node-event-delegate'] });
