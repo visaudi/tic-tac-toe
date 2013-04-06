@@ -10,8 +10,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
         },
         makeBoardArrayFromSquareAttrs: function (transferredBoard) {
 
-            var board = Y.clone(transferredBoard.board),
-                currentTurn = transferredBoard.currentTurn;
+            var board = Y.clone(transferredBoard);
 
                 board.projectAllPossibleBoardsThisTurn = function () {
 
@@ -25,8 +24,6 @@ YUI.add('tic-tac-toe-board', function (Y) {
                         consideredPossibilityLocation = board.possibleMoveLocations()[i];
                         futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'o';
                         possibleBoardList.push(futureBoard);
-                        possibleBoardList.possibleMoveLocations = [];
-                        possibleBoardList.possibleMoveLocations.push(consideredPossibilityLocation);
                     }
                     return possibleBoardList;
                 };
@@ -354,6 +351,15 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 return oneToWinOccurrences;
             };
 
+            board.checkForXInTheCorner = function (gameBoard) {
+                var x, y;
+
+                for (y = 0; y < 3; y += 1) {
+
+                }
+
+            };
+
             board.findMoveToMaximizeOsPerRow = function () {
 
                var possibleBoardProjection = Y.clone(board.projectAllPossibleBoardsThisTurn()),
@@ -386,15 +392,32 @@ YUI.add('tic-tac-toe-board', function (Y) {
                                 }
                             }
                         } 
+                    },
+
+                    compareFirstBoardToFinalBoard = function (lastPossibleBoard) {
+                        var x, y,
+                            moveLocation;
+
+                        for (y = 0; y < 3; y+= 1) {
+                            for (x = 0; x < 3; x += 1) {
+                                if (lastPossibleBoard[y][x] !== board[y][x]) {
+                                    moveLocation = [y, x];
+                                }
+                            }
+                        }
+                        return moveLocation;
                     };
 
                     
                 highestNumberOfOneOToWin = 0;
                 highestNumberOfTwoOsToWin = 0;
                 highestNumberOfTwoXsToWin = 8;
+
                 for (possibilityIndex = 0; possibilityIndex < possibleBoardProjection.length; possibilityIndex += 1) {
                     if (that.checkGameWinForO(possibleBoardProjection[possibilityIndex]) === true) {
                         possibleBoardProjection = [].push(possibleBoardProjection[possibilityIndex]);
+                        possibilityIndex = 1;
+                        break;
 
                     } else {
 
@@ -449,8 +472,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     }
                 }
 
-Y.log(convertPossibilityToMove());
-                return possibleBoardProjection[0];
+                Y.log(possibleBoardProjection[0]);
+                return compareFirstBoardToFinalBoard(possibleBoardProjection[0]);
+                
             };
             return board;
 
@@ -501,8 +525,6 @@ Y.log(convertPossibilityToMove());
 
                     if ((that.get("currentTurn")) === 'x') {
                         that.set(locationString, 'x');
-                    } else {
-                        that.set(locationString, 'o');
                     }
                 },
 
@@ -527,19 +549,37 @@ Y.log(convertPossibilityToMove());
                     connectSquareClickToSquareValue('bottomRowRight');
                 },
 
-                convertWidgetBoardToBoardArray = function () {
+                convertWidgetBoardToBoardArrayForO = function () {
 
                     var widgetBoard = [[that.get('topRowLeft'), that.get('topRowCenter'), that.get('topRowRight')],
                                 [that.get('middleRowLeft'), that.get('middleRowCenter'), that.get('middleRowRight')],
-                                [that.get('bottomRowLeft'), that.get('bottomRowCenter'), that.get('bottomRowRight')]],
+                                [that.get('bottomRowLeft'), that.get('bottomRowCenter'), that.get('bottomRowRight')]];
 
-                        widgetCurrentTurn = that.get('currentTurn');
-                    return {board: widgetBoard, currentTurn: widgetCurrentTurn};
+                    return widgetBoard;
+                },
+
+                convertXYMoveToWidgetBoard = function (XYArray) {
+                    var widgetBoardLocation = {};
+                    widgetBoardLocation["0,0"] = "topRowLeft";
+                    widgetBoardLocation["0,1"] = "topRowCenter";
+                    widgetBoardLocation["0,2"] = "topRowRight";
+
+                    widgetBoardLocation["1,0"] = "middleRowLeft";
+                    widgetBoardLocation["1,1"] = "middleRowCenter";
+                    widgetBoardLocation["1,2"] = "middleRowRight";
+
+                    widgetBoardLocation["2,0"] = "bottomRowLeft";
+                    widgetBoardLocation["2,1"] = "bottomRowCenter";
+                    widgetBoardLocation["2,2"] = "bottomRowRight";
+
+                    return widgetBoardLocation[XYArray.toString()];
+
                 },
 
                 changeTurn = function () {
                     if ((that.get("currentTurn")) === 'x') {
                         that.set("currentTurn", 'o');
+                        playOsTurn();
                     } else {
                         that.set("currentTurn", 'x');
                     }
@@ -567,7 +607,7 @@ Y.log(convertPossibilityToMove());
 
                 isTheGameOver = function () {
 
-                    var board = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArray()),
+                    var board = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArrayForO()),
                         gameMessage;
                     if (board.checkGameTie(board) === true ||
                         board.checkGameWinForX(board) === true ||
@@ -598,6 +638,15 @@ Y.log(convertPossibilityToMove());
                     setSpaceChangeEvent('bottomRowCenter');
                     setSpaceChangeEvent('bottomRowRight');
 
+                },
+
+                playOsTurn = function () {
+                    var oBoardAI;
+                    oBoardAI = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArrayForO());
+
+                    if (oBoardAI.possibleMoveLocations().length !== 0) {
+                        that.set(convertXYMoveToWidgetBoard(oBoardAI.findMoveToMaximizeOsPerRow()), 'o');
+                    }
                 };
 
             listenForAndChangeTurns();
