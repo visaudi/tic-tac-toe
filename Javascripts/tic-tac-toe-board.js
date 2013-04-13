@@ -383,6 +383,19 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 return winningOBoards;
             };
 
+            board.filterAgainstWinForX = function (arrayOfBoards) {
+
+                var xBoardsNotWinning, checkNotGameWinForX;
+
+                checkNotGameWinForX = function (gameBoard) {
+                    return !this.checkGameWinForX(gameBoard);
+                };
+
+                xBoardsNotWinning = Y.Array.filter(arrayOfBoards, checkNotGameWinForX, this);
+                return xBoardsNotWinning;
+
+            };
+
             board.filterForNumberOfXOneToWinsPerBoard = function (gameBoard, numberOfOneToWinsPerBoardToFilterFor) {
 
                 return (this.oneToWinForX(gameBoard) === numberOfOneToWinsPerBoardToFilterFor);
@@ -434,9 +447,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                     filterForCurrentNumberOfOneToWinsPerBoard = makeFilterForCurrentNumberOfOneToWinsPerBoard(highestNumberOfOneToWins);
                     highestOneToWinBoards.push(Y.Array.filter(arrayOfBoards, filterForCurrentNumberOfOneToWinsPerBoard, this));
-
-                } while ((highestOneToWinBoards[highestOneToWinBoards.length - 1]).length !== 0);
-
+} while ((highestOneToWinBoards[highestOneToWinBoards.length - 1]).length !== 0); 
                 highestOneToWinBoards.pop();
 
                 if (highestOneToWinBoards.length !== 0) {
@@ -444,6 +455,15 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 }
 
                 return highestOneToWinBoards;
+            };
+
+            board.filterAgainstOneToWinForX = function (arrayOfBoards) {
+
+
+                var nonOneToWinXBoards;
+                nonOneToWinXBoards = Y.Array.reject(arrayOfBoards, this.oneToWinForX, this);
+                return nonOneToWinXBoards;
+
             };
 
             board.filterForHighestOneToWinForO = function (arrayOfBoards) {
@@ -564,9 +584,14 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 bigResult = gameBoard.projectAllPossibleBoardsThisTurn();
 
-                littleResult = this.filterForWinX(bigResult);
-
+                littleResult = this.filterForWinO(bigResult);
                 bigResult = littleResult.length ? littleResult : bigResult;
+
+                littleResult = this.filterAgainstWinForX(bigResult);
+                bigResult = littleResult.length ? littleResult : bigResult;
+
+
+                console.log(bigResult);
 
 
                 return bigResult[0];
