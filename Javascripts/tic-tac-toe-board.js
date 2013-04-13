@@ -12,38 +12,38 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             var board = Y.clone(transferredBoard);
 
-                board.projectAllPossibleBoardsThisTurn = function () {
+            board.projectAllPossibleBoardsThisTurn = function () {
 
-                    var futureBoard,
-                        consideredPossibilityLocation,
-                        i,
-                        possibleBoardList = [];
+                var futureBoard,
+                    consideredPossibilityLocation,
+                    i,
+                    possibleBoardList = [];
 
-                    for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
-                        futureBoard = Y.clone(board);
-                        consideredPossibilityLocation = board.possibleMoveLocations()[i];
-                        futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'o';
-                        possibleBoardList.push(futureBoard);
-                    }
-                    return possibleBoardList;
-                };
+                for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
+                    futureBoard = Y.clone(board);
+                    consideredPossibilityLocation = board.possibleMoveLocations()[i];
+                    futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'o';
+                    possibleBoardList.push(futureBoard);
+                }
+                return possibleBoardList;
+            };
 
 
-                board.projectAllPossibleXMoveBoardsThisTurn = function () {
+            board.projectAllPossibleXMoveBoardsThisTurn = function () {
 
-                    var futureBoard,
-                        consideredPossibilityLocation,
-                        i,
-                        possibleBoardList = [];
+                var futureBoard,
+                    consideredPossibilityLocation,
+                    i,
+                    possibleBoardList = [];
 
-                    for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
-                        futureBoard = Y.clone(board);
-                        consideredPossibilityLocation = board.possibleMoveLocations()[i];
-                        futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
-                        possibleBoardList.push(futureBoard);
-                    }
-                    return possibleBoardList;
-                };
+                for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
+                    futureBoard = Y.clone(board);
+                    consideredPossibilityLocation = board.possibleMoveLocations()[i];
+                    futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
+                    possibleBoardList.push(futureBoard);
+                }
+                return possibleBoardList;
+            };
 
             board.possibleMoveLocations = function () {
 
@@ -368,33 +368,214 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 return oneToWinOccurrences;
             };
 
-            board.checkForXInTheCorner = function (gameBoard) {
-                var x, y;
-
-                for (y = 0; y < 3; y += 1) {
-
-                }
-
-            };
-
             board.filterForWinX = function (arrayOfBoards) {
 
                 var winningXBoards;
-                winningXBoards = Y.Array.filter(arrayOfBoards, this.checkGameWinForX, this); 
+                winningXBoards = Y.Array.filter(arrayOfBoards, this.checkGameWinForX, this);
                 return winningXBoards;
             };
 
 
             board.filterForWinO = function (arrayOfBoards) {
 
-                var winningXBoards;
-                winningXBoards = Y.Array.filter(arrayOfBoards, this.checkGameWinForX, this); 
-                return winningXBoards;
+                var winningOBoards;
+                winningOBoards = Y.Array.filter(arrayOfBoards, this.checkGameWinForO, this);
+                return winningOBoards;
             };
 
+            board.filterForNumberOfXOneToWinsPerBoard = function (gameBoard, numberOfOneToWinsPerBoardToFilterFor) {
+
+                return (this.oneToWinForX(gameBoard) === numberOfOneToWinsPerBoardToFilterFor);
+
+            };
+
+
+            board.filterForNumberOfOOneToWinsPerBoard = function (gameBoard, numberOfOneToWinsPerBoardToFilterFor) {
+
+                return (this.oneToWinForO(gameBoard) === numberOfOneToWinsPerBoardToFilterFor);
+
+            };
+
+
+            board.filterForNumberOfXTwoToWinsPerBoard = function (gameBoard, numberOfTwoToWinsPerBoardToFilterFor) {
+
+                return (this.twoToWinForX(gameBoard) === numberOfTwoToWinsPerBoardToFilterFor);
+
+            };
+
+
+            board.filterForNumberOfOTwoToWinsPerBoard = function (gameBoard, numberOfTwoToWinsPerBoardToFilterFor) {
+
+                return (this.twoToWinForO(gameBoard) === numberOfTwoToWinsPerBoardToFilterFor);
+
+            };
+
+            board.filterForHighestOneToWinForX = function (arrayOfBoards) {
+
+                var highestOneToWinBoards,
+                    highestNumberOfOneToWins,
+                    makeFilterForCurrentNumberOfOneToWinsPerBoard,
+                    filterForCurrentNumberOfOneToWinsPerBoard;
+
+                highestOneToWinBoards = [];
+                highestNumberOfOneToWins = 0;
+
+                makeFilterForCurrentNumberOfOneToWinsPerBoard = function (numberOfOneToWinPerBoard) {
+                    return function (sameArrayOfBoards) {
+
+                        return this.filterForNumberOfXOneToWinsPerBoard(sameArrayOfBoards, numberOfOneToWinPerBoard);
+
+                    };
+
+                };
+
+                do {
+                    highestNumberOfOneToWins += 1;
+
+                    filterForCurrentNumberOfOneToWinsPerBoard = makeFilterForCurrentNumberOfOneToWinsPerBoard(highestNumberOfOneToWins);
+                    highestOneToWinBoards.push(Y.Array.filter(arrayOfBoards, filterForCurrentNumberOfOneToWinsPerBoard, this));
+
+                } while ((highestOneToWinBoards[highestOneToWinBoards.length - 1]).length !== 0);
+
+                highestOneToWinBoards.pop();
+
+                if (highestOneToWinBoards.length !== 0) {
+                    highestOneToWinBoards = highestOneToWinBoards[highestOneToWinBoards.length - 1];
+                }
+
+                return highestOneToWinBoards;
+            };
+
+            board.filterForHighestOneToWinForO = function (arrayOfBoards) {
+
+                var highestOneToWinBoards,
+                    highestNumberOfOneToWins,
+                    makeFilterForCurrentNumberOfOneToWinsPerBoard,
+                    filterForCurrentNumberOfOneToWinsPerBoard;
+
+                highestOneToWinBoards = [];
+                highestNumberOfOneToWins = 0;
+
+                makeFilterForCurrentNumberOfOneToWinsPerBoard = function (numberOfOneToWinPerBoard) {
+                    return function (sameArrayOfBoards) {
+
+                        return this.filterForNumberOfOOneToWinsPerBoard(sameArrayOfBoards, numberOfOneToWinPerBoard);
+
+                    };
+
+                };
+
+                do {
+                    highestNumberOfOneToWins += 1;
+
+                    filterForCurrentNumberOfOneToWinsPerBoard = makeFilterForCurrentNumberOfOneToWinsPerBoard(highestNumberOfOneToWins);
+                    highestOneToWinBoards.push(Y.Array.filter(arrayOfBoards, filterForCurrentNumberOfOneToWinsPerBoard, this));
+
+                } while ((highestOneToWinBoards[highestOneToWinBoards.length - 1]).length !== 0);
+
+                highestOneToWinBoards.pop();
+
+                if (highestOneToWinBoards.length !== 0) {
+                    highestOneToWinBoards = highestOneToWinBoards[highestOneToWinBoards.length - 1];
+                }
+
+                return highestOneToWinBoards;
+            };
+
+            board.filterForHighestTwoToWinForX = function (arrayOfBoards) {
+
+                var highestTwoToWinBoards,
+                    highestNumberOfTwoToWins,
+                    makeFilterForCurrentNumberOfTwoToWinsPerBoard,
+                    filterForCurrentNumberOfTwoToWinsPerBoard,
+                    twoToWinLevelState;
+
+                highestTwoToWinBoards = [];
+                highestNumberOfTwoToWins = 0;
+
+                makeFilterForCurrentNumberOfTwoToWinsPerBoard = function (numberOfTwoToWinPerBoard) {
+                    return function (sameArrayOfBoards) {
+
+                        return this.filterForNumberOfXTwoToWinsPerBoard(sameArrayOfBoards, numberOfTwoToWinPerBoard);
+
+                    };
+
+                };
+
+                for (highestNumberOfTwoToWins = 1; highestNumberOfTwoToWins < 6; highestNumberOfTwoToWins += 1) {
+
+                    filterForCurrentNumberOfTwoToWinsPerBoard = makeFilterForCurrentNumberOfTwoToWinsPerBoard(highestNumberOfTwoToWins);
+
+                    twoToWinLevelState = Y.Array.filter(arrayOfBoards, filterForCurrentNumberOfTwoToWinsPerBoard, this);
+
+                    if (twoToWinLevelState.length !== 0) {
+                        highestTwoToWinBoards.push(Y.Array.filter(arrayOfBoards, filterForCurrentNumberOfTwoToWinsPerBoard, this));
+                    }
+
+                }
+
+                if (highestTwoToWinBoards.length !== 0) {
+                    highestTwoToWinBoards = highestTwoToWinBoards[highestTwoToWinBoards.length - 1];
+                }
+                return highestTwoToWinBoards;
+            };
+
+            board.filterForHighestTwoToWinForO = function (arrayOfBoards) {
+
+                var highestTwoToWinBoards,
+                    highestNumberOfTwoToWins,
+                    makeFilterForCurrentNumberOfTwoToWinsPerBoard,
+                    filterForCurrentNumberOfTwoToWinsPerBoard,
+                    twoToWinLevelState;
+
+                highestTwoToWinBoards = [];
+                highestNumberOfTwoToWins = 0;
+
+                makeFilterForCurrentNumberOfTwoToWinsPerBoard = function (numberOfTwoToWinPerBoard) {
+                    return function (sameArrayOfBoards) {
+
+                        return this.filterForNumberOfOTwoToWinsPerBoard(sameArrayOfBoards, numberOfTwoToWinPerBoard);
+
+                    };
+
+                };
+
+                for (highestNumberOfTwoToWins = 1; highestNumberOfTwoToWins < 6; highestNumberOfTwoToWins += 1) {
+
+                    filterForCurrentNumberOfTwoToWinsPerBoard = makeFilterForCurrentNumberOfTwoToWinsPerBoard(highestNumberOfTwoToWins);
+
+                    twoToWinLevelState = Y.Array.filter(arrayOfBoards, filterForCurrentNumberOfTwoToWinsPerBoard, this);
+
+                    if (twoToWinLevelState.length !== 0) {
+                        highestTwoToWinBoards.push(Y.Array.filter(arrayOfBoards, filterForCurrentNumberOfTwoToWinsPerBoard, this));
+                    }
+
+                }
+
+                if (highestTwoToWinBoards.length !== 0) {
+                    highestTwoToWinBoards = highestTwoToWinBoards[highestTwoToWinBoards.length - 1];
+                }
+                return highestTwoToWinBoards;
+            };
+
+            board.findMoveForO = function (gameBoard) {
+
+                var littleResult, bigResult;
+
+                bigResult = gameBoard.projectAllPossibleBoardsThisTurn();
+
+                littleResult = this.filterForWinX(bigResult);
+
+                bigResult = littleResult.length ? littleResult : bigResult;
+
+
+                return bigResult[0];
+
+            };
+            
             board.findMoveToMaximizeOsPerRow = function () {
 
-               var possibleBoardProjection = Y.clone(board.projectAllPossibleBoardsThisTurn()),
+                var possibleBoardProjection = Y.clone(board.projectAllPossibleBoardsThisTurn()),
                     possibilityIndex = 0,
                     carefulness,
                     highestNumberOfOneOToWin,
@@ -408,29 +589,29 @@ YUI.add('tic-tac-toe-board', function (Y) {
                                 newTotal = [];
                             firstPart = possibleBoardProjection.slice(0, possibilityIndex);
                             secondPart = possibleBoardProjection.slice(possibilityIndex + 1, possibleBoardProjection.length);
-                            newTotal= [].concat(firstPart, secondPart);
+                            newTotal = [].concat(firstPart, secondPart);
 
                             return newTotal;
-                        }())
+                        }());
                     },
 
                     convertPossibilityToMove = function () {
                         var x, y;
 
                         for (x = 0; x < 3; x += 1) {
-                            for (y = 0; y < 3; y +=1) {
+                            for (y = 0; y < 3; y += 1) {
                                 if (that[x][y] !== possibleBoardProjection[0][x][y]) {
-                                   return [x, y];
+                                    return [x, y];
                                 }
                             }
-                        } 
+                        }
                     },
 
                     compareFirstBoardToFinalBoard = function (lastPossibleBoard) {
                         var x, y,
                             moveLocation;
 
-                        for (y = 0; y < 3; y+= 1) {
+                        for (y = 0; y < 3; y += 1) {
                             for (x = 0; x < 3; x += 1) {
                                 if (lastPossibleBoard[y][x] !== board[y][x]) {
                                     moveLocation = [y, x];
@@ -440,7 +621,6 @@ YUI.add('tic-tac-toe-board', function (Y) {
                         return moveLocation;
                     };
 
-                    
                 highestNumberOfOneOToWin = 0;
                 highestNumberOfTwoOsToWin = 0;
                 highestNumberOfTwoXsToWin = 8;
@@ -471,7 +651,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                                 highestNumberOfTwoXsToWin = this.twoToWinForX(possibleBoardProjection[possibilityIndex]);
                             } else {
                                 removePossibility(possibilityIndex);
-                                possibilityIndex -=1;
+                                possibilityIndex -= 1;
                             }
                         }
                     }
@@ -506,7 +686,6 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 Y.log(possibleBoardProjection[0]);
                 return compareFirstBoardToFinalBoard(possibleBoardProjection[0]);
-                
             };
             return board;
 
@@ -608,6 +787,15 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 },
 
+                playOsTurn = function () {
+                    var oBoardAI;
+                    oBoardAI = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArrayForO());
+
+                    if (oBoardAI.possibleMoveLocations().length !== 0) {
+                        that.set(convertXYMoveToWidgetBoard(oBoardAI.findMoveToMaximizeOsPerRow()), 'o');
+                    }
+                },
+
                 changeTurn = function () {
                     if ((that.get("currentTurn")) === 'x') {
                         that.set("currentTurn", 'o');
@@ -642,8 +830,8 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     var board = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArrayForO()),
                         gameMessage;
                     if (board.checkGameTie(board) === true ||
-                        board.checkGameWinForX(board) === true ||
-                        board.checkGameWinForO(board) === true) {
+                            board.checkGameWinForX(board) === true ||
+                            board.checkGameWinForO(board) === true) {
 
                         gameMessage = Y.one('#gameMessage');
 
@@ -670,15 +858,6 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     setSpaceChangeEvent('bottomRowCenter');
                     setSpaceChangeEvent('bottomRowRight');
 
-                },
-
-                playOsTurn = function () {
-                    var oBoardAI;
-                    oBoardAI = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArrayForO());
-
-                    if (oBoardAI.possibleMoveLocations().length !== 0) {
-                        that.set(convertXYMoveToWidgetBoard(oBoardAI.findMoveToMaximizeOsPerRow()), 'o');
-                    }
                 };
 
             listenForAndChangeTurns();
