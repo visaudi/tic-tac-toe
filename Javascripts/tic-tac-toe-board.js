@@ -564,7 +564,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 bigResult = gameBoard.projectAllPossibleBoardsThisTurn();
 
-                littleResult = this.filterForWinX(bigResult);
+                littleResult = this.filterForWinO(bigResult);
 
                 bigResult = littleResult.length ? littleResult : bigResult;
 
@@ -575,39 +575,8 @@ YUI.add('tic-tac-toe-board', function (Y) {
             
             board.findMoveToMaximizeOsPerRow = function () {
 
-                var possibleBoardProjection = Y.clone(board.projectAllPossibleBoardsThisTurn()),
-                    possibilityIndex = 0,
-                    carefulness,
-                    highestNumberOfOneOToWin,
-                    highestNumberOfTwoOsToWin,
-                    highestNumberOfTwoXsToWin,
-                    that = this,
-                    removePossibility = function (boardIndex) {
-                        possibleBoardProjection = (function () {
-                            var firstPart,
-                                secondPart,
-                                newTotal = [];
-                            firstPart = possibleBoardProjection.slice(0, possibilityIndex);
-                            secondPart = possibleBoardProjection.slice(possibilityIndex + 1, possibleBoardProjection.length);
-                            newTotal = [].concat(firstPart, secondPart);
 
-                            return newTotal;
-                        }());
-                    },
-
-                    convertPossibilityToMove = function () {
-                        var x, y;
-
-                        for (x = 0; x < 3; x += 1) {
-                            for (y = 0; y < 3; y += 1) {
-                                if (that[x][y] !== possibleBoardProjection[0][x][y]) {
-                                    return [x, y];
-                                }
-                            }
-                        }
-                    },
-
-                    compareFirstBoardToFinalBoard = function (lastPossibleBoard) {
+                var compareFirstBoardToFinalBoard = function (lastPossibleBoard) {
                         var x, y,
                             moveLocation;
 
@@ -621,71 +590,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                         return moveLocation;
                     };
 
-                highestNumberOfOneOToWin = 0;
-                highestNumberOfTwoOsToWin = 0;
-                highestNumberOfTwoXsToWin = 8;
-
-                for (possibilityIndex = 0; possibilityIndex < possibleBoardProjection.length; possibilityIndex += 1) {
-                    if (that.checkGameWinForO(possibleBoardProjection[possibilityIndex]) === true) {
-                        possibleBoardProjection = [].push(possibleBoardProjection[possibilityIndex]);
-                        possibilityIndex = 1;
-                        break;
-
-                    } else {
-
-                        if (that.oneToWinForX(possibleBoardProjection[possibilityIndex]) >=  1) {
-                            removePossibility(possibilityIndex);
-                            possibilityIndex -= 1;
-                        }
-
-                    }
-                }
-
-
-                if (possibleBoardProjection.length > 1) {
-
-                    for (carefulness = 0; carefulness < 2; carefulness += 1) {
-
-                        for (possibilityIndex = 0; possibilityIndex < possibleBoardProjection.length; possibilityIndex += 1) {
-                            if (that.twoToWinForX(possibleBoardProjection[possibilityIndex]) <=  highestNumberOfTwoXsToWin) {
-                                highestNumberOfTwoXsToWin = this.twoToWinForX(possibleBoardProjection[possibilityIndex]);
-                            } else {
-                                removePossibility(possibilityIndex);
-                                possibilityIndex -= 1;
-                            }
-                        }
-                    }
-                }
-
-                if (possibleBoardProjection.length > 1) {
-                    for (carefulness = 0; carefulness < 2; carefulness += 1) {
-                        for (possibilityIndex = 0; possibilityIndex < possibleBoardProjection.length; possibilityIndex += 1) {
-                            if (this.oneToWinForO(possibleBoardProjection[possibilityIndex]) >= highestNumberOfOneOToWin) {
-                                highestNumberOfOneOToWin = this.oneToWinForO(possibleBoardProjection[possibilityIndex]);
-                            } else {
-                                removePossibility(possibilityIndex);
-                                possibilityIndex -= 1;
-                            }
-                        }
-                    }
-                }
-
-
-                if (possibleBoardProjection.length > 1) {
-                    for (carefulness = 0; carefulness < 2; carefulness += 1) {
-                        for (possibilityIndex = 0; possibilityIndex < possibleBoardProjection.length; possibilityIndex += 1) {
-                            if (this.twoToWinForO(possibleBoardProjection[possibilityIndex]) >= highestNumberOfTwoOsToWin) {
-                                highestNumberOfTwoOsToWin = this.twoToWinForO(possibleBoardProjection[possibilityIndex]);
-                            } else {
-                                removePossibility(possibilityIndex);
-                                possibilityIndex -= 1;
-                            }
-                        }
-                    }
-                }
-
-                Y.log(possibleBoardProjection[0]);
-                return compareFirstBoardToFinalBoard(possibleBoardProjection[0]);
+                return compareFirstBoardToFinalBoard(this.findMoveForO(this));
             };
             return board;
 

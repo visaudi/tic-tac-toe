@@ -254,6 +254,32 @@
                         Y.Assert.areSame(0, noTwoToWinsPerBoard.filterForHighestTwoToWinForO(noTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn()).length);
                     },
 
+                    'findMoveForO should take a board near the end and choose the winning move': function () {
+
+                        var endGame,
+                            testGame = new Y.ticTacToeBoard;
+
+                        endGame = testGame.makeBoardArrayFromSquareAttrs([['x', 'x', 'o'],
+                                                                          ['n', 'o', 'n'],
+                                                                          ['n', 'n', 'n']]);
+
+                        Y.Assert.areSame('o', (endGame.findMoveForO(endGame))[2][0]);
+
+                    },
+
+                    'findMoveForO should take a board near the end and block a winning move for x': function () {
+
+                        var endGame,
+                            testGame = new Y.ticTacToeBoard;
+
+                        endGame = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'o'],
+                                                                          ['n', 'o', 'x'],
+                                                                          ['x', 'n', 'n']]);
+
+                        Y.Assert.areSame('o', (endGame.findMoveForO(endGame))[1][0]);
+
+                    },
+
                     'findMoveForO should take a board with a corner move for X and put O in the opposite corner': function () {
 
                         var cornerMoveGame,
