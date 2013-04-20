@@ -19,9 +19,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     i,
                     possibleBoardList = [];
 
-                for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
-                    futureBoard = Y.clone(board);
-                    consideredPossibilityLocation = board.possibleMoveLocations()[i];
+                for (i = 0; i < this.possibleMoveLocations().length; i += 1) {
+                    futureBoard = Y.clone(this);
+                    consideredPossibilityLocation = this.possibleMoveLocations(this)[i];
                     futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'o';
                     possibleBoardList.push(futureBoard);
                 }
@@ -36,23 +36,64 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     i,
                     possibleBoardList = [];
 
-                for (i = 0; i < board.possibleMoveLocations().length; i += 1) {
-                    futureBoard = Y.clone(board);
-                    consideredPossibilityLocation = board.possibleMoveLocations()[i];
+                for (i = 0; i < this.possibleMoveLocations().length; i += 1) {
+                    futureBoard = Y.clone(this);
+                    consideredPossibilityLocation = this.possibleMoveLocations(this)[i];
                     futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
                     possibleBoardList.push(futureBoard);
                 }
                 return possibleBoardList;
             };
 
-            board.possibleMoveLocations = function () {
+            board.projectAllMovesTwoTurnsAhead = function () {
+                var movesToMake,
+                    movePossibilities,
+                    secondMovePossibilities,
+                    thirdMovePossibilities,
+                    fourthMovePossibilities,
+
+                    currentBeyondMove,
+                    nextPossibleLocation,
+
+                    movesBeyond,
+                    rangeOfBoards;
+
+                movesToMake = this.projectAllPossibleBoardsThisTurn();
+
+                for (movePossibilities = 0; movesToMake.length; movePossibilities += 1) {
+
+                    for (secondMovePossibilities = 0; secondMovePossibilities < (movesToMake.length - 1); secondMovePossibilities += 1) {
+
+                        for (thirdMovePossibilities = 0; thirdMovePossibilities < (movesToMake.length - 2); thirdMovePossibilities += 1) {
+
+                            for (fourthMovePossibilities = 0; fourthMovePossibilities < (movesToMake.length - 3); fourthMovePossibilities += 1) {
+
+                                currentBeyondMove = movesToMake[movePossibilities];
+
+                                nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[secondMovePossibilities];
+                                currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'x';
+
+                                nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[thirdMovePossibilities];
+                                currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'o';
+
+                                nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[fourthMovePossibilities];
+                                currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'x';
+
+
+                            }
+                        }
+                    } 
+                } 
+            };
+
+            board.possibleMoveLocations = function (gameBoard) {
 
                 var possibilities = [], x, y;
 
                 for (x = 0; x < 3; x += 1) {
                     for (y = 0; y < 3; y += 1) {
 
-                        if (this[x][y] === 'n') {
+                        if (gameBoard[x][y] === 'n') {
 
                             possibilities.push([x, y]);
 
@@ -558,7 +599,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 }());
 
-                minimalTwoToWinBoards = Y.Array.reject(arrayOfBoards, filterForCurrentNumberOfTwoToWinsPerBoard, this);
+                minimalTwoToWinBoards = Y.Array.filter(arrayOfBoards, filterForCurrentNumberOfTwoToWinsPerBoard, this);
 console.log(minimalTwoToWinBoards);
                 if ((minimalTwoToWinBoards.length === 0) &&  (xRowDepth !== 6)) {
                     return (this.filterAgainstHighestTwoToWinForX(arrayOfBoards, xRowDepth + 1)); 
@@ -618,7 +659,14 @@ console.log(minimalTwoToWinBoards);
                 littleResult = this.filterAgainstOneToWinForX(bigResult);
                 bigResult = littleResult.length ? littleResult : bigResult;
 
-                littleResult = this.filterAgainstOneToWinForX(bigResult);
+                littleResult = this.filterAgainstHighestTwoToWinForX(bigResult);
+                bigResult = littleResult.length ? littleResult : bigResult;
+
+
+                littleResult = this.filterForHighestOneToWinForO(bigResult);
+                bigResult = littleResult.length ? littleResult : bigResult;
+
+                littleResult = this.filterForHighestTwoToWinForO(bigResult);
                 bigResult = littleResult.length ? littleResult : bigResult;
 
                 return bigResult[0];

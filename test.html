@@ -285,6 +285,18 @@
                         Y.Assert.areSame(2, fourTwoToWinsPerBoard.filterAgainstHighestTwoToWinForX(fourTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn()).length);
                     },
 
+                    'filterAgainstHighestTwoToWinFor X should take an array of boards, eight boards should keep the two to wins lowest': function () {
+
+                        var fourTwoToWinsPerBoard,
+                            testGame = new Y.ticTacToeBoard;
+
+                        fourTwoToWinsPerBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
+                                                                                        ['n', 'x', 'n'],
+                                                                                        ['n', 'n', 'n']]);
+
+                        Y.Assert.areSame(8, fourTwoToWinsPerBoard.filterAgainstHighestTwoToWinForX(fourTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn()).length);
+                    },
+
                     'filterForHighestTwoToWinForO should take an array from an empty board and return one board': function () {
 
                         var oneTwoToWin,
@@ -312,6 +324,7 @@
                         Y.Assert.areSame(4, fourTwoToWinFromBoard.filterForHighestTwoToWinForO(fourTwoToWinFromBoard.projectAllPossibleBoardsThisTurn()).length);
 
                     },
+
                     'filterForHighestTwoToWinForO should take an array of boards, none of the boards has a two to win in it': function () {
 
                         var noTwoToWinsPerBoard,
@@ -322,6 +335,19 @@
                                                                                       ['x', 'x', 'o']]);
 
                         Y.Assert.areSame(0, noTwoToWinsPerBoard.filterForHighestTwoToWinForO(noTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn()).length);
+                    },
+
+                    'projectAllMovesTwoTurnsAhead should take a board and return 1680 objects that each contain a far future board and a next move board': function () {
+
+                        var firstTurnBoard,
+                            testGame = new Y.ticTacToeBoard;
+
+                        firstTurnBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
+                                                                                 ['n', 'x', 'n'],
+                                                                                 ['n', 'n', 'n']]);
+
+                        Y.Assert.areSame(1680, firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn()).length);
+
                     },
 
                     'findMoveForO should take a board near the end and choose the winning move': function () {
@@ -363,16 +389,16 @@
 
                     },
 
-                    'findMoveForO should take a board with a corner move for X and put O in the opposite corner': function () {
+                    'findMoveForO should take a board with no moves on it and place an o in the center': function () {
 
                         var cornerMoveGame,
                             testGame = new Y.ticTacToeBoard;
 
-                        cornerMoveGame = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'n'],
+                        cornerMoveGame = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
                                                                                  ['n', 'n', 'n'],
                                                                                  ['n', 'n', 'n']]);
 
-                        Y.Assert.areSame('o', (cornerMoveGame.findMoveForO(cornerMoveGame))[2][2]);
+                        Y.Assert.areSame('o', (cornerMoveGame.findMoveForO(cornerMoveGame))[1][1]);
 
                     },
 
