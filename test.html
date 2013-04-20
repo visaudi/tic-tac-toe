@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html>
     <head>
         <title>Tic Tac Toe</title>
@@ -96,6 +96,20 @@
 
                     },
 
+                    'filterAgainstWinForX should take a list of boards and not return the ones where X is winning': function () {
+
+                        var winningBoardSeed,
+
+                        testGame = new Y.ticTacToeBoard;
+
+                        winningBoardSeed = testGame.makeBoardArrayFromSquareAttrs([['o', 'x', 'n'],
+                                                                                   ['n', 'x', 'n'],
+                                                                                   ['o', 'n', 'o']]);
+
+                        Y.Assert.areSame(3, (winningBoardSeed.filterAgainstWinForX(winningBoardSeed.projectAllPossibleXMoveBoardsThisTurn()).length));
+
+                    },
+
                     'filterForHighestOneToWinForX should take an array of empty boards and return no boards at all': function () {
 
                         var highestNumberOfOneToWinForX,
@@ -135,6 +149,37 @@
 
                         Y.Assert.areSame(1, twoOneToWinsPerBoard.filterForHighestOneToWinForX(twoOneToWinsPerBoard.projectAllPossibleXMoveBoardsThisTurn()).length);
                     },
+
+                    'filterAgainstOneToWinForX should take an array of empty boards and return what it was given': function () {
+
+
+                        var noOneToWins,
+                            testGame = new Y.ticTacToeBoard;
+
+                        noOneToWins = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
+                                                                              ['n', 'n', 'n'],
+                                                                              ['n', 'n', 'n']]);
+
+
+                        Y.Assert.areSame(9, noOneToWins.filterAgainstOneToWinForX(noOneToWins.projectAllPossibleXMoveBoardsThisTurn()).length);
+
+                    },
+
+                    'filterAgainstOneToWinForX should take an array of boards where some of the boards have one one to win row and return no boards with one to wins on them': function () {
+
+
+                        var oneOneToWinPerBoard,
+                            testGame = new Y.ticTacToeBoard;
+
+
+                        oneOneToWinPerBoard = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'n'],
+                                                                                      ['n', 'n', 'o'],
+                                                                                      ['n', 'n', 'n']]);
+
+                        Y.Assert.areSame(1, oneOneToWinPerBoard.filterAgainstOneToWinForX(oneOneToWinPerBoard.projectAllPossibleXMoveBoardsThisTurn()).length);
+
+                    },
+
 
                     'filterForHighestOneToWinForO should take an array of empty boards and return no boards at all': function () {
 
@@ -215,6 +260,31 @@
                         Y.Assert.areSame(0, noTwoToWinsPerBoard.filterForHighestTwoToWinForX(noTwoToWinsPerBoard.projectAllPossibleXMoveBoardsThisTurn()).length);
                     },
 
+                    'filterAgainstHighestTwoToWinFor X should take an array of boards, none of the boards has a two to win in it and return all possibilities': function () {
+
+                        var noTwoToWinsPerBoard,
+                            testGame = new Y.ticTacToeBoard;
+
+                        noTwoToWinsPerBoard = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'x'],
+                                                                                      ['x', 'o', 'o'],
+                                                                                      ['o', 'o', 'x']]);
+
+                        Y.Assert.areSame(1, noTwoToWinsPerBoard.filterAgainstHighestTwoToWinForX(noTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn()).length);
+                    },
+
+
+                    'filterAgainstHighestTwoToWinFor X should take an array of boards, two boards should keep the two to wins lowest': function () {
+
+                        var fourTwoToWinsPerBoard,
+                            testGame = new Y.ticTacToeBoard;
+
+                        fourTwoToWinsPerBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'x'],
+                                                                                        ['n', 'o', 'n'],
+                                                                                        ['x', 'n', 'n']]);
+
+                        Y.Assert.areSame(2, fourTwoToWinsPerBoard.filterAgainstHighestTwoToWinForX(fourTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn()).length);
+                    },
+
                     'filterForHighestTwoToWinForO should take an array from an empty board and return one board': function () {
 
                         var oneTwoToWin,
@@ -277,6 +347,19 @@
                                                                           ['x', 'n', 'n']]);
 
                         Y.Assert.areSame('o', (endGame.findMoveForO(endGame))[1][0]);
+
+                    },
+
+                    'findMoveForO should take a board and pick the choice that minimizes two to wins on Xs side': function () {
+
+                        var endGame,
+                            testGame = new Y.ticTacToeBoard;
+
+                        endGame = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'o'],
+                                                                          ['n', 'n', 'x'],
+                                                                          ['n', 'x', 'n']]);
+
+                        Y.Assert.areSame('o', (endGame.findMoveForO(endGame))[1][1]);
 
                     },
 
