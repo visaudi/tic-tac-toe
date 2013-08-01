@@ -110,6 +110,21 @@
 
                     },
 
+
+                    'filterAgainstWinForO should take a list of boards and not return the ones where X is winning': function () {
+
+                        var winningBoardSeed,
+
+                        testGame = new Y.ticTacToeBoard;
+
+                        winningBoardSeed = testGame.makeBoardArrayFromSquareAttrs([['x', 'o', 'n'],
+                                                                                   ['n', 'o', 'n'],
+                                                                                   ['x', 'n', 'x']]);
+
+                        Y.Assert.areSame(3, (winningBoardSeed.filterAgainstWinForO(winningBoardSeed.projectAllPossibleBoardsThisTurn()).length));
+
+                    },
+
                     'filterForHighestOneToWinForX should take an array of empty boards and return no boards at all': function () {
 
                         var highestNumberOfOneToWinForX,
@@ -180,6 +195,36 @@
 
                     },
 
+
+                    'filterAgainstOneToWinForO should take an array of empty boards and return what it was given': function () {
+
+
+                        var noOneToWins,
+                            testGame = new Y.ticTacToeBoard;
+
+                        noOneToWins = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
+                                                                              ['n', 'n', 'n'],
+                                                                              ['n', 'n', 'n']]);
+
+
+                        Y.Assert.areSame(9, noOneToWins.filterAgainstOneToWinForO(noOneToWins.projectAllPossibleBoardsThisTurn()).length);
+
+                    },
+
+                    'filterAgainstOneToWinForO should take an array of boards where some of the boards have one one to win row and return no boards with one to wins on them': function () {
+
+
+                        var oneOneToWinPerBoard,
+                            testGame = new Y.ticTacToeBoard;
+
+
+                        oneOneToWinPerBoard = testGame.makeBoardArrayFromSquareAttrs([['o', 'n', 'n'],
+                                                                                      ['n', 'n', 'x'],
+                                                                                      ['n', 'n', 'n']]);
+
+                        Y.Assert.areSame(1, oneOneToWinPerBoard.filterAgainstOneToWinForO(oneOneToWinPerBoard.projectAllPossibleBoardsThisTurn()).length);
+
+                    },
 
                     'filterForHighestOneToWinForO should take an array of empty boards and return no boards at all': function () {
 
@@ -473,18 +518,94 @@
                                                                                  ['n', 'n', 'n']]);
 
                         Y.Assert.areSame('o', (cornerMoveGame.findMoveForO(cornerMoveGame))[2][2]);
-                    }
+                    },
+
+
+                    'findSimpleMoveForX should take a board near the end and choose the winning move': function () {
+
+                        var endGame,
+                            testGame = new Y.ticTacToeBoard;
+
+                        endGame = testGame.makeBoardArrayFromSquareAttrs([['x', 'x', 'o'],
+                                                                          ['n', 'o', 'n'],
+                                                                          ['n', 'n', 'n']]);
+
+                        Y.Assert.areSame('x', (endGame.findSimpleMoveForX(endGame))[2][0]);
+
+                    },
+
+                    'findSimpleMoveForX should take a board near the end and block a winning move for x': function () {
+
+                        var endGame,
+                            testGame = new Y.ticTacToeBoard;
+
+                        endGame = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'o'],
+                                                                          ['n', 'o', 'x'],
+                                                                          ['x', 'n', 'n']]);
+
+                        Y.Assert.areSame('x', (endGame.findSimpleMoveForX(endGame))[1][0]);
+
+                    },
+
+                    'findSimpleMoveForX should take a board and pick the choice that minimizes two to wins on Xs side': function () {
+
+                        var endGame,
+                            testGame = new Y.ticTacToeBoard;
+
+                        endGame = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'o'],
+                                                                          ['n', 'n', 'x'],
+                                                                          ['n', 'x', 'n']]);
+
+                        Y.Assert.areSame('x', (endGame.findSimpleMoveForX(endGame))[1][1]);
+
+                    },
+
+                    'findSimpleMoveForX should take a board with no moves on it and place an o in the center': function () {
+
+                        var cornerMoveGame,
+                            testGame = new Y.ticTacToeBoard;
+
+                        cornerMoveGame = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
+                                                                                 ['n', 'n', 'n'],
+                                                                                 ['n', 'n', 'n']]);
+
+                        Y.Assert.areSame('x', (cornerMoveGame.findSimpleMoveForX(cornerMoveGame))[1][1]);
+
+                    },
+
+                    'findSimpleMoveForX should take a board with a center move and make the first corner move': function () {
+
+                        var centerMoveGame,
+                            testGame = new Y.ticTacToeBoard;
+
+                        centerMoveGame = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
+                                                                                 ['n', 'x', 'n'],
+                                                                                 ['n', 'n', 'n']]);
+
+                        Y.Assert.areSame('x', (centerMoveGame.findSimpleMoveForX(centerMoveGame))[0][0]);
+                    },
 
                 }),
 
                 movesAheadVariation = new Y.Test.Case({
 
-                    name: "Variation For Thinking Turns Ahead",
+                    name: 'Variation For Thinking Turns Ahead',
 
-                    "projectAllMovesTwoTurnsAhead should absord the variation of turns left to be played": function () {
+                    'projectAllMovesTwoTurnsAhead should absord the variation of turns left to be played': function () {
+
+                        var fourTurnsLeftGame,
+                            testGame = new Y.ticTacToeBoard;
+
+                        console.log("Latest");
+
+                        fourTurnsLeftGame = testGame.makeBoardArrayFromSquareAttrs([['n', 'x', 'x'],
+                                                                                    ['o', 'o', 'n'],
+                                                                                    ['n', 'x', 'n']]);
 
 
-                    Y.Assert.areSame(1, 2);
+                        fourTurnsLeftGame.findMoveForO(fourTurnsLeftGame);
+
+                        Y.Assert.areSame(1, 2);
                     }
                 }); 
 
