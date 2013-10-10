@@ -1,3 +1,5 @@
+/*global YUI */
+
 YUI.add('tic-tac-toe-board', function (Y) {
     "use strict";
 
@@ -62,7 +64,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 for (movePossibilities = 0; movePossibilities < movesToMake.length; movePossibilities += 1) {
 
-                    if(movesToMake.length === 1) {
+                    if (movesToMake.length === 1) {
                         currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
                         currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
 
@@ -73,7 +75,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                         for (secondMovePossibilities = 0; secondMovePossibilities < (movesToMake.length - 1); secondMovePossibilities += 1) {
 
 
-                            if(movesToMake.length === 2) {
+                            if (movesToMake.length === 2) {
                                 currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
                                 currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
 
@@ -87,7 +89,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                                 for (thirdMovePossibilities = 0; thirdMovePossibilities < (movesToMake.length - 2); thirdMovePossibilities += 1) {
 
-                                    if(movesToMake.length === 3) {
+                                    if (movesToMake.length === 3) {
                                         currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
                                         currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
 
@@ -125,7 +127,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                         }
                     }
                 }
-                    return rangeOfBoards;
+                return rangeOfBoards;
             };
 
             board.projectAllMovesTwoTurnsAheadGroupedByNextMove = function () {
@@ -145,7 +147,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 for (movePossibilities = 0; movePossibilities < movesToMake.length; movePossibilities += 1) {
 
-                    if(movesToMake.length === 1) {
+                    if (movesToMake.length === 1) {
                         currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
                         currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
 
@@ -156,7 +158,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                         for (secondMovePossibilities = 0; secondMovePossibilities < (movesToMake.length - 1); secondMovePossibilities += 1) {
 
 
-                            if(movesToMake.length === 2) {
+                            if (movesToMake.length === 2) {
                                 currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
                                 currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
 
@@ -170,7 +172,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                                 for (thirdMovePossibilities = 0; thirdMovePossibilities < (movesToMake.length - 2); thirdMovePossibilities += 1) {
 
-                                    if(movesToMake.length === 3) {
+                                    if (movesToMake.length === 3) {
                                         currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
                                         currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
 
@@ -208,9 +210,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
                         }
                     }
                 }
-                    console.log("here");
-                    console.log(rangeOfBoards);
-                    return rangeOfBoards;
+                console.log("here");
+                console.log(rangeOfBoards);
+                return rangeOfBoards;
             };
             board.possibleMoveLocations = function (gameBoard) {
 
@@ -627,7 +629,8 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                     filterForCurrentNumberOfOneToWinsPerBoard = makeFilterForCurrentNumberOfOneToWinsPerBoard(highestNumberOfOneToWins);
                     highestOneToWinBoards.push(Y.Array.filter(arrayOfBoards, filterForCurrentNumberOfOneToWinsPerBoard, this));
-} while ((highestOneToWinBoards[highestOneToWinBoards.length - 1]).length !== 0); 
+                } while ((highestOneToWinBoards[highestOneToWinBoards.length - 1]).length !== 0);
+
                 highestOneToWinBoards.pop();
 
                 if (highestOneToWinBoards.length !== 0) {
@@ -643,6 +646,16 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 var nonOneToWinXBoards;
                 nonOneToWinXBoards = Y.Array.reject(arrayOfBoards, this.oneToWinForX, this);
                 return nonOneToWinXBoards;
+
+            };
+
+
+            board.filterAgainstOneToWinForO = function (arrayOfBoards) {
+
+
+                var nonOneToWinOBoards;
+                nonOneToWinOBoards = Y.Array.reject(arrayOfBoards, this.oneToWinForO, this);
+                return nonOneToWinOBoards;
 
             };
 
@@ -727,7 +740,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     xRowDepth = xRows;
 
                 if (xRowDepth === undefined) {
-                   xRowDepth = 0; 
+                    xRowDepth = 0;
                 }
 
                 filterForCurrentNumberOfTwoToWinsPerBoard = (function () {
@@ -740,11 +753,37 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 minimalTwoToWinBoards = Y.Array.filter(arrayOfBoards, filterForCurrentNumberOfTwoToWinsPerBoard, this);
                 if ((minimalTwoToWinBoards.length === 0) &&  (xRowDepth !== 6)) {
-                    return (this.filterAgainstHighestTwoToWinForX(arrayOfBoards, xRowDepth + 1)); 
-                } else {
-                    return minimalTwoToWinBoards;
-                }    
-                
+                    return (this.filterAgainstHighestTwoToWinForX(arrayOfBoards, xRowDepth + 1));
+                }
+                return minimalTwoToWinBoards;
+
+
+            };
+
+
+            board.filterAgainstHighestTwoToWinForO = function (arrayOfBoards, oRows) {
+
+                var minimalTwoToWinBoards,
+                    filterForCurrentNumberOfTwoToWinsPerBoard,
+                    oRowDepth = oRows;
+
+                if (oRowDepth === undefined) {
+                    oRowDepth = 0;
+                }
+
+                filterForCurrentNumberOfTwoToWinsPerBoard = (function () {
+
+                    return function (sameArrayOfBoards) {
+                        return this.filterForNumberOfOTwoToWinsPerBoard(sameArrayOfBoards, oRowDepth);
+                    };
+
+                }());
+
+                minimalTwoToWinBoards = Y.Array.filter(arrayOfBoards, filterForCurrentNumberOfTwoToWinsPerBoard, this);
+                if ((minimalTwoToWinBoards.length === 0) &&  (oRowDepth !== 6)) {
+                    return (this.filterAgainstHighestTwoToWinForO(arrayOfBoards, oRowDepth + 1));
+                }
+                return minimalTwoToWinBoards;
             };
 
             board.filterForHighestTwoToWinForO = function (arrayOfBoards) {
@@ -783,6 +822,26 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     highestTwoToWinBoards = highestTwoToWinBoards[highestTwoToWinBoards.length - 1];
                 }
                 return highestTwoToWinBoards;
+            };
+
+            board.removeDangerousSneakyMoves = function (arrayOfBoards) {
+
+
+                var boardCount, nextBoard, removalDecision;
+                for (boardCount = 0; boardCount < arrayOfBoards.length; boardCount += 1) {
+
+                    if (this.checkGameWinForO(arrayOfBoards[boardCount]) !== true) {
+
+                        nextBoard = this.findSimpleMoveForX(arrayOfBoards[boardCount]);
+
+                        if (this.checkGameWinForX(nextBoard) !== true) {
+                            nextBoard = this.findSimpleMoveForO(nextBoard);
+                        }
+
+                    }
+
+                }
+
             };
 
             board.findMoveForO = function (gameBoard) {
@@ -862,24 +921,24 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 littleResult = this.filterAgainstWinForO(bigResult);
                 bigResult = littleResult.length ? littleResult : bigResult;
 
-                littleResult = this.filterAgainstOneToWinForX(bigResult);
+                littleResult = this.filterAgainstOneToWinForO(bigResult);
                 bigResult = littleResult.length ? littleResult : bigResult;
 
-                littleResult = this.filterAgainstHighestTwoToWinForX(bigResult);
+                littleResult = this.filterAgainstHighestTwoToWinForO(bigResult);
                 bigResult = littleResult.length ? littleResult : bigResult;
 
 
-                littleResult = this.filterForHighestOneToWinForO(bigResult);
+                littleResult = this.filterForHighestOneToWinForX(bigResult);
                 bigResult = littleResult.length ? littleResult : bigResult;
 
-                littleResult = this.filterForHighestTwoToWinForO(bigResult);
+                littleResult = this.filterForHighestTwoToWinForX(bigResult);
                 bigResult = littleResult.length ? littleResult : bigResult;
 
 
                 return bigResult[0];
 
             };
-            
+
             board.findMoveToMaximizeOsPerRow = function () {
 
 
