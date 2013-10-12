@@ -1,4 +1,4 @@
-<!html>
+<!doctype html>
 <html>
     <head>
         <title>Tic Tac Toe</title>
@@ -424,6 +424,50 @@ YUI({
                 Y.Assert.areSame(0, noTwoToWinsPerBoard.filterForHighestTwoToWinForO(noTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn()).length);
             },
 
+            'firstOppositeCornerMove should take a board with an x move in the top left corner and return a board with an x move on the bottom right, when that space is open': function () {
+
+
+                var openCornerXBoard,
+                    testGame = new Y.ticTacToeBoard();
+
+                openCornerXBoard = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'n'],
+                                                                           ['n', 'n', 'n'],
+                                                                           ['n', 'n', 'n']]);
+
+                Y.Assert.areSame('x', openCornerXBoard.firstOppositeCornerMove(openCornerXBoard, 'x')[2][2]);
+
+            },
+
+
+            'firstOppositeCornerMove should take a board with an x move in the top right corner and return a board with an x move on the bottom left, when that space is open': function () {
+
+
+                var openCornerXBoard,
+                    testGame = new Y.ticTacToeBoard();
+
+                openCornerXBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'x'],
+                                                                           ['n', 'n', 'n'],
+                                                                           ['n', 'n', 'n']]);
+
+                Y.Assert.areSame('x', openCornerXBoard.firstOppositeCornerMove(openCornerXBoard, 'x')[2][0]);
+
+            },
+
+
+            'firstOppositeCornerMove should take a board with an x move in the bottom left corner and return a board with an x move on the top left corner, when that space is open': function () {
+
+
+                var openCornerXBoard,
+                    testGame = new Y.ticTacToeBoard();
+
+                openCornerXBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
+                                                                           ['n', 'n', 'n'],
+                                                                           ['x', 'n', 'n']]);
+
+                Y.Assert.areSame('x', openCornerXBoard.firstOppositeCornerMove(openCornerXBoard, 'x')[0][2]);
+
+            },
+
             'projectAllMovesTwoTurnsAhead should take a board and return 1680 objects that each contain a far future board': function () {
 
                 var firstTurnBoard,
@@ -492,7 +536,6 @@ YUI({
                 dangerousBoard = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'n'],
                                                                          ['n', 'n', 'n'],
                                                                          ['n', 'n', 'n']]);
-
 
                 Y.Assert.areSame(7, dangerousBoard.removeDangerousSneakyMoves(dangerousBoard.projectAllPossibleBoardsThisTurn()).length);
 
@@ -603,14 +646,14 @@ YUI({
 
             },
 
-            'findSimpleMoveForX should take a board and pick the choice that minimizes two to wins on Xs side': function () {
+            'findSimpleMoveForX should take a board and pick the choice that minimizes two to wins on Os side': function () {
 
                 var endGame,
                     testGame = new Y.ticTacToeBoard();
 
-                endGame = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'o'],
-                                                                  ['n', 'n', 'x'],
-                                                                  ['n', 'x', 'n']]);
+                endGame = testGame.makeBoardArrayFromSquareAttrs([['o', 'n', 'x'],
+                                                                  ['n', 'n', 'o'],
+                                                                  ['n', 'o', 'n']]);
 
                 Y.Assert.areSame('x', (endGame.findSimpleMoveForX(endGame))[1][1]);
 
@@ -640,7 +683,6 @@ YUI({
                 var fourTurnsLeftGame,
                     testGame = new Y.ticTacToeBoard();
 
-                console.log("Latest");
 
                 fourTurnsLeftGame = testGame.makeBoardArrayFromSquareAttrs([['n', 'x', 'x'],
                                                                             ['o', 'o', 'n'],

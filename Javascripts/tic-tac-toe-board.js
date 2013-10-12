@@ -14,12 +14,15 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             var board = Y.clone(transferredBoard);
 
-            board.projectAllPossibleBoardsThisTurn = function () {
+            board.projectAllPossibleBoardsThisTurn = function (arrayBoard) {
 
                 var futureBoard,
                     consideredPossibilityLocation,
                     i,
                     possibleBoardList = [];
+
+
+                if (arrayBoard === undefined) {
 
                 for (i = 0; i < this.possibleMoveLocations(this).length; i += 1) {
                     futureBoard = Y.clone(this);
@@ -28,15 +31,29 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     possibleBoardList.push(futureBoard);
                 }
                 return possibleBoardList;
+
+                }
+
+
+                for (i = 0; i < this.possibleMoveLocations(this).length; i += 1) {
+                    futureBoard = Y.clone(arrayBoard);
+                    consideredPossibilityLocation = this.possibleMoveLocations(arrayBoard)[i];
+                    futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'o';
+                    possibleBoardList.push(futureBoard);
+                }
+
+                return possibleBoardList;
             };
 
 
-            board.projectAllPossibleXMoveBoardsThisTurn = function () {
+            board.projectAllPossibleXMoveBoardsThisTurn = function (arrayBoard) {
 
                 var futureBoard,
                     consideredPossibilityLocation,
                     i,
                     possibleBoardList = [];
+
+                if (arrayBoard === undefined) {
 
                 for (i = 0; i < this.possibleMoveLocations(this).length; i += 1) {
                     futureBoard = Y.clone(this);
@@ -45,9 +62,20 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     possibleBoardList.push(futureBoard);
                 }
                 return possibleBoardList;
+                }
+
+
+                for (i = 0; i < this.possibleMoveLocations(arrayBoard).length; i += 1) {
+                    futureBoard = Y.clone(arrayBoard);
+                    consideredPossibilityLocation = this.possibleMoveLocations(arrayBoard)[i];
+                    futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
+                    possibleBoardList.push(futureBoard);
+                }
+                return possibleBoardList;
+
             };
 
-            board.projectAllMovesTwoTurnsAhead = function () {
+            board.projectAllMovesTwoTurnsAhead = function (arrayBoard) {
                 var movesToMake,
                     movePossibilities,
                     secondMovePossibilities,
@@ -824,20 +852,38 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 return highestTwoToWinBoards;
             };
 
+            board.firstOppositeCornerMove = function (oldBoard, player) {
+
+                var newBoard = Y.clone(oldBoard);
+
+                if (((newBoard[0][0] === player) && (newBoard[2][2] === 'n'))) {
+                    newBoard[2][2] = player;
+                }
+
+                if (((newBoard[0][2] === player) && (newBoard[2][0] === 'n'))) {
+                    newBoard[2][0] = player;
+                }
+
+
+                if (((newBoard[2][0] === player) && (newBoard[0][2] === 'n'))) {
+                    newBoard[0][2] = player;
+                }
+
+
+
+                return newBoard;
+
+            };
+
             board.removeDangerousSneakyMoves = function (arrayOfBoards) {
 
 
                 var boardCount, nextBoard, removalDecision;
                 for (boardCount = 0; boardCount < arrayOfBoards.length; boardCount += 1) {
-console.log(arrayOfBoards);
+
                     if (this.checkGameWinForO(arrayOfBoards[boardCount]) !== true) {
-console.log(arrayOfBoards[boardCount]);
 
                         nextBoard = this.findSimpleMoveForX(arrayOfBoards[boardCount]);
-
-                        if (this.checkGameWinForX(nextBoard) !== true) {
-                            nextBoard = this.findSimpleMoveForO(nextBoard);
-                        }
 
                     }
 
@@ -849,7 +895,7 @@ console.log(arrayOfBoards[boardCount]);
 
                 var littleResult, bigResult;
 
-                bigResult = gameBoard.projectAllPossibleBoardsThisTurn();
+                bigResult = this.projectAllPossibleBoardsThisTurn(gameBoard);
 
                 littleResult = this.filterForWinO(bigResult);
                 bigResult = littleResult.length ? littleResult : bigResult;
@@ -881,7 +927,7 @@ console.log(arrayOfBoards[boardCount]);
 
                 var littleResult, bigResult;
 
-                bigResult = gameBoard.projectAllPossibleBoardsThisTurn();
+                bigResult = this.projectAllPossibleBoardsThisTurn(gameBoard);
 
                 littleResult = this.filterForWinO(bigResult);
                 bigResult = littleResult.length ? littleResult : bigResult;
@@ -912,9 +958,8 @@ console.log(arrayOfBoards[boardCount]);
             board.findSimpleMoveForX = function (gameBoard) {
 
                 var littleResult, bigResult;
-console.log("near");
-console.log(gameBoard);
-                bigResult = gameBoard.projectAllPossibleXMoveBoardsThisTurn();
+
+                bigResult = this.projectAllPossibleXMoveBoardsThisTurn(gameBoard);
 
                 littleResult = this.filterForWinX(bigResult);
                 bigResult = littleResult.length ? littleResult : bigResult;
