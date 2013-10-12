@@ -829,8 +829,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 var boardCount, nextBoard, removalDecision;
                 for (boardCount = 0; boardCount < arrayOfBoards.length; boardCount += 1) {
-
+console.log(arrayOfBoards);
                     if (this.checkGameWinForO(arrayOfBoards[boardCount]) !== true) {
+console.log(arrayOfBoards[boardCount]);
 
                         nextBoard = this.findSimpleMoveForX(arrayOfBoards[boardCount]);
 
@@ -911,7 +912,8 @@ YUI.add('tic-tac-toe-board', function (Y) {
             board.findSimpleMoveForX = function (gameBoard) {
 
                 var littleResult, bigResult;
-
+console.log("near");
+console.log(gameBoard);
                 bigResult = gameBoard.projectAllPossibleXMoveBoardsThisTurn();
 
                 littleResult = this.filterForWinX(bigResult);
