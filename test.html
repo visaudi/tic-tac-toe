@@ -424,47 +424,75 @@ YUI({
                 Y.Assert.areSame(0, noTwoToWinsPerBoard.filterForHighestTwoToWinForO(noTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn()).length);
             },
 
-            'firstOppositeCornerMove should take a board with an x move in the top left corner and return a board with an x move on the bottom right, when that space is open': function () {
+            'checkOppositeCornerHazardAgainstO should take a board with an x move in the top left corner, an o move in the center, an x move in the opposite corner and return true, when middle of the top is an o move and there are five turns left in the game': function () {
 
 
-                var openCornerXBoard,
+                var doubleCornerXBoard,
                     testGame = new Y.ticTacToeBoard();
 
-                openCornerXBoard = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'n'],
-                                                                           ['n', 'n', 'n'],
-                                                                           ['n', 'n', 'n']]);
+                doubleCornerXBoard = testGame.makeBoardArrayFromSquareAttrs([['x', 'o', 'n'],
+                                                                             ['n', 'o', 'n'],
+                                                                             ['n', 'n', 'x']]);
 
-                Y.Assert.areSame('x', openCornerXBoard.firstOppositeCornerMove(openCornerXBoard, 'x')[2][2]);
+                Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
+                Y.Assert.areSame(5, doubleCornerXBoard.possibleMoveLocations(doubleCornerXBoard).length);
+            },
+
+
+            'checkOppositeCornerHazardAgainstO should take a board with an x move in the top right corner and in the opposite corner and return true when an o move is on the right side of the middle row and there are five turns left in the game': function () {
+
+                var doubleCornerXBoard,
+                    testGame = new Y.ticTacToeBoard();
+
+                doubleCornerXBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'x'],
+                                                                             ['n', 'o', 'o'],
+                                                                             ['x', 'n', 'n']]);
+
+                Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
+                Y.Assert.areSame(5, doubleCornerXBoard.possibleMoveLocations(doubleCornerXBoard).length);
 
             },
 
 
-            'firstOppositeCornerMove should take a board with an x move in the top right corner and return a board with an x move on the bottom left, when that space is open': function () {
+            'checkOppositeCornerHazardAgainstO should take a board with an x move in the top left corner, an o move in the center, an x move in the opposite corner and return true, when the left of the middle row is an o move and there are five turns left in the game': function () {
 
 
-                var openCornerXBoard,
+                var doubleCornerXBoard,
                     testGame = new Y.ticTacToeBoard();
 
-                openCornerXBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'x'],
-                                                                           ['n', 'n', 'n'],
-                                                                           ['n', 'n', 'n']]);
+                doubleCornerXBoard = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'n'],
+                                                                             ['o', 'o', 'n'],
+                                                                             ['n', 'n', 'x']]);
 
-                Y.Assert.areSame('x', openCornerXBoard.firstOppositeCornerMove(openCornerXBoard, 'x')[2][0]);
-
+                Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
+                Y.Assert.areSame(5, doubleCornerXBoard.possibleMoveLocations(doubleCornerXBoard).length);
             },
 
 
-            'firstOppositeCornerMove should take a board with an x move in the bottom left corner and return a board with an x move on the top left corner, when that space is open': function () {
+            'checkOppositeCornerHazardAgainstO should take a board with an x move in the top right corner and in the opposite corner and return true when an o move is the middle of the bottom row': function () {
 
-
-                var openCornerXBoard,
+                var doubleCornerXBoard,
                     testGame = new Y.ticTacToeBoard();
 
-                openCornerXBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
-                                                                           ['n', 'n', 'n'],
-                                                                           ['x', 'n', 'n']]);
+                doubleCornerXBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'x'],
+                                                                             ['n', 'o', 'n'],
+                                                                             ['x', 'o', 'n']]);
 
-                Y.Assert.areSame('x', openCornerXBoard.firstOppositeCornerMove(openCornerXBoard, 'x')[0][2]);
+                Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
+                Y.Assert.areSame(5, doubleCornerXBoard.possibleMoveLocations(doubleCornerXBoard).length);
+
+            },
+
+            'filterAgainstOppositeCornerHazardForO should take an array of boards where xs are in opposite corners and should only return the board that forces a move out of the corner': function () {
+
+                var dangerousArraySeed,
+                    testGame = new Y.ticTacToeBoard();
+
+               dangerousArraySeed = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'n'],
+                                                                            ['n', 'o', 'n'],
+                                                                            ['n', 'n', 'x']]);
+
+               Y.Assert.areSame('o', dangerousArraySeed.filterAgainstOppositeCornerHazardForO(dangerousArraySeed.projectAllPossibleBoardsThisTurn())[0][0][1]);
 
             },
 
