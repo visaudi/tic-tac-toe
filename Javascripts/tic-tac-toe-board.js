@@ -897,16 +897,22 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                     var board = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArrayForO()),
                         gameMessage;
-                    if (board.checkGameTie(board) === true ||
-                            board.checkGameWinForX(board) === true ||
-                            board.checkGameWinForO(board) === true) {
-
+                    if (board.checkGameTie(board) === true) {
                         gameMessage = Y.one('#gameMessage');
 
-                        gameMessage.addClass('gameEnding');
+                        gameMessage.addClass('gameTie');
                         gameMessage.show(true);
 
 
+                    }
+
+
+                    if (board.checkGameWinForO(board) === true) {
+
+                        gameMessage = Y.one('#gameMessage');
+
+                        gameMessage.addClass('gameLoss');
+                        gameMessage.show(true);
                     }
                 },
 

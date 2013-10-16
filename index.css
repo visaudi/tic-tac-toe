@@ -18,8 +18,13 @@ body {
 
 }
 
-#gameMessage.gameEnding {
+#gameMessage.gameTie {
     background-image: url("Images/Cat.png");
+    z-index: 20;
+}
+
+#gameMessage.gameLoss {
+    background-image: url("Images/Dog.png");
     z-index: 20;
 }
 .square {
