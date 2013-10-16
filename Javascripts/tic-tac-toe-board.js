@@ -901,7 +901,11 @@ YUI.add('tic-tac-toe-board', function (Y) {
                         gameMessage = Y.one('#gameMessage');
 
                         gameMessage.addClass('gameTie');
-                        gameMessage.show(true);
+                        gameMessage.transition({
+                                                opacity: .90,
+                                                duration: 2.0,
+                                                easing: 'ease-in'
+                        });
 
 
                     }
@@ -912,7 +916,11 @@ YUI.add('tic-tac-toe-board', function (Y) {
                         gameMessage = Y.one('#gameMessage');
 
                         gameMessage.addClass('gameLoss');
-                        gameMessage.show(true);
+                        gameMessage.transition({
+                                                opacity: .90,
+                                                duration: 2.0,
+                                                easing: 'ease-in'
+                        });
                     }
                 },
 

@@ -12,6 +12,8 @@ body {
     left: 22%;
 	position: absolute;
     opacity: 0;
+    border-style: solid;
+    border-width: 2px;
 }
 
 .messageBeginning {
