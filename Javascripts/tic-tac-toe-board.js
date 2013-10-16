@@ -75,173 +75,6 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             };
 
-            board.projectAllMovesTwoTurnsAhead = function (arrayBoard) {
-                var movesToMake,
-                    movePossibilities,
-                    secondMovePossibilities,
-                    thirdMovePossibilities,
-                    fourthMovePossibilities,
-
-                    currentBeyondMove,
-                    nextPossibleLocation,
-
-                    rangeOfBoards = [];
-
-                movesToMake = this.projectAllPossibleBoardsThisTurn(this);
-
-
-                for (movePossibilities = 0; movePossibilities < movesToMake.length; movePossibilities += 1) {
-
-                    if (movesToMake.length === 1) {
-                        currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
-                        currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
-
-                        rangeOfBoards.push(currentBeyondMove);
-
-                    } else {
-
-                        for (secondMovePossibilities = 0; secondMovePossibilities < (movesToMake.length - 1); secondMovePossibilities += 1) {
-
-
-                            if (movesToMake.length === 2) {
-                                currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
-                                currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
-
-
-                                nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[secondMovePossibilities];
-                                currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'x';
-
-                                rangeOfBoards.push(currentBeyondMove);
-
-                            } else {
-
-                                for (thirdMovePossibilities = 0; thirdMovePossibilities < (movesToMake.length - 2); thirdMovePossibilities += 1) {
-
-                                    if (movesToMake.length === 3) {
-                                        currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
-                                        currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
-
-
-                                        nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[secondMovePossibilities];
-                                        currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'x';
-
-                                        nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[thirdMovePossibilities];
-                                        currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'o';
-
-
-                                        rangeOfBoards.push(currentBeyondMove);
-
-                                    } else {
-
-                                        for (fourthMovePossibilities = 0; fourthMovePossibilities < (movesToMake.length - 3); fourthMovePossibilities += 1) {
-
-                                            currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
-                                            currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
-
-                                            nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[secondMovePossibilities];
-                                            currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'x';
-
-                                            nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[thirdMovePossibilities];
-                                            currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'o';
-
-                                            nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[fourthMovePossibilities];
-                                            currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'x';
-
-                                            rangeOfBoards.push(currentBeyondMove);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                return rangeOfBoards;
-            };
-
-            board.projectAllMovesTwoTurnsAheadGroupedByNextMove = function () {
-                var movesToMake,
-                    movePossibilities,
-                    secondMovePossibilities,
-                    thirdMovePossibilities,
-                    fourthMovePossibilities,
-
-                    currentBeyondMove,
-                    nextPossibleLocation,
-
-                    rangeOfBoards = [];
-
-                movesToMake = this.projectAllPossibleBoardsThisTurn(this);
-
-
-                for (movePossibilities = 0; movePossibilities < movesToMake.length; movePossibilities += 1) {
-
-                    if (movesToMake.length === 1) {
-                        currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
-                        currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
-
-                        rangeOfBoards.push(currentBeyondMove);
-
-                    } else {
-
-                        for (secondMovePossibilities = 0; secondMovePossibilities < (movesToMake.length - 1); secondMovePossibilities += 1) {
-
-
-                            if (movesToMake.length === 2) {
-                                currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
-                                currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
-
-
-                                nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[secondMovePossibilities];
-                                currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'x';
-
-                                rangeOfBoards.push(currentBeyondMove);
-
-                            } else {
-
-                                for (thirdMovePossibilities = 0; thirdMovePossibilities < (movesToMake.length - 2); thirdMovePossibilities += 1) {
-
-                                    if (movesToMake.length === 3) {
-                                        currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
-                                        currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
-
-
-                                        nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[secondMovePossibilities];
-                                        currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'x';
-
-                                        nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[thirdMovePossibilities];
-                                        currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'o';
-
-
-                                        rangeOfBoards.push(currentBeyondMove);
-
-                                    } else {
-
-                                        for (fourthMovePossibilities = 0; fourthMovePossibilities < (movesToMake.length - 3); fourthMovePossibilities += 1) {
-
-                                            currentBeyondMove = Y.clone(movesToMake[movePossibilities]);
-                                            currentBeyondMove.nextTurnBoard = movesToMake[movePossibilities];
-
-                                            nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[secondMovePossibilities];
-                                            currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'x';
-
-                                            nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[thirdMovePossibilities];
-                                            currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'o';
-
-                                            nextPossibleLocation = this.possibleMoveLocations(currentBeyondMove)[fourthMovePossibilities];
-                                            currentBeyondMove[nextPossibleLocation[0]][nextPossibleLocation[1]] = 'x';
-
-                                            rangeOfBoards.push(currentBeyondMove);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                console.log("here");
-                console.log(rangeOfBoards);
-                return rangeOfBoards;
-            };
             board.possibleMoveLocations = function (gameBoard) {
 
                 var possibilities = [], x, y;
@@ -856,7 +689,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
             board.filterAgainstOppositeCornerHazardForO = function (arrayOfBoards, player) {
 
                 var oppositeCornerPlay = [];
-console.log(arrayOfBoards);
+
                 oppositeCornerPlay.push(Y.Array.find(arrayOfBoards, this.checkOppositeCornerHazardAgainstO));
 
                 return oppositeCornerPlay;
@@ -886,22 +719,6 @@ console.log(arrayOfBoards);
                 }
 
                 return result;
-
-            };
-
-            board.removeDangerousSneakyMoves = function (arrayOfBoards) {
-
-
-                var boardCount, nextBoard, removalDecision;
-                for (boardCount = 0; boardCount < arrayOfBoards.length; boardCount += 1) {
-
-                    if (this.checkGameWinForO(arrayOfBoards[boardCount]) !== true) {
-
-                        nextBoard = this.findSimpleMoveForX(arrayOfBoards[boardCount]);
-
-                    }
-
-                }
 
             };
 
@@ -939,70 +756,6 @@ console.log(arrayOfBoards);
 
             };
 
-
-            board.findSimpleMoveForO = function (gameBoard) {
-
-                var littleResult, bigResult;
-
-                bigResult = this.projectAllPossibleBoardsThisTurn(gameBoard);
-
-                littleResult = this.filterForWinO(bigResult);
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-
-                littleResult = this.filterAgainstWinForX(bigResult);
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-                littleResult = this.filterAgainstOneToWinForX(bigResult);
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-                littleResult = this.filterAgainstHighestTwoToWinForX(bigResult);
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-
-                littleResult = this.filterForHighestOneToWinForO(bigResult);
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-                littleResult = this.filterForHighestTwoToWinForO(bigResult);
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-
-                return bigResult[0];
-
-            };
-
-
-            board.findSimpleMoveForX = function (gameBoard) {
-
-                var littleResult, bigResult;
-
-                bigResult = this.projectAllPossibleXMoveBoardsThisTurn(gameBoard);
-
-                littleResult = this.filterForWinX(bigResult);
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-
-                littleResult = this.filterAgainstWinForO(bigResult);
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-                littleResult = this.filterAgainstOneToWinForO(bigResult);
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-                littleResult = this.filterAgainstHighestTwoToWinForO(bigResult);
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-
-                littleResult = this.filterForHighestOneToWinForX(bigResult);
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-                littleResult = this.filterForHighestTwoToWinForX(bigResult);
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-
-                return bigResult[0];
-
-            };
-
             board.findMoveToMaximizeOsPerRow = function () {
 
 
@@ -1023,26 +776,6 @@ console.log(arrayOfBoards);
                 return compareFirstBoardToFinalBoard(this.findMoveForO(this));
             };
             return board;
-
-        },
-
-        possibleMoveLocations: function (board) {
-
-            var possibilities = [], x, y;
-
-            for (x = 0; x < 3; x += 1) {
-                for (y = 0; y < 3; y += 1) {
-
-                    if (board[x][y] === 'n') {
-
-                        possibilities.push([x, y]);
-
-
-                    }
-                }
-            }
-
-            return possibilities;
 
         },
 

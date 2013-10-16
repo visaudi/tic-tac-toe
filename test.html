@@ -1,4 +1,4 @@
-<!doctype html>
+e!doctype html>
 <html>
     <head>
         <title>Tic Tac Toe</title>
@@ -28,13 +28,14 @@ YUI({
         name: 'possibilities() Tests',
 
         'Array should have nine members that correspond to each of the nine x, y coordinates': function () {
-            var board = [['n', 'n', 'n'],
-                        ['n', 'n', 'n'],
-                        ['n', 'n', 'n']],
+            var testGame = new Y.ticTacToeBoard(),
+                board = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
+                                                                ['n', 'n', 'n'],
+                                                                ['n', 'n', 'n']]),
 
-                testGame = new Y.ticTacToeBoard(),
+
                 literalListToEqual = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
-                result = testGame.possibleMoveLocations(board),
+                result = board.possibleMoveLocations(board),
                 i,
                 j;
             for (i = 0; i < literalListToEqual.length; i += 1) {
@@ -496,80 +497,6 @@ YUI({
 
             },
 
-            'projectAllMovesTwoTurnsAhead should take a board and return 1680 objects that each contain a far future board': function () {
-
-                var firstTurnBoard,
-                    testGame = new Y.ticTacToeBoard();
-
-                firstTurnBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
-                                                                         ['n', 'x', 'n'],
-                                                                         ['n', 'n', 'n']]);
-
-                Y.Assert.areSame(1680, firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn()).length);
-
-            },
-
-
-            'projectAllMovesTwoTurnsAhead should take a board and return objects that contain a far future board': function () {
-
-                var firstTurnBoard,
-                    testGame = new Y.ticTacToeBoard();
-
-                firstTurnBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
-                                                                         ['n', 'x', 'n'],
-                                                                         ['n', 'n', 'n']]);
-
-                Y.Assert.areSame('o', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0][0][0]);
-                Y.Assert.areSame('x', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0][0][1]);
-                Y.Assert.areSame('o', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0][0][2]);
-
-                Y.Assert.areSame('x', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0][1][0]);
-                Y.Assert.areSame('x', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0][1][1]);
-                Y.Assert.areSame('n', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0][1][2]);
-
-                Y.Assert.areSame('n', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0][2][0]);
-                Y.Assert.areSame('n', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0][2][1]);
-                Y.Assert.areSame('n', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0][2][2]);
-
-            },
-
-
-            'projectAllMovesTwoTurnsAhead should take a board and return objects that contain a nextTurnBoard': function () {
-
-                var firstTurnBoard,
-                    testGame = new Y.ticTacToeBoard();
-
-                firstTurnBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
-                                                                         ['n', 'x', 'n'],
-                                                                         ['n', 'n', 'n']]);
-
-                Y.Assert.areSame('o', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0].nextTurnBoard[0][0]);
-                Y.Assert.areSame('n', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0].nextTurnBoard[0][1]);
-                Y.Assert.areSame('n', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0].nextTurnBoard[0][2]);
-
-                Y.Assert.areSame('n', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0].nextTurnBoard[1][0]);
-                Y.Assert.areSame('x', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0].nextTurnBoard[1][1]);
-                Y.Assert.areSame('n', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0].nextTurnBoard[1][2]);
-
-                Y.Assert.areSame('n', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0].nextTurnBoard[2][0]);
-                Y.Assert.areSame('n', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0].nextTurnBoard[2][1]);
-                Y.Assert.areSame('n', firstTurnBoard.projectAllMovesTwoTurnsAhead(firstTurnBoard.projectAllPossibleBoardsThisTurn())[0].nextTurnBoard[2][2]);
-
-            },
-
-            'removeDangerousSneakyMoves should get a tricky board among not so tricky boards and remove the tricky one.': function () {
-                var dangerousBoard,
-                    testGame = new Y.ticTacToeBoard();
-
-                dangerousBoard = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'n'],
-                                                                         ['n', 'n', 'n'],
-                                                                         ['n', 'n', 'n']]);
-
-                Y.Assert.areSame(7, dangerousBoard.removeDangerousSneakyMoves(dangerousBoard.projectAllPossibleBoardsThisTurn()).length);
-
-
-            },
-
             'findMoveForO should take a board near the end and choose the winning move': function () {
 
                 var endGame,
@@ -635,7 +562,7 @@ YUI({
             },
 
 
-            'findMoveForO should take a board with a corner move and make the opposite corner move': function () {
+            'findMoveForO should take a board with a corner move and make the center move': function () {
 
                 var cornerMoveGame,
                     testGame = new Y.ticTacToeBoard();
@@ -644,89 +571,15 @@ YUI({
                                                                          ['n', 'n', 'n'],
                                                                          ['n', 'n', 'n']]);
 
-                Y.Assert.areSame('o', (cornerMoveGame.findMoveForO(cornerMoveGame))[2][2]);
+                Y.Assert.areSame('o', (cornerMoveGame.findMoveForO(cornerMoveGame))[1][1]);
             },
 
 
-            'findSimpleMoveForX should take a board near the end and choose the winning move': function () {
-
-                var endGame,
-                    testGame = new Y.ticTacToeBoard();
-
-                endGame = testGame.makeBoardArrayFromSquareAttrs([['x', 'x', 'o'],
-                                                                  ['n', 'o', 'n'],
-                                                                  ['n', 'n', 'n']]);
-
-                Y.Assert.areSame('x', (endGame.findSimpleMoveForX(endGame))[2][0]);
-
-            },
-
-            'findSimpleMoveForX should take a board near the end and block a winning move for x': function () {
-
-                var endGame,
-                    testGame = new Y.ticTacToeBoard();
-
-                endGame = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'o'],
-                                                                  ['n', 'o', 'x'],
-                                                                  ['x', 'n', 'n']]);
-
-                Y.Assert.areSame('x', (endGame.findSimpleMoveForX(endGame))[1][0]);
-
-            },
-
-            'findSimpleMoveForX should take a board and pick the choice that minimizes two to wins on Os side': function () {
-
-                var endGame,
-                    testGame = new Y.ticTacToeBoard();
-
-                endGame = testGame.makeBoardArrayFromSquareAttrs([['o', 'n', 'x'],
-                                                                  ['n', 'n', 'o'],
-                                                                  ['n', 'o', 'n']]);
-
-                Y.Assert.areSame('x', (endGame.findSimpleMoveForX(endGame))[1][1]);
-
-            },
-
-            'findSimpleMoveForX should take a board with no moves on it and place an o in the center': function () {
-
-                var cornerMoveGame,
-                    testGame = new Y.ticTacToeBoard();
-
-                cornerMoveGame = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
-                                                                         ['n', 'n', 'n'],
-                                                                         ['n', 'n', 'n']]);
-
-                Y.Assert.areSame('x', (cornerMoveGame.findSimpleMoveForX(cornerMoveGame))[1][1]);
-
-            },
-
-        }),
-
-        movesAheadVariation = new Y.Test.Case({
-
-            name: 'Variation For Thinking Turns Ahead',
-
-            'projectAllMovesTwoTurnsAhead should absord the variation of turns left to be played': function () {
-
-                var fourTurnsLeftGame,
-                    testGame = new Y.ticTacToeBoard();
-
-
-                fourTurnsLeftGame = testGame.makeBoardArrayFromSquareAttrs([['n', 'x', 'x'],
-                                                                            ['o', 'o', 'n'],
-                                                                            ['n', 'x', 'n']]);
-
-
-                fourTurnsLeftGame.findMoveForO(fourTurnsLeftGame);
-
-                Y.Assert.areSame(1, 2);
-            }
         });
 
     new Y.Test.Console().render('#console');
     Y.Test.Runner.add(testPossibilities);
     Y.Test.Runner.add(filteringForAI);
-    Y.Test.Runner.add(movesAheadVariation);
     Y.Test.Runner.run();
 });
 
