@@ -200,9 +200,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
             board.checkGameTie = function (gameBoard) {
 
                 var tie = false;
-                if ((this.checkForMixedRow(this.getColumn(0, gameBoard))) &&
-                        (this.checkForMixedRow(this.getColumn(1, gameBoard))) &&
-                        (this.checkForMixedRow(this.getColumn(2, gameBoard))) &&
+                if ((this.checkForMixedRow(Y.squareRowTools.getColumn(0, gameBoard))) &&
+                        (this.checkForMixedRow(Y.squareRowTools.getColumn(1, gameBoard))) &&
+                        (this.checkForMixedRow(Y.squareRowTools.getColumn(2, gameBoard))) &&
                         (this.checkForMixedRow(this.getRow(0, gameBoard))) &&
                         (this.checkForMixedRow(this.getRow(1, gameBoard))) &&
                         (this.checkForMixedRow(this.getRow(2, gameBoard))) &&
@@ -219,9 +219,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
             board.checkGameWinForX = function (gameBoard) {
 
                 var win = false;
-                if ((this.rowXCount(this.getColumn(0, gameBoard)) === 3) ||
-                        (this.rowXCount(this.getColumn(1, gameBoard)) === 3) ||
-                        (this.rowXCount(this.getColumn(2, gameBoard)) === 3) ||
+                if ((this.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 3) ||
+                        (this.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 3) ||
+                        (this.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 3) ||
                         (this.rowXCount(this.getRow(0, gameBoard)) === 3) ||
                         (this.rowXCount(this.getRow(1, gameBoard)) === 3) ||
                         (this.rowXCount(this.getRow(2, gameBoard)) === 3) ||
@@ -237,9 +237,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
             board.checkGameWinForO = function (gameBoard) {
 
                 var win = false;
-                if ((this.rowOCount(this.getColumn(0, gameBoard)) === 3) ||
-                        (this.rowOCount(this.getColumn(1, gameBoard)) === 3) ||
-                        (this.rowOCount(this.getColumn(2, gameBoard)) === 3) ||
+                if ((this.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 3) ||
+                        (this.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 3) ||
+                        (this.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 3) ||
                         (this.rowOCount(this.getRow(0, gameBoard)) === 3) ||
                         (this.rowOCount(this.getRow(1, gameBoard)) === 3) ||
                         (this.rowOCount(this.getRow(2, gameBoard)) === 3) ||
@@ -254,15 +254,15 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.twoToWinForO = function (gameBoard) {
                 var twoToWinOccurrences = 0;
-                if ((this.rowOCount(this.getColumn(0, gameBoard)) === 1) && (this.rowXCount(this.getColumn(0, gameBoard)) === 0)) {
+                if ((this.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 1) && (this.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getColumn(1, gameBoard)) === 1) && (this.rowXCount(this.getColumn(1, gameBoard)) === 0)) {
+                if ((this.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 1) && (this.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getColumn(2, gameBoard)) === 1) && (this.rowXCount(this.getColumn(2, gameBoard)) === 0)) {
+                if ((this.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 1) && (this.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
                 if ((this.rowOCount(this.getRow(0, gameBoard)) === 1) && (this.rowXCount(this.getRow(0, gameBoard)) === 0)) {
@@ -292,15 +292,15 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.twoToWinForX = function (gameBoard) {
                 var twoToWinOccurrences = 0;
-                if ((this.rowXCount(this.getColumn(0, gameBoard)) === 1) && (this.rowOCount(this.getColumn(0, gameBoard)) === 0)) {
+                if ((this.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 1) && (this.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getColumn(1, gameBoard)) === 1) && (this.rowOCount(this.getColumn(1, gameBoard)) === 0)) {
+                if ((this.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 1) && (this.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getColumn(2, gameBoard)) === 1) && (this.rowOCount(this.getColumn(2, gameBoard)) === 0)) {
+                if ((this.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 1) && (this.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
                 if ((this.rowXCount(this.getRow(0, gameBoard)) === 1) && (this.rowOCount(this.getRow(0, gameBoard)) === 0)) {
@@ -328,15 +328,15 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.oneToWinForX = function (gameBoard) {
                 var oneToWinOccurrences = 0;
-                if ((this.rowXCount(this.getColumn(0, gameBoard)) === 2) && (this.rowOCount(this.getColumn(0, gameBoard)) === 0)) {
+                if ((this.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 2) && (this.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getColumn(1, gameBoard)) === 2) && (this.rowOCount(this.getColumn(1, gameBoard)) === 0)) {
+                if ((this.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 2) && (this.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getColumn(2, gameBoard)) === 2) && (this.rowOCount(this.getColumn(2, gameBoard)) === 0)) {
+                if ((this.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 2) && (this.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
                 if ((this.rowXCount(this.getRow(0, gameBoard)) === 2) && (this.rowOCount(this.getRow(0, gameBoard)) === 0)) {
@@ -364,15 +364,15 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.oneToWinForO = function (gameBoard) {
                 var oneToWinOccurrences = 0;
-                if ((this.rowOCount(this.getColumn(0, gameBoard)) === 2) && (this.rowXCount(this.getColumn(0, gameBoard)) === 0)) {
+                if ((this.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 2) && (this.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getColumn(1, gameBoard)) === 2) && (this.rowXCount(this.getColumn(1, gameBoard)) === 0)) {
+                if ((this.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 2) && (this.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getColumn(2, gameBoard)) === 2) && (this.rowXCount(this.getColumn(2, gameBoard)) === 0)) {
+                if ((this.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 2) && (this.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
                 if ((this.rowOCount(this.getRow(0, gameBoard)) === 2) && (this.rowXCount(this.getRow(0, gameBoard)) === 0)) {
@@ -1044,4 +1044,4 @@ YUI.add('tic-tac-toe-board', function (Y) {
         }
     });
 
-}, '0.0.1', { requires: [ 'base-build', 'widget', 'oop', 'array-extras', 'transition', 'node-event-delegate'] });
+}, '0.0.1', { requires: [ 'base-build', 'widget', 'oop', 'array-extras', 'transition', 'node-event-delegate', 'square-row-tools'] });
