@@ -24,20 +24,20 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 if (arrayBoard === undefined) {
 
-                for (i = 0; i < this.possibleMoveLocations(this).length; i += 1) {
-                    futureBoard = Y.clone(this);
-                    consideredPossibilityLocation = this.possibleMoveLocations(this)[i];
-                    futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'o';
-                    possibleBoardList.push(futureBoard);
-                }
-                return possibleBoardList;
+                    for (i = 0; i < Y.squareRowTools.possibleMoveLocations(this).length; i += 1) {
+                        futureBoard = Y.clone(this);
+                        consideredPossibilityLocation = Y.squareRowTools.possibleMoveLocations(this)[i];
+                        futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'o';
+                        possibleBoardList.push(futureBoard);
+                    }
+                    return possibleBoardList;
 
                 }
 
 
-                for (i = 0; i < this.possibleMoveLocations(this).length; i += 1) {
+                for (i = 0; i < Y.squareRowTools.possibleMoveLocations(this).length; i += 1) {
                     futureBoard = Y.clone(arrayBoard);
-                    consideredPossibilityLocation = this.possibleMoveLocations(arrayBoard)[i];
+                    consideredPossibilityLocation = Y.squareRowTools.possibleMoveLocations(arrayBoard)[i];
                     futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'o';
                     possibleBoardList.push(futureBoard);
                 }
@@ -55,178 +55,37 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 if (arrayBoard === undefined) {
 
-                for (i = 0; i < this.possibleMoveLocations(this).length; i += 1) {
-                    futureBoard = Y.clone(this);
-                    consideredPossibilityLocation = this.possibleMoveLocations(this)[i];
-                    futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
-                    possibleBoardList.push(futureBoard);
-                }
-                return possibleBoardList;
+                    for (i = 0; i < Y.squareRowTools.possibleMoveLocations(this).length; i += 1) {
+                        futureBoard = Y.clone(this);
+                        consideredPossibilityLocation = Y.squareRowTools.possibleMoveLocations(this)[i];
+                        futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
+                        possibleBoardList.push(futureBoard);
+                    }
+                    return possibleBoardList;
                 }
 
 
-                for (i = 0; i < this.possibleMoveLocations(arrayBoard).length; i += 1) {
+                for (i = 0; i < Y.squareRowTools.possibleMoveLocations(arrayBoard).length; i += 1) {
                     futureBoard = Y.clone(arrayBoard);
-                    consideredPossibilityLocation = this.possibleMoveLocations(arrayBoard)[i];
+                    consideredPossibilityLocation = Y.squareRowTools.possibleMoveLocations(arrayBoard)[i];
                     futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
                     possibleBoardList.push(futureBoard);
                 }
                 return possibleBoardList;
 
             };
-
-            board.possibleMoveLocations = function (gameBoard) {
-
-                var possibilities = [], x, y;
-
-                for (x = 0; x < 3; x += 1) {
-                    for (y = 0; y < 3; y += 1) {
-
-                        if (gameBoard[x][y] === 'n') {
-
-                            possibilities.push([x, y]);
-
-
-                        }
-                    }
-                }
-                return possibilities;
-
-            };
-
-            board.getColumn = function (columnPosition, gameBoard) {
-
-                var x, column = [];
-
-                for (x = 0; x < 3; x += 1) {
-
-                    column[x] = gameBoard[x][columnPosition];
-
-
-                }
-
-                return column;
-
-
-            };
-
-            board.getRow = function (rowPosition, gameBoard) {
-
-                var y, extractedRow = [];
-
-                for (y = 0; y < 3; y += 1) {
-
-                    extractedRow[y] = gameBoard[rowPosition][y];
-
-
-                }
-
-                return extractedRow;
-
-            };
-
-            board.getHighLeftDiagonal = function (gameBoard) {
-
-                var xAndY, diagonal = [];
-
-                for (xAndY = 0; xAndY < 3; xAndY += 1) {
-
-                    diagonal[xAndY] = gameBoard[xAndY][xAndY];
-
-                }
-
-                return diagonal;
-
-            };
-
-            board.getLowLeftDiagonal = function (gameBoard) {
-
-                var x, y = 2, diagonal = [];
-
-
-                for (x = 0; x < 3; x += 1) {
-                    diagonal[x] = gameBoard[y][x];
-
-                    y -= 1;
-
-                }
-
-                return diagonal;
-
-            };
-
-            board.rowOCount = function (row) {
-
-                var square, oNumber  = 0;
-
-                for (square = 0; square < row.length; square += 1) {
-                    if (row[square] === 'o') {
-                        oNumber  += 1;
-                    }
-
-                }
-
-                return oNumber;
-
-            };
-
-            board.rowXCount = function (row) {
-
-                var square, xNumber  = 0;
-
-                for (square = 0; square < row.length; square += 1) {
-                    if (row[square] === 'x') {
-                        xNumber  += 1;
-                    }
-
-                }
-
-                return xNumber;
-
-            };
-
-            board.checkForMixedRow = function (row) {
-
-                var mixed = false;
-                if ((this.rowXCount(row) > 0) && (this.rowOCount(row) > 0)) {
-                    mixed = true;
-                }
-
-                return mixed;
-
-            };
-
-
-            board.checkGameTie = function (gameBoard) {
-
-                var tie = false;
-                if ((this.checkForMixedRow(Y.squareRowTools.getColumn(0, gameBoard))) &&
-                        (this.checkForMixedRow(Y.squareRowTools.getColumn(1, gameBoard))) &&
-                        (this.checkForMixedRow(Y.squareRowTools.getColumn(2, gameBoard))) &&
-                        (this.checkForMixedRow(this.getRow(0, gameBoard))) &&
-                        (this.checkForMixedRow(this.getRow(1, gameBoard))) &&
-                        (this.checkForMixedRow(this.getRow(2, gameBoard))) &&
-                        (this.checkForMixedRow(this.getHighLeftDiagonal(gameBoard))) &&
-                        (this.checkForMixedRow(this.getLowLeftDiagonal(gameBoard)))) {
-                    tie = true;
-                }
-
-                return tie;
-
-            };
-
 
             board.checkGameWinForX = function (gameBoard) {
 
                 var win = false;
-                if ((this.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 3) ||
-                        (this.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 3) ||
-                        (this.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 3) ||
-                        (this.rowXCount(this.getRow(0, gameBoard)) === 3) ||
-                        (this.rowXCount(this.getRow(1, gameBoard)) === 3) ||
-                        (this.rowXCount(this.getRow(2, gameBoard)) === 3) ||
-                        (this.rowXCount(this.getHighLeftDiagonal(gameBoard)) === 3) ||
-                        (this.rowXCount(this.getLowLeftDiagonal(gameBoard)) === 3)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(0, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(1, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(2, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 3)) {
                     win = true;
                 }
 
@@ -237,14 +96,14 @@ YUI.add('tic-tac-toe-board', function (Y) {
             board.checkGameWinForO = function (gameBoard) {
 
                 var win = false;
-                if ((this.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 3) ||
-                        (this.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 3) ||
-                        (this.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 3) ||
-                        (this.rowOCount(this.getRow(0, gameBoard)) === 3) ||
-                        (this.rowOCount(this.getRow(1, gameBoard)) === 3) ||
-                        (this.rowOCount(this.getRow(2, gameBoard)) === 3) ||
-                        (this.rowOCount(this.getHighLeftDiagonal(gameBoard)) === 3) ||
-                        (this.rowOCount(this.getLowLeftDiagonal(gameBoard)) === 3)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(0, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(1, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(2, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 3)) {
                     win = true;
                 }
 
@@ -254,34 +113,34 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.twoToWinForO = function (gameBoard) {
                 var twoToWinOccurrences = 0;
-                if ((this.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 1) && (this.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 1) && (this.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 1) && (this.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
-                if ((this.rowOCount(this.getRow(0, gameBoard)) === 1) && (this.rowXCount(this.getRow(0, gameBoard)) === 0)) {
-                    twoToWinOccurrences += 1;
-                }
-
-                if ((this.rowOCount(this.getRow(1, gameBoard)) === 1) && (this.rowXCount(this.getRow(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(0, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getRow(2, gameBoard)) === 1) && (this.rowXCount(this.getRow(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(1, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getHighLeftDiagonal(gameBoard)) === 1) && (this.rowXCount(this.getHighLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(2, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getLowLeftDiagonal(gameBoard)) === 1) && (this.rowXCount(this.getLowLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
@@ -292,34 +151,34 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.twoToWinForX = function (gameBoard) {
                 var twoToWinOccurrences = 0;
-                if ((this.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 1) && (this.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 1) && (this.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 1) && (this.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
-                if ((this.rowXCount(this.getRow(0, gameBoard)) === 1) && (this.rowOCount(this.getRow(0, gameBoard)) === 0)) {
-                    twoToWinOccurrences += 1;
-                }
-
-                if ((this.rowXCount(this.getRow(1, gameBoard)) === 1) && (this.rowOCount(this.getRow(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(0, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getRow(2, gameBoard)) === 1) && (this.rowOCount(this.getRow(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(1, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getHighLeftDiagonal(gameBoard)) === 1) && (this.rowOCount(this.getHighLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(2, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getLowLeftDiagonal(gameBoard)) === 1) && (this.rowOCount(this.getLowLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
@@ -328,34 +187,34 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.oneToWinForX = function (gameBoard) {
                 var oneToWinOccurrences = 0;
-                if ((this.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 2) && (this.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 2) && (this.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 2) && (this.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
-                if ((this.rowXCount(this.getRow(0, gameBoard)) === 2) && (this.rowOCount(this.getRow(0, gameBoard)) === 0)) {
-                    oneToWinOccurrences += 1;
-                }
-
-                if ((this.rowXCount(this.getRow(1, gameBoard)) === 2) && (this.rowOCount(this.getRow(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(0, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getRow(2, gameBoard)) === 2) && (this.rowOCount(this.getRow(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(1, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getHighLeftDiagonal(gameBoard)) === 2) && (this.rowOCount(this.getHighLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(2, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowXCount(this.getLowLeftDiagonal(gameBoard)) === 2) && (this.rowOCount(this.getLowLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
@@ -364,34 +223,34 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.oneToWinForO = function (gameBoard) {
                 var oneToWinOccurrences = 0;
-                if ((this.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 2) && (this.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(0, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 2) && (this.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(1, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 2) && (this.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getColumn(2, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getColumn(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
-                if ((this.rowOCount(this.getRow(0, gameBoard)) === 2) && (this.rowXCount(this.getRow(0, gameBoard)) === 0)) {
-                    oneToWinOccurrences += 1;
-                }
-
-                if ((this.rowOCount(this.getRow(1, gameBoard)) === 2) && (this.rowXCount(this.getRow(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(0, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getRow(2, gameBoard)) === 2) && (this.rowXCount(this.getRow(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(1, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getHighLeftDiagonal(gameBoard)) === 2) && (this.rowXCount(this.getHighLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(2, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((this.rowOCount(this.getLowLeftDiagonal(gameBoard)) === 2) && (this.rowXCount(this.getLowLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
@@ -704,14 +563,14 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     opponent = 'o';
 
                 if (((gameBoard[0][0] === player) && (gameBoard[2][2] === player))
-                || ((gameBoard[0][2] === player) && (gameBoard[2][0] === player))) {
+                            || ((gameBoard[0][2] === player) && (gameBoard[2][0] === player))) {
 
                     if ((gameBoard[0][1] === opponent)
-                     || (gameBoard[1][0] === opponent)
-                     || (gameBoard[1][2] === opponent)
-                     || (gameBoard[2][1] === opponent)) {
+                            || (gameBoard[1][0] === opponent)
+                            || (gameBoard[1][2] === opponent)
+                            || (gameBoard[2][1] === opponent)) {
 
-                        if ((board.possibleMoveLocations(gameBoard)).length === 5) {
+                        if ((Y.squareRowTools.possibleMoveLocations(gameBoard)).length === 5) {
                             result = true;
                         }
                     }
@@ -739,7 +598,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 bigResult = littleResult.length ? littleResult : bigResult;
 
                 littleResult = this.filterAgainstOppositeCornerHazardForO(bigResult);
-                bigResult = littleResult[0]? littleResult : bigResult;
+                bigResult = littleResult[0] ? littleResult : bigResult;
 
                 littleResult = this.filterAgainstHighestTwoToWinForX(bigResult);
                 bigResult = littleResult.length ? littleResult : bigResult;
@@ -859,7 +718,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     var oBoardAI;
                     oBoardAI = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArrayForO());
 
-                    if (oBoardAI.possibleMoveLocations(oBoardAI).length !== 0) {
+                    if (Y.squareRowTools.possibleMoveLocations(oBoardAI).length !== 0) {
                         that.set(convertXYMoveToWidgetBoard(oBoardAI.findMoveToMaximizeOsPerRow()), 'o');
                     }
                 },
@@ -897,14 +756,14 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                     var board = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArrayForO()),
                         gameMessage;
-                    if (board.checkGameTie(board) === true) {
+                    if (Y.squareRowTools.checkGameTie(board) === true) {
                         gameMessage = Y.one('#gameMessage');
 
                         gameMessage.addClass('gameTie');
                         gameMessage.transition({
-                                                opacity: .90,
-                                                duration: 2.0,
-                                                easing: 'ease-in'
+                            opacity: 0.90,
+                            duration: 2.0,
+                            easing: 'ease-in'
                         });
 
 
@@ -917,9 +776,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                         gameMessage.addClass('gameLoss');
                         gameMessage.transition({
-                                                opacity: .90,
-                                                duration: 2.0,
-                                                easing: 'ease-in'
+                            opacity: 0.90,
+                            duration: 2.0,
+                            easing: 'ease-in'
                         });
                     }
                 },

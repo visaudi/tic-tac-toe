@@ -1,4 +1,4 @@
-e!doctype html>
+<!doctype html>
 <html>
     <head>
         <title>Tic Tac Toe</title>
@@ -38,7 +38,7 @@ YUI({
 
 
                 literalListToEqual = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
-                result = board.possibleMoveLocations(board),
+                result = Y.squareRowTools.possibleMoveLocations(board),
                 i,
                 j;
             for (i = 0; i < literalListToEqual.length; i += 1) {
@@ -439,7 +439,7 @@ YUI({
                                                                              ['n', 'n', 'x']]);
 
                 Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
-                Y.Assert.areSame(5, doubleCornerXBoard.possibleMoveLocations(doubleCornerXBoard).length);
+                Y.Assert.areSame(5, Y.squareRowTools.possibleMoveLocations(doubleCornerXBoard).length);
             },
 
 
@@ -453,7 +453,7 @@ YUI({
                                                                              ['x', 'n', 'n']]);
 
                 Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
-                Y.Assert.areSame(5, doubleCornerXBoard.possibleMoveLocations(doubleCornerXBoard).length);
+                Y.Assert.areSame(5, Y.squareRowTools.possibleMoveLocations(doubleCornerXBoard).length);
 
             },
 
@@ -469,7 +469,7 @@ YUI({
                                                                              ['n', 'n', 'x']]);
 
                 Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
-                Y.Assert.areSame(5, doubleCornerXBoard.possibleMoveLocations(doubleCornerXBoard).length);
+                Y.Assert.areSame(5, Y.squareRowTools.possibleMoveLocations(doubleCornerXBoard).length);
             },
 
 
@@ -483,7 +483,7 @@ YUI({
                                                                              ['x', 'o', 'n']]);
 
                 Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
-                Y.Assert.areSame(5, doubleCornerXBoard.possibleMoveLocations(doubleCornerXBoard).length);
+                Y.Assert.areSame(5, Y.squareRowTools.possibleMoveLocations(doubleCornerXBoard).length);
 
             },
 
@@ -492,11 +492,11 @@ YUI({
                 var dangerousArraySeed,
                     testGame = new Y.ticTacToeBoard();
 
-               dangerousArraySeed = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'n'],
+                dangerousArraySeed = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'n'],
                                                                             ['n', 'o', 'n'],
                                                                             ['n', 'n', 'x']]);
 
-               Y.Assert.areSame('o', dangerousArraySeed.filterAgainstOppositeCornerHazardForO(dangerousArraySeed.projectAllPossibleBoardsThisTurn())[0][0][1]);
+                Y.Assert.areSame('o', dangerousArraySeed.filterAgainstOppositeCornerHazardForO(dangerousArraySeed.projectAllPossibleBoardsThisTurn())[0][0][1]);
 
             },
 
