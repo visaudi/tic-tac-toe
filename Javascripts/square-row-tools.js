@@ -19,6 +19,11 @@ YUI.add('square-row-tools', function (Y) {
         return axisSlice;
     };
 
+    Y.squareRowTools.getBoardLineLength = function () {
+
+        return 0;
+
+    };
 
     Y.squareRowTools.getColumn = function (columnPosition, gameBoard) {
 
@@ -31,7 +36,6 @@ YUI.add('square-row-tools', function (Y) {
         }
 
         return column;
-
 
     };
 

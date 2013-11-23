@@ -48,6 +48,24 @@ YUI({
             }
         }
     }),
+        squareRowTools = new Y.Test.Case({
+            name: 'Square-Row-Tool Tests',
+
+            'Y.squareRowTools.getBoardLineLength should return 0 for an empty array': function () {
+
+                var emptyArray = [];
+
+                Y.Assert.areSame(Y.squareRowTools.getBoardLineLength(emptyArray), 0, 'getBoardLineLength not counting right');
+
+            },
+
+            'Y.squareRowTools.getBoardLineLength should return 3 for a three item array': function () {
+
+                var threeLongArray = ['x', 'x', 'x'];
+
+                Y.Assert.areSame(Y.squareRowTools.getBoardLineLength(threeLongArray), 3, 'getBoardLineLength should count 3');
+            }
+        }),
 
         filteringForAI = new Y.Test.Case({
             name: 'AI Filtering Tests',
@@ -583,6 +601,7 @@ YUI({
     new Y.Test.Console().render('#console');
     Y.Test.Runner.add(testPossibilities);
     Y.Test.Runner.add(filteringForAI);
+    Y.Test.Runner.add(squareRowTools);
     Y.Test.Runner.run();
 });
 
