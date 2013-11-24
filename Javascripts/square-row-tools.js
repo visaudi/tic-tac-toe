@@ -29,7 +29,7 @@ YUI.add('square-row-tools', function (Y) {
 
         var x, column = [];
 
-        for (x = 0; x < 3; x += 1) {
+        for (x = 0; x < gameBoard.length; x += 1) {
 
             column[x] = gameBoard[x][columnPosition];
 
@@ -43,7 +43,7 @@ YUI.add('square-row-tools', function (Y) {
 
         var y, extractedRow = [];
 
-        for (y = 0; y < 3; y += 1) {
+        for (y = 0; y < gameBoard[rowPosition].length; y += 1) {
 
             extractedRow[y] = gameBoard[rowPosition][y];
 
@@ -53,13 +53,41 @@ YUI.add('square-row-tools', function (Y) {
 
     };
 
-    Y.squareRowTools.getHighLeftDiagonal = function (gameBoard) {
+    Y.squareRowTools.getHighLeftDiagonal = function (gameBoard, startingPoint) {
 
         var xAndY, diagonal = [];
 
-        for (xAndY = 0; xAndY < 3; xAndY += 1) {
+        if (startingPoint !== 0) {
 
-            diagonal[xAndY] = gameBoard[xAndY][xAndY];
+            startingPoint = 0;
+
+        }
+
+        if (gameBoard.length >= gameBoard[0].length) {
+
+            if (startingPoint >= gameBoard[0].length) {
+
+                startingPoint = startingPoint % gameBoard[0].length;
+
+            }
+
+            for (xAndY = 0; xAndY < (gameBoard[0].length - startingPoint); xAndY += 1) {
+
+                diagonal[xAndY] = gameBoard[startingPoint + xAndY][startingPoint + xAndY];
+            }
+
+        } else {
+
+            if (startingPoint >= gameBoard.length) {
+
+                startingPoint = startingPoint % gameBoard.length;
+
+            }
+
+            for (xAndY = 0; xAndY < (gameBoard.length - startingPoint); xAndY += 1) {
+
+                diagonal[xAndY] = gameBoard[startingPoint + xAndY][startingPoint + xAndY];
+            }
 
         }
 
