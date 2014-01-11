@@ -14,64 +14,44 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             var board = Y.clone(transferredBoard);
 
-            board.projectAllPossibleBoardsThisTurn = function (arrayBoard) {
+            board.projectAllPossibleBoardsThisTurn = function (arrayBoard, marker) {
 
-                var futureBoard,
+                var makePossibleBoardList, 
+                    futureBoard,
                     consideredPossibilityLocation,
                     i,
                     possibleBoardList = [];
 
+                if (marker === undefined) {
+
+                    marker = 'o';
+
+                }
+
+                makePossibleBoardList = function (usedArray) {
+
+                    for (i = 0; i < Y.squareRowTools.possibleMoveLocations(usedArray).length; i += 1) {
+                        futureBoard = Y.clone(usedArray);
+                        consideredPossibilityLocation = Y.squareRowTools.possibleMoveLocations(usedArray)[i];
+                        futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = marker;
+                        possibleBoardList.push(futureBoard);
+                    }
+
+                        return possibleBoardList;
+                };
 
                 if (arrayBoard === undefined) {
 
-                    for (i = 0; i < Y.squareRowTools.possibleMoveLocations(this).length; i += 1) {
-                        futureBoard = Y.clone(this);
-                        consideredPossibilityLocation = Y.squareRowTools.possibleMoveLocations(this)[i];
-                        futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'o';
-                        possibleBoardList.push(futureBoard);
-                    }
-                    return possibleBoardList;
-
+                    return makePossibleBoardList(this);
                 }
 
-
-                for (i = 0; i < Y.squareRowTools.possibleMoveLocations(this).length; i += 1) {
-                    futureBoard = Y.clone(arrayBoard);
-                    consideredPossibilityLocation = Y.squareRowTools.possibleMoveLocations(arrayBoard)[i];
-                    futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'o';
-                    possibleBoardList.push(futureBoard);
-                }
-
-                return possibleBoardList;
+                return makePossibleBoardList(arrayBoard);
             };
 
 
             board.projectAllPossibleXMoveBoardsThisTurn = function (arrayBoard) {
 
-                var futureBoard,
-                    consideredPossibilityLocation,
-                    i,
-                    possibleBoardList = [];
-
-                if (arrayBoard === undefined) {
-
-                    for (i = 0; i < Y.squareRowTools.possibleMoveLocations(this).length; i += 1) {
-                        futureBoard = Y.clone(this);
-                        consideredPossibilityLocation = Y.squareRowTools.possibleMoveLocations(this)[i];
-                        futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
-                        possibleBoardList.push(futureBoard);
-                    }
-                    return possibleBoardList;
-                }
-
-
-                for (i = 0; i < Y.squareRowTools.possibleMoveLocations(arrayBoard).length; i += 1) {
-                    futureBoard = Y.clone(arrayBoard);
-                    consideredPossibilityLocation = Y.squareRowTools.possibleMoveLocations(arrayBoard)[i];
-                    futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = 'x';
-                    possibleBoardList.push(futureBoard);
-                }
-                return possibleBoardList;
+                return this.projectAllPossibleBoardsThisTurn(arrayBoard, 'x');
 
             };
 
