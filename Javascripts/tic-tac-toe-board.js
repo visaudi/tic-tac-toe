@@ -48,13 +48,6 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 return makePossibleBoardList(arrayBoard);
             };
 
-
-            board.projectAllPossibleXMoveBoardsThisTurn = function (arrayBoard) {
-
-                return this.projectAllPossibleBoardsThisTurn(arrayBoard, 'x');
-
-            };
-
             board.checkGameWinForX = function (gameBoard) {
 
                 var win = false;

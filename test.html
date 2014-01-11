@@ -151,9 +151,9 @@ YUI({
                                                                            ['x', 'x', 'n'],
                                                                            ['n', 'n', 'n']]);
 
-                Y.Assert.areSame(1, (winningBoard.filterForWinX(winningBoard.projectAllPossibleXMoveBoardsThisTurn())).length);
-                Y.Assert.areSame(0, (notWinningBoard.filterForWinX(notWinningBoard.projectAllPossibleXMoveBoardsThisTurn())).length);
-                Y.Assert.areSame(3, (multiWinningBoard.filterForWinX(multiWinningBoard.projectAllPossibleXMoveBoardsThisTurn())).length);
+                Y.Assert.areSame(1, (winningBoard.filterForWinX(winningBoard.projectAllPossibleBoardsThisTurn(winningBoard, 'x'))).length);
+                Y.Assert.areSame(0, (notWinningBoard.filterForWinX(notWinningBoard.projectAllPossibleBoardsThisTurn(notWinningBoard, 'x'))).length);
+                Y.Assert.areSame(3, (multiWinningBoard.filterForWinX(multiWinningBoard.projectAllPossibleBoardsThisTurn(multiWinningBoard, 'x'))).length);
 
             },
 
@@ -193,7 +193,7 @@ YUI({
                                                                            ['n', 'x', 'n'],
                                                                            ['o', 'n', 'o']]);
 
-                Y.Assert.areSame(3, (winningBoardSeed.filterAgainstWinForX(winningBoardSeed.projectAllPossibleXMoveBoardsThisTurn()).length));
+                Y.Assert.areSame(3, (winningBoardSeed.filterAgainstWinForX(winningBoardSeed.projectAllPossibleBoardsThisTurn(winningBoardSeed, 'x')).length));
 
             },
 
@@ -223,7 +223,7 @@ YUI({
                                                                       ['n', 'n', 'n']]);
 
 
-                Y.Assert.areSame(0, noOneToWins.filterForHighestOneToWinForX(noOneToWins.projectAllPossibleXMoveBoardsThisTurn()).length);
+                                                                      Y.Assert.areSame(0, noOneToWins.filterForHighestOneToWinForX(noOneToWins.projectAllPossibleBoardsThisTurn(noOneToWins, 'x')).length);
             },
 
             'filterForHighestOneToWinFor X should take an array of boards, some of the boards have one one to win row and return the boards which have on to win rows': function () {
@@ -237,7 +237,7 @@ YUI({
                                                                               ['n', 'n', 'n'],
                                                                               ['n', 'o', 'o']]);
 
-                Y.Assert.areSame(4, oneOneToWinPerBoard.filterForHighestOneToWinForX(oneOneToWinPerBoard.projectAllPossibleXMoveBoardsThisTurn()).length);
+                Y.Assert.areSame(4, oneOneToWinPerBoard.filterForHighestOneToWinForX(oneOneToWinPerBoard.projectAllPossibleBoardsThisTurn(oneOneToWinPerBoard, 'x')).length);
 
             },
             'filterForHighestOneToWinFor X should take an array of boards, one of the boards has two rows with one two wins in each, it returns these boards': function () {
@@ -249,7 +249,7 @@ YUI({
                                                                                ['n', 'o', 'n'],
                                                                                ['o', 'n', 'x']]);
 
-                Y.Assert.areSame(1, twoOneToWinsPerBoard.filterForHighestOneToWinForX(twoOneToWinsPerBoard.projectAllPossibleXMoveBoardsThisTurn()).length);
+                Y.Assert.areSame(1, twoOneToWinsPerBoard.filterForHighestOneToWinForX(twoOneToWinsPerBoard.projectAllPossibleBoardsThisTurn(twoOneToWinsPerBoard, 'x')).length);
             },
 
             'filterAgainstOneToWinForX should take an array of empty boards and return what it was given': function () {
@@ -263,7 +263,7 @@ YUI({
                                                                       ['n', 'n', 'n']]);
 
 
-                Y.Assert.areSame(9, noOneToWins.filterAgainstOneToWinForX(noOneToWins.projectAllPossibleXMoveBoardsThisTurn()).length);
+                Y.Assert.areSame(9, noOneToWins.filterAgainstOneToWinForX(noOneToWins.projectAllPossibleBoardsThisTurn(noOneToWins, 'x')).length);
 
             },
 
@@ -278,7 +278,7 @@ YUI({
                                                                               ['n', 'n', 'o'],
                                                                               ['n', 'n', 'n']]);
 
-                Y.Assert.areSame(1, oneOneToWinPerBoard.filterAgainstOneToWinForX(oneOneToWinPerBoard.projectAllPossibleXMoveBoardsThisTurn()).length);
+                Y.Assert.areSame(1, oneOneToWinPerBoard.filterAgainstOneToWinForX(oneOneToWinPerBoard.projectAllPossibleBoardsThisTurn(oneOneToWinPerBoard, 'x')).length);
 
             },
 
@@ -365,7 +365,7 @@ YUI({
                                                                       ['n', 'n', 'n']]);
 
 
-                Y.Assert.areSame(1, oneTwoToWin.filterForHighestTwoToWinForX(oneTwoToWin.projectAllPossibleXMoveBoardsThisTurn()).length);
+                Y.Assert.areSame(1, oneTwoToWin.filterForHighestTwoToWinForX(oneTwoToWin.projectAllPossibleBoardsThisTurn(oneTwoToWin, 'x')).length);
             },
 
 
@@ -379,7 +379,7 @@ YUI({
                                                                                 ['n', 'o', 'n'],
                                                                                 ['n', 'n', 'n']]);
 
-                Y.Assert.areSame(4, fourTwoToWinFromBoard.filterForHighestTwoToWinForX(fourTwoToWinFromBoard.projectAllPossibleXMoveBoardsThisTurn()).length);
+                Y.Assert.areSame(4, fourTwoToWinFromBoard.filterForHighestTwoToWinForX(fourTwoToWinFromBoard.projectAllPossibleBoardsThisTurn(fourTwoToWinFromBoard, 'x')).length);
 
             },
             'filterForHighestTwoToWinFor X should take an array of boards, none of the boards has a two to win in it': function () {
@@ -391,7 +391,7 @@ YUI({
                                                                               ['x', 'o', 'o'],
                                                                               ['o', 'o', 'x']]);
 
-                Y.Assert.areSame(0, noTwoToWinsPerBoard.filterForHighestTwoToWinForX(noTwoToWinsPerBoard.projectAllPossibleXMoveBoardsThisTurn()).length);
+                Y.Assert.areSame(0, noTwoToWinsPerBoard.filterForHighestTwoToWinForX(noTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn(noTwoToWinsPerBoard, 'x')).length);
             },
 
             'filterAgainstHighestTwoToWinFor X should take an array of boards, none of the boards has a two to win in it and return all possibilities': function () {
@@ -441,7 +441,7 @@ YUI({
                                                                               ['o', 'x', 'x'],
                                                                               ['x', 'x', 'o']]);
 
-                Y.Assert.areSame(1, noTwoToWinsPerBoard.filterAgainstHighestTwoToWinForO(noTwoToWinsPerBoard.projectAllPossibleXMoveBoardsThisTurn()).length);
+                Y.Assert.areSame(1, noTwoToWinsPerBoard.filterAgainstHighestTwoToWinForO(noTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn(noTwoToWinsPerBoard, 'x')).length);
             },
 
 
@@ -454,7 +454,7 @@ YUI({
                                                                                 ['n', 'x', 'n'],
                                                                                 ['o', 'n', 'n']]);
 
-                Y.Assert.areSame(2, fourTwoToWinsPerBoard.filterAgainstHighestTwoToWinForO(fourTwoToWinsPerBoard.projectAllPossibleXMoveBoardsThisTurn()).length);
+                Y.Assert.areSame(2, fourTwoToWinsPerBoard.filterAgainstHighestTwoToWinForO(fourTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn(fourTwoToWinsPerBoard, 'x')).length);
             },
 
             'filterAgainstHighestTwoToWinFor O should take an array of boards, eight boards should keep the two to wins lowest': function () {
@@ -466,7 +466,7 @@ YUI({
                                                                                 ['n', 'o', 'n'],
                                                                                 ['n', 'n', 'n']]);
 
-                Y.Assert.areSame(8, fourTwoToWinsPerBoard.filterAgainstHighestTwoToWinForO(fourTwoToWinsPerBoard.projectAllPossibleXMoveBoardsThisTurn()).length);
+                Y.Assert.areSame(8, fourTwoToWinsPerBoard.filterAgainstHighestTwoToWinForO(fourTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn(fourTwoToWinsPerBoard, 'x')).length);
             },
 
             'filterForHighestTwoToWinForO should take an array from an empty board and return one board': function () {
