@@ -25,19 +25,6 @@ YUI.add('square-row-tools', function (Y) {
 
     };
 
-    Y.squareRowTools.getColumn = function (columnPosition, gameBoard) {
-
-        var x, column = [];
-
-        for (x = 0; x < gameBoard.length; x += 1) {
-
-            column[x] = gameBoard[x][columnPosition];
-
-        }
-
-        return column;
-
-    };
 
     Y.squareRowTools.getRow = function (rowPosition, gameBoard) {
 
@@ -155,9 +142,9 @@ YUI.add('square-row-tools', function (Y) {
     Y.squareRowTools.checkGameTie = function (gameBoard) {
 
         var tie = false;
-        if ((Y.squareRowTools.checkForMixedRow(Y.squareRowTools.getColumn(0, gameBoard))) &&
-                (Y.squareRowTools.checkForMixedRow(Y.squareRowTools.getColumn(1, gameBoard))) &&
-                (Y.squareRowTools.checkForMixedRow(Y.squareRowTools.getColumn(2, gameBoard))) &&
+        if ((Y.squareRowTools.checkForMixedRow(Y.getRow.column(0, gameBoard))) &&
+                (Y.squareRowTools.checkForMixedRow(Y.getRow.column(1, gameBoard))) &&
+                (Y.squareRowTools.checkForMixedRow(Y.getRow.column(2, gameBoard))) &&
                 (Y.squareRowTools.checkForMixedRow(Y.squareRowTools.getRow(0, gameBoard))) &&
                 (Y.squareRowTools.checkForMixedRow(Y.squareRowTools.getRow(1, gameBoard))) &&
                 (Y.squareRowTools.checkForMixedRow(Y.squareRowTools.getRow(2, gameBoard))) &&
@@ -189,4 +176,4 @@ YUI.add('square-row-tools', function (Y) {
 
     };
 
-}, '0.0.1', { requires: [] });
+}, '0.0.1', { requires: ['get-row'] });

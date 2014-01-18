@@ -21,6 +21,9 @@ YUI({
         },
         'square-row-tools': {
             fullpath: 'Javascripts/square-row-tools.js'
+        },
+        'get-row' : {
+            fullpath: 'Javascripts/get-row.js'
         }
     }
 }).use('tic-tac-toe-board', 'test-console', function (Y) {
@@ -67,7 +70,7 @@ YUI({
                                      ['n', 'x', 'o'],
                                      ['n', 'o', 'n']];
 
-                Y.Assert.areSame(Y.squareRowTools.getColumn(0, fourHighBoard).length, 4, 'getColumn should count 4');
+                Y.Assert.areSame(Y.getRow.column(0, fourHighBoard).length, 4, 'getColumn should count 4');
             },
 
             'Y.squareRowTools.getHighLeftDiagonal should return a four item array for a four by four board': function () {
