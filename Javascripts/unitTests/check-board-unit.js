@@ -28,5 +28,4 @@ YUI.add('check-board-unit', function (Y) {
         }
     });
 
-},
-'0.0.1', { requires: ['test', 'check-board'] });
+}, '0.0.1', { requires: ['test', 'check-board'] });

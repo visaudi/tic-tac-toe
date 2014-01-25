@@ -34,39 +34,8 @@ YUI({
     "use strict";
 
 
-    var testPossibilities = new Y.Test.Case({
-        name: 'possibilities() Tests',
-
-        'Array should have nine members that correspond to each of the nine x, y coordinates': function () {
-            var testGame = new Y.ticTacToeBoard(),
-                board  = [['n', 'n', 'n'],
-                          ['n', 'n', 'n'],
-                          ['n', 'n', 'n']],
-
-
-                literalListToEqual = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
-                result = Y.checkBoard.possibleMoveLocations(board),
-                i,
-                j;
-            for (i = 0; i < literalListToEqual.length; i += 1) {
-                for (j = 0; j < literalListToEqual[i].length; j += 1) {
-                    Y.Assert.areSame(literalListToEqual[i][j], result[i][j]);
-                }
-            }
-        }
-    }),
-        squareRowTools = new Y.Test.Case({
+    var squareRowTools = new Y.Test.Case({
             name: 'Square-Row-Tool Tests',
-
-            'Y.squareRowTools.getColumn should return a four item array for a three by four board': function () {
-
-                var fourHighBoard = [['x', 'o', 'n'],
-                                     ['n', 'n', 'n'],
-                                     ['n', 'x', 'o'],
-                                     ['n', 'o', 'n']];
-
-                Y.Assert.areSame(Y.getStrand.column(0, fourHighBoard).length, 4, 'getColumn should count 4');
-            },
 
             'Y.getStrand.highLeftDiagonal should return a four item array for a four by four board': function () {
 
@@ -660,7 +629,6 @@ YUI({
         });
 
     new Y.Test.Console().render('#console');
-    Y.Test.Runner.add(testPossibilities);
     Y.Test.Runner.add(filteringForAI);
     Y.Test.Runner.add(squareRowTools);
     Y.Test.Runner.run();

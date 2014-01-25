@@ -40,6 +40,8 @@ YUI({
     new Y.Test.Console().render('#console');
 
     Y.Test.Runner.add(Y.getStrandUnit.row);
+    Y.Test.Runner.add(Y.getStrandUnit.column);
+
     Y.Test.Runner.add(Y.checkBoardUnit.possibleMoveLocations);
 
     Y.Test.Runner.run();

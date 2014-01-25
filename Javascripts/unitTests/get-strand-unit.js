@@ -22,5 +22,19 @@ YUI.add('get-strand-unit', function (Y) {
 
     });
 
-},
-'0.0.1', { requires: ['test', 'get-strand'] });
+
+    Y.getStrandUnit.column = new Y.Test.Case({
+        name: 'getStrand.column Unit Tests',
+
+        'Y.getStrand.column should return a four item array for a three by four board': function () {
+
+            var fourHighBoard = [['x', 'o', 'n'],
+                                 ['n', 'n', 'n'],
+                                 ['n', 'x', 'o'],
+                                 ['n', 'o', 'n']];
+
+            Y.Assert.areSame(Y.getStrand.column(0, fourHighBoard).length, 4, 'column should count 4');
+        }
+
+    });
+}, '0.0.1', { requires: ['test', 'get-strand'] });
