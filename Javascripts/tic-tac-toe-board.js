@@ -1,5 +1,6 @@
 /*global YUI */
 
+
 YUI.add('tic-tac-toe-board', function (Y) {
     "use strict";
 
@@ -51,14 +52,14 @@ YUI.add('tic-tac-toe-board', function (Y) {
             board.checkGameWinForX = function (gameBoard) {
 
                 var win = false;
-                if ((Y.squareRowTools.rowXCount(Y.getRow.column(0, gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowXCount(Y.getRow.column(1, gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowXCount(Y.getRow.column(2, gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(0, gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(1, gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(2, gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowXCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowXCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 3)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.column(0, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.getStrand.column(1, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.getStrand.column(2, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.getStrand.row(0, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.getStrand.row(1, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.getStrand.row(2, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.getStrand.highLeftDiagonal(gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowXCount(Y.getStrand.lowLeftDiagonal(gameBoard)) === 3)) {
                     win = true;
                 }
 
@@ -69,14 +70,14 @@ YUI.add('tic-tac-toe-board', function (Y) {
             board.checkGameWinForO = function (gameBoard) {
 
                 var win = false;
-                if ((Y.squareRowTools.rowOCount(Y.getRow.column(0, gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowOCount(Y.getRow.column(1, gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowOCount(Y.getRow.column(2, gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(0, gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(1, gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(2, gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowOCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 3) ||
-                        (Y.squareRowTools.rowOCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 3)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.column(0, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.getStrand.column(1, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.getStrand.column(2, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.getStrand.row(0, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.getStrand.row(1, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.getStrand.row(2, gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.getStrand.highLeftDiagonal(gameBoard)) === 3) ||
+                        (Y.squareRowTools.rowOCount(Y.getStrand.lowLeftDiagonal(gameBoard)) === 3)) {
                     win = true;
                 }
 
@@ -86,34 +87,34 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.twoToWinForO = function (gameBoard) {
                 var twoToWinOccurrences = 0;
-                if ((Y.squareRowTools.rowOCount(Y.getRow.column(0, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.getRow.column(0, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.column(0, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.getStrand.column(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowOCount(Y.getRow.column(1, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.getRow.column(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.column(1, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.getStrand.column(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowOCount(Y.getRow.column(2, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.getRow.column(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.column(2, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.getStrand.column(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
-                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(0, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(0, gameBoard)) === 0)) {
-                    twoToWinOccurrences += 1;
-                }
-
-                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(1, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.row(0, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.getStrand.row(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(2, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.row(1, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.getStrand.row(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.row(2, gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.getStrand.row(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.highLeftDiagonal(gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.getStrand.highLeftDiagonal(gameBoard)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.lowLeftDiagonal(gameBoard)) === 1) && (Y.squareRowTools.rowXCount(Y.getStrand.lowLeftDiagonal(gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
@@ -124,34 +125,34 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.twoToWinForX = function (gameBoard) {
                 var twoToWinOccurrences = 0;
-                if ((Y.squareRowTools.rowXCount(Y.getRow.column(0, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.getRow.column(0, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.column(0, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.getStrand.column(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowXCount(Y.getRow.column(1, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.getRow.column(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.column(1, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.getStrand.column(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowXCount(Y.getRow.column(2, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.getRow.column(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.column(2, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.getStrand.column(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
-                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(0, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(0, gameBoard)) === 0)) {
-                    twoToWinOccurrences += 1;
-                }
-
-                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(1, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.row(0, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.getStrand.row(0, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(2, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.row(1, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.getStrand.row(1, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.row(2, gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.getStrand.row(2, gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.highLeftDiagonal(gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.getStrand.highLeftDiagonal(gameBoard)) === 0)) {
+                    twoToWinOccurrences += 1;
+                }
+
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.lowLeftDiagonal(gameBoard)) === 1) && (Y.squareRowTools.rowOCount(Y.getStrand.lowLeftDiagonal(gameBoard)) === 0)) {
                     twoToWinOccurrences += 1;
                 }
 
@@ -160,34 +161,34 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.oneToWinForX = function (gameBoard) {
                 var oneToWinOccurrences = 0;
-                if ((Y.squareRowTools.rowXCount(Y.getRow.column(0, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.getRow.column(0, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.column(0, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.getStrand.column(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowXCount(Y.getRow.column(1, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.getRow.column(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.column(1, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.getStrand.column(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowXCount(Y.getRow.column(2, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.getRow.column(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.column(2, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.getStrand.column(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
-                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(0, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(0, gameBoard)) === 0)) {
-                    oneToWinOccurrences += 1;
-                }
-
-                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(1, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.row(0, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.getStrand.row(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(2, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.row(1, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.getStrand.row(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.row(2, gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.getStrand.row(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowXCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.highLeftDiagonal(gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.getStrand.highLeftDiagonal(gameBoard)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((Y.squareRowTools.rowXCount(Y.getStrand.lowLeftDiagonal(gameBoard)) === 2) && (Y.squareRowTools.rowOCount(Y.getStrand.lowLeftDiagonal(gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
@@ -196,34 +197,34 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.oneToWinForO = function (gameBoard) {
                 var oneToWinOccurrences = 0;
-                if ((Y.squareRowTools.rowOCount(Y.getRow.column(0, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.getRow.column(0, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.column(0, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.getStrand.column(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowOCount(Y.getRow.column(1, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.getRow.column(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.column(1, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.getStrand.column(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowOCount(Y.getRow.column(2, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.getRow.column(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.column(2, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.getStrand.column(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
-                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(0, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(0, gameBoard)) === 0)) {
-                    oneToWinOccurrences += 1;
-                }
-
-                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(1, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(1, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.row(0, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.getStrand.row(0, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getRow(2, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getRow(2, gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.row(1, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.getStrand.row(1, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getHighLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.row(2, gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.getStrand.row(2, gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
-                if ((Y.squareRowTools.rowOCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.squareRowTools.getLowLeftDiagonal(gameBoard)) === 0)) {
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.highLeftDiagonal(gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.getStrand.highLeftDiagonal(gameBoard)) === 0)) {
+                    oneToWinOccurrences += 1;
+                }
+
+                if ((Y.squareRowTools.rowOCount(Y.getStrand.lowLeftDiagonal(gameBoard)) === 2) && (Y.squareRowTools.rowXCount(Y.getStrand.lowLeftDiagonal(gameBoard)) === 0)) {
                     oneToWinOccurrences += 1;
                 }
 
@@ -876,4 +877,4 @@ YUI.add('tic-tac-toe-board', function (Y) {
         }
     });
 
-}, '0.0.1', { requires: [ 'base-build', 'widget', 'oop', 'array-extras', 'transition', 'node-event-delegate', 'square-row-tools', 'get-row'] });
+}, '0.0.1', { requires: [ 'base-build', 'widget', 'oop', 'array-extras', 'transition', 'node-event-delegate', 'square-row-tools', 'get-strand'] });

@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <title>testing Test</title>
+    </head>
+
+    <body>
+
+        <div class="yui3-skin-sam" id="console"></div>
+
+        <script src="http://yui.yahooapis.com/3.8.1/build/yui/yui-min.js"></script>
+
+        <script>
+
+/*global YUI: false */
+
+YUI({
+    modules: {
+
+        'test-mod': {
+            fullpath: 'test-mod.js'
+          }
+    }
+    }).use('test-console', 'test-mod', function (Y) {
+
+    "use strict";
+
+    new Y.Test.Console().render('#console');
+
+    Y.Test.Runner.add(Y.testMod.testTestCase);
+
+    Y.Test.Runner.run();
+
+});
+
+        </script>
+    </body>
+</html>
+

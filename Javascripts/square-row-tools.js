@@ -25,79 +25,6 @@ YUI.add('square-row-tools', function (Y) {
 
     };
 
-
-    Y.squareRowTools.getRow = function (rowPosition, gameBoard) {
-
-        var y, extractedRow = [];
-
-        for (y = 0; y < gameBoard[rowPosition].length; y += 1) {
-
-            extractedRow[y] = gameBoard[rowPosition][y];
-
-        }
-
-        return extractedRow;
-
-    };
-
-    Y.squareRowTools.getHighLeftDiagonal = function (gameBoard, startingPoint) {
-
-        var xAndY, diagonal = [];
-
-        if (startingPoint !== 0) {
-
-            startingPoint = 0;
-
-        }
-
-        if (gameBoard.length >= gameBoard[0].length) {
-
-            if (startingPoint >= gameBoard[0].length) {
-
-                startingPoint = startingPoint % gameBoard[0].length;
-
-            }
-
-            for (xAndY = 0; xAndY < (gameBoard[0].length - startingPoint); xAndY += 1) {
-
-                diagonal[xAndY] = gameBoard[startingPoint + xAndY][startingPoint + xAndY];
-            }
-
-        } else {
-
-            if (startingPoint >= gameBoard.length) {
-
-                startingPoint = startingPoint % gameBoard.length;
-
-            }
-
-            for (xAndY = 0; xAndY < (gameBoard.length - startingPoint); xAndY += 1) {
-
-                diagonal[xAndY] = gameBoard[startingPoint + xAndY][startingPoint + xAndY];
-            }
-
-        }
-
-        return diagonal;
-
-    };
-
-    Y.squareRowTools.getLowLeftDiagonal = function (gameBoard) {
-
-        var x, y = 2, diagonal = [];
-
-
-        for (x = 0; x < 3; x += 1) {
-            diagonal[x] = gameBoard[y][x];
-
-            y -= 1;
-
-        }
-
-        return diagonal;
-
-    };
-
     Y.squareRowTools.rowOCount = function (row) {
 
         var square, oNumber  = 0;
@@ -142,14 +69,14 @@ YUI.add('square-row-tools', function (Y) {
     Y.squareRowTools.checkGameTie = function (gameBoard) {
 
         var tie = false;
-        if ((Y.squareRowTools.checkForMixedRow(Y.getRow.column(0, gameBoard))) &&
-                (Y.squareRowTools.checkForMixedRow(Y.getRow.column(1, gameBoard))) &&
-                (Y.squareRowTools.checkForMixedRow(Y.getRow.column(2, gameBoard))) &&
-                (Y.squareRowTools.checkForMixedRow(Y.squareRowTools.getRow(0, gameBoard))) &&
-                (Y.squareRowTools.checkForMixedRow(Y.squareRowTools.getRow(1, gameBoard))) &&
-                (Y.squareRowTools.checkForMixedRow(Y.squareRowTools.getRow(2, gameBoard))) &&
-                (Y.squareRowTools.checkForMixedRow(Y.squareRowTools.getHighLeftDiagonal(gameBoard))) &&
-                (Y.squareRowTools.checkForMixedRow(Y.squareRowTools.getLowLeftDiagonal(gameBoard)))) {
+        if ((Y.squareRowTools.checkForMixedRow(Y.getStrand.column(0, gameBoard))) &&
+                (Y.squareRowTools.checkForMixedRow(Y.getStrand.column(1, gameBoard))) &&
+                (Y.squareRowTools.checkForMixedRow(Y.getStrand.column(2, gameBoard))) &&
+                (Y.squareRowTools.checkForMixedRow(Y.getStrand.row(0, gameBoard))) &&
+                (Y.squareRowTools.checkForMixedRow(Y.getStrand.row(1, gameBoard))) &&
+                (Y.squareRowTools.checkForMixedRow(Y.getStrand.row(2, gameBoard))) &&
+                (Y.squareRowTools.checkForMixedRow(Y.getStrand.highLeftDiagonal(gameBoard))) &&
+                (Y.squareRowTools.checkForMixedRow(Y.getStrand.lowLeftDiagonal(gameBoard)))) {
             tie = true;
         }
 
@@ -176,4 +103,4 @@ YUI.add('square-row-tools', function (Y) {
 
     };
 
-}, '0.0.1', { requires: ['get-row'] });
+}, '0.0.1', { requires: ['get-strand'] });
