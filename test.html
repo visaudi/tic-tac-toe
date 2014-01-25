@@ -24,6 +24,10 @@ YUI({
         },
         'get-strand' : {
             fullpath: 'Javascripts/get-strand.js'
+        },
+
+        'check-board' : {
+            fullpath: 'Javascripts/check-board.js'
         }
     }
 }).use('tic-tac-toe-board', 'test-console', function (Y) {
@@ -35,13 +39,13 @@ YUI({
 
         'Array should have nine members that correspond to each of the nine x, y coordinates': function () {
             var testGame = new Y.ticTacToeBoard(),
-                board = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
-                                                                ['n', 'n', 'n'],
-                                                                ['n', 'n', 'n']]),
+                board  = [['n', 'n', 'n'],
+                          ['n', 'n', 'n'],
+                          ['n', 'n', 'n']],
 
 
                 literalListToEqual = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
-                result = Y.squareRowTools.possibleMoveLocations(board),
+                result = Y.checkBoard.possibleMoveLocations(board),
                 i,
                 j;
             for (i = 0; i < literalListToEqual.length; i += 1) {
@@ -53,15 +57,6 @@ YUI({
     }),
         squareRowTools = new Y.Test.Case({
             name: 'Square-Row-Tool Tests',
-
-            'Y.getStrand.row should return a four item array for a four by three board': function () {
-
-                var fourWideBoard = [['x', 'o', 'n', 'x'],
-                                     ['n', 'n', 'n', 'n'],
-                                     ['n', 'x', 'o', 'n']];
-
-                Y.Assert.areSame(Y.getStrand.row(0, fourWideBoard).length, 4, 'getRow should count 4');
-            },
 
             'Y.squareRowTools.getColumn should return a four item array for a three by four board': function () {
 
@@ -523,7 +518,7 @@ YUI({
                                                                              ['n', 'n', 'x']]);
 
                 Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
-                Y.Assert.areSame(5, Y.squareRowTools.possibleMoveLocations(doubleCornerXBoard).length);
+                Y.Assert.areSame(5, Y.checkBoard.possibleMoveLocations(doubleCornerXBoard).length);
             },
 
 
@@ -537,7 +532,7 @@ YUI({
                                                                              ['x', 'n', 'n']]);
 
                 Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
-                Y.Assert.areSame(5, Y.squareRowTools.possibleMoveLocations(doubleCornerXBoard).length);
+                Y.Assert.areSame(5, Y.checkBoard.possibleMoveLocations(doubleCornerXBoard).length);
 
             },
 
@@ -553,7 +548,7 @@ YUI({
                                                                              ['n', 'n', 'x']]);
 
                 Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
-                Y.Assert.areSame(5, Y.squareRowTools.possibleMoveLocations(doubleCornerXBoard).length);
+                Y.Assert.areSame(5, Y.checkBoard.possibleMoveLocations(doubleCornerXBoard).length);
             },
 
 
@@ -567,7 +562,7 @@ YUI({
                                                                              ['x', 'o', 'n']]);
 
                 Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
-                Y.Assert.areSame(5, Y.squareRowTools.possibleMoveLocations(doubleCornerXBoard).length);
+                Y.Assert.areSame(5, Y.checkBoard.possibleMoveLocations(doubleCornerXBoard).length);
 
             },
 

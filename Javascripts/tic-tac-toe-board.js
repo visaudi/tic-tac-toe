@@ -31,9 +31,9 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
                 makePossibleBoardList = function (usedArray) {
 
-                    for (i = 0; i < Y.squareRowTools.possibleMoveLocations(usedArray).length; i += 1) {
+                    for (i = 0; i < Y.checkBoard.possibleMoveLocations(usedArray).length; i += 1) {
                         futureBoard = Y.clone(usedArray);
-                        consideredPossibilityLocation = Y.squareRowTools.possibleMoveLocations(usedArray)[i];
+                        consideredPossibilityLocation = Y.checkBoard.possibleMoveLocations(usedArray)[i];
                         futureBoard[consideredPossibilityLocation[0]][consideredPossibilityLocation[1]] = marker;
                         possibleBoardList.push(futureBoard);
                     }
@@ -544,7 +544,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                             || (gameBoard[1][2] === opponent)
                             || (gameBoard[2][1] === opponent)) {
 
-                        if ((Y.squareRowTools.possibleMoveLocations(gameBoard)).length === 5) {
+                        if ((Y.checkBoard.possibleMoveLocations(gameBoard)).length === 5) {
                             result = true;
                         }
                     }
@@ -692,7 +692,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                     var oBoardAI;
                     oBoardAI = that.makeBoardArrayFromSquareAttrs(convertWidgetBoardToBoardArrayForO());
 
-                    if (Y.squareRowTools.possibleMoveLocations(oBoardAI).length !== 0) {
+                    if (Y.checkBoard.possibleMoveLocations(oBoardAI).length !== 0) {
                         that.set(convertXYMoveToWidgetBoard(oBoardAI.findMoveToMaximizeOsPerRow()), 'o');
                     }
                 },
@@ -877,4 +877,4 @@ YUI.add('tic-tac-toe-board', function (Y) {
         }
     });
 
-}, '0.0.1', { requires: [ 'base-build', 'widget', 'oop', 'array-extras', 'transition', 'node-event-delegate', 'square-row-tools', 'get-strand'] });
+}, '0.0.1', { requires: [ 'base-build', 'widget', 'oop', 'array-extras', 'transition', 'node-event-delegate', 'square-row-tools', 'get-strand', 'check-board'] });
