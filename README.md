@@ -1,7 +1,10 @@
-A simple game of Tic Tac Toe
+Unbeatable Tic Tac Toe
 
-When finished:
+To Run Load Index.html
 
-    No human player shall ever be able to win.
+The logic is divided into two incompatable organizational schemes.
 
-It uses YUI and is a work in progress.
+Some tests may be run in modTest.html and the rest are in test.html.
+
+
+Some day each piece of logic shall have a logical module it exists in.
