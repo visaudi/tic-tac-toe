@@ -25,40 +25,10 @@ YUI.add('square-row-tools', function (Y) {
 
     };
 
-    Y.squareRowTools.rowOCount = function (row) {
-
-        var square, oNumber  = 0;
-
-        for (square = 0; square < row.length; square += 1) {
-            if (row[square] === 'o') {
-                oNumber  += 1;
-            }
-
-        }
-
-        return oNumber;
-
-    };
-
-    Y.squareRowTools.rowXCount = function (row) {
-
-        var square, xNumber  = 0;
-
-        for (square = 0; square < row.length; square += 1) {
-            if (row[square] === 'x') {
-                xNumber  += 1;
-            }
-
-        }
-
-        return xNumber;
-
-    };
-
     Y.squareRowTools.checkForMixedRow = function (row) {
 
         var mixed = false;
-        if ((Y.squareRowTools.rowXCount(row) > 0) && (Y.squareRowTools.rowOCount(row) > 0)) {
+        if ((Y.checkRow.tokenCount(row, 'x') > 0) && (Y.checkRow.tokenCount(row, 'o') > 0)) {
             mixed = true;
         }
 
@@ -84,23 +54,4 @@ YUI.add('square-row-tools', function (Y) {
 
     };
 
-    Y.squareRowTools.possibleMoveLocations = function (gameBoard) {
-
-        var possibilities = [], x, y;
-
-        for (x = 0; x < 3; x += 1) {
-            for (y = 0; y < 3; y += 1) {
-
-                if (gameBoard[x][y] === 'n') {
-
-                    possibilities.push([x, y]);
-
-
-                }
-            }
-        }
-        return possibilities;
-
-    };
-
-}, '0.0.1', { requires: ['get-strand'] });
+}, '0.0.1', { requires: ['get-strand', 'check-row'] });
