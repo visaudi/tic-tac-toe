@@ -27,27 +27,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
 
             board.checkOppositeCornerHazardAgainstO = function (gameBoard) {
-
-                var result = false,
-                    player = 'x',
-                    opponent = 'o';
-
-                if (((gameBoard[0][0] === player) && (gameBoard[2][2] === player))
-                            || ((gameBoard[0][2] === player) && (gameBoard[2][0] === player))) {
-
-                    if ((gameBoard[0][1] === opponent)
-                            || (gameBoard[1][0] === opponent)
-                            || (gameBoard[1][2] === opponent)
-                            || (gameBoard[2][1] === opponent)) {
-
-                        if ((Y.checkBoard.possibleMoveLocations(gameBoard)).length === 5) {
-                            result = true;
-                        }
-                    }
-
-                }
-
-                return result;
+                return Y.checkBoard.forOppositeCornerHazard (gameBoard, 'x', 'o');
 
             };
 

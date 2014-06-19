@@ -50,44 +50,6 @@ YUI({
     var filteringForAI = new Y.Test.Case({
 
 
-            'filterAgainstHighestTwoToWinFor O should take an array of boards, none of the boards has a two to win in it and return all possibilities': function () {
-
-                var noTwoToWinsPerBoard,
-                    testGame = new Y.ticTacToeBoard();
-
-                noTwoToWinsPerBoard = testGame.makeBoardArrayFromSquareAttrs([['o', 'n', 'o'],
-                                                                              ['o', 'x', 'x'],
-                                                                              ['x', 'x', 'o']]);
-
-                Y.Assert.areSame(1, noTwoToWinsPerBoard.filterAgainstHighestTwoToWinForO(noTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn(noTwoToWinsPerBoard, 'x')).length);
-            },
-
-
-            'filterAgainstHighestTwoToWinFor O should take an array of boards, two boards should keep the two to wins lowest': function () {
-
-                var fourTwoToWinsPerBoard,
-                    testGame = new Y.ticTacToeBoard();
-
-                fourTwoToWinsPerBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'o'],
-                                                                                ['n', 'x', 'n'],
-                                                                                ['o', 'n', 'n']]);
-
-                Y.Assert.areSame(2, fourTwoToWinsPerBoard.filterAgainstHighestTwoToWinForO(fourTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn(fourTwoToWinsPerBoard, 'x')).length);
-            },
-
-            'filterAgainstHighestTwoToWinFor O should take an array of boards, eight boards should keep the two to wins lowest': function () {
-
-                var fourTwoToWinsPerBoard,
-                    testGame = new Y.ticTacToeBoard();
-
-                fourTwoToWinsPerBoard = testGame.makeBoardArrayFromSquareAttrs([['n', 'n', 'n'],
-                                                                                ['n', 'o', 'n'],
-                                                                                ['n', 'n', 'n']]);
-
-                Y.Assert.areSame(8, fourTwoToWinsPerBoard.filterAgainstHighestTwoToWinForO(fourTwoToWinsPerBoard.projectAllPossibleBoardsThisTurn(fourTwoToWinsPerBoard, 'x')).length);
-            },
-
-
             'checkOppositeCornerHazardAgainstO should take a board with an x move in the top left corner, an o move in the center, an x move in the opposite corner and return true, when middle of the top is an o move and there are five turns left in the game': function () {
 
 

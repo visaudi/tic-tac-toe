@@ -178,6 +178,18 @@ YUI.add('sift-boards-and-project-integ', function (Y) {
                                           ['n', 'n', 'n']];
 
                 Y.Assert.areSame(4, Y.siftBoards.againstHighestTwoToWin(Y.projectBoard.forNextTurnPossibilities(nineTwoToWinProjection, 'x'), 'x').length);
+            },
+
+
+            'Y.siftBoards.againstHighestTwoToWin should take an array of boards, none of the boards has a two to win in it and return all possibilities': function () {
+
+                var noTwoToWinsPerBoard;
+
+                noTwoToWinsPerBoard = [['o', 'n', 'o'],
+                                       ['o', 'x', 'x'],
+                                       ['x', 'x', 'o']];
+
+                Y.Assert.areSame(1, Y.siftBoards.againstHighestTwoToWin(Y.projectBoard.forNextTurnPossibilities(noTwoToWinsPerBoard, 'x'), 'o').length);
             }
 
     });

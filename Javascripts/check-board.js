@@ -116,4 +116,27 @@ YUI.add('check-board', function (Y) {
         return oneToWinOccurrences;
     };
 
+    Y.checkBoard.forOppositeCornerHazard = function (gameBoard, aggressor, defender) {
+
+        var result = false;
+
+        if (((gameBoard[0][0] === aggressor) && (gameBoard[2][2] === aggressor))
+                    || ((gameBoard[0][2] === aggressor) && (gameBoard[2][0] === aggressor))) {
+
+            if ((gameBoard[0][1] === defender)
+                    || (gameBoard[1][0] === defender)
+                    || (gameBoard[1][2] === defender)
+                    || (gameBoard[2][1] === defender)) {
+
+                if ((Y.checkBoard.possibleMoveLocations(gameBoard)).length === 5) {
+                    result = true;
+                }   
+            }   
+
+        }   
+
+        return result;
+
+    };
+
 }, '0.0.1', { requires: ['get-strand', 'check-row'] });
