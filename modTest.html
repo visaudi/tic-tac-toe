@@ -31,9 +31,31 @@ YUI({
 
         'check-board': {
             fullpath: 'Javascripts/check-board.js'
+        },
+
+        'check-row': {
+
+            fullpath: 'Javascripts/check-row.js'
+
+        },
+
+        'sift-boards-unit': {
+            fullpath: 'Javascripts/unitTests/sift-boards-unit.js'
+        },
+
+        'sift-boards': {
+            fullpath: 'Javascripts/sift-boards.js'
+        },
+
+        'project-board': {
+            fullpath: 'Javascripts/project-board.js'
+        },
+
+        'sift-boards-and-project-integ': {
+            fullpath: 'Javascripts/integrationTests/sift-boards-and-project-integ.js'
         }
     }
-}).use('test-console', 'get-strand-unit', 'check-board-unit', function (Y) {
+}).use('test-console', 'get-strand-unit', 'check-board-unit', 'sift-boards-unit', 'sift-boards-and-project-integ', function (Y) {
 
     "use strict";
 
@@ -43,6 +65,9 @@ YUI({
     Y.Test.Runner.add(Y.getStrandUnit.column);
     Y.Test.Runner.add(Y.getStrandUnit.highLeftDiagonal);
     Y.Test.Runner.add(Y.checkBoardUnit.possibleMoveLocations);
+    Y.Test.Runner.add(Y.siftBoardsUnit.forWin);
+    Y.Test.Runner.add(Y.siftBoardsUnit.againstHighestTwoToWin);
+    Y.Test.Runner.add(Y.siftBoardsAndProjectInteg.forWin);
 
     Y.Test.Runner.run();
 

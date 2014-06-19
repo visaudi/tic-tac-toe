@@ -7,7 +7,9 @@ var YUI_config = {
         'square-row-tools': 'Javascripts/square-row-tools.js',
         'get-strand': 'Javascripts/get-strand.js',
         'check-board': 'Javascripts/check-board.js',
-        'check-row': 'Javascripts/check-row.js'
+        'check-row': 'Javascripts/check-row.js',
+        'sift-boards': 'Javascripts/sift-boards.js',
+        'project-board': 'Javascripts/project-board.js'
     }
 
 };
