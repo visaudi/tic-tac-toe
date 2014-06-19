@@ -1,11 +1,11 @@
-Unbeatable Tic Tac Toe
+*Unbeatable Tic Tac Toe*
 
 To Run Load Index.html
 
-File Architecture
+**File Architecture**
 The game loads through index.html. The file is the bare minimum to get the game started.
 
-Javascripts Folder
+**Javascripts Folder**
 This folder contains the game.
 tic-tac-toe-board.js has always been the game's core. The business logic was originally completely contained here. It is now partially here.
 tic-tac-toe-board.js also contains a rather bad YUI widget design that is the game board. It would be better if it were more modular (like allowing the board to be many sizes).
@@ -18,7 +18,7 @@ modTest.html is my new approach at bringing order to my tests. Although it is fa
 
 Some tests may be run in modTest.html and the rest are in test.html.
 
-Wish List
+**Wish List**
 1. Clean Up Conditionals - Polymorphism
 2. Allow for more absorbtion of variation (multiple board sizes)
 3. Complete breaking apart the code into clairifying modules
