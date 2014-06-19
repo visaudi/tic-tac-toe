@@ -144,4 +144,18 @@ YUI.add('sift-boards', function (Y) {
 
     };
 
+    Y.siftBoards.againstOppositeCornerHazard = function (arrayOfBoards, aggressor, defender) {
+
+        var oppositeCornerPlay = []; 
+
+        oppositeCornerPlay.push(Y.Array.find(arrayOfBoards, function (gameBoard) {
+
+            return Y.checkBoard.forOppositeCornerHazard(gameBoard, aggressor, defender);
+
+        }));
+
+        return oppositeCornerPlay;
+        
+    };
+
 }, '0.0.1', { requires: ['check-board'] });

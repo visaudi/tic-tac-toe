@@ -15,22 +15,6 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             var board = Y.clone(transferredBoard);
 
-            board.filterAgainstOppositeCornerHazardForO = function (arrayOfBoards, player) {
-
-                var oppositeCornerPlay = [];
-
-                oppositeCornerPlay.push(Y.Array.find(arrayOfBoards, this.checkOppositeCornerHazardAgainstO));
-
-                return oppositeCornerPlay;
-
-            };
-
-
-            board.checkOppositeCornerHazardAgainstO = function (gameBoard) {
-                return Y.checkBoard.forOppositeCornerHazard (gameBoard, 'x', 'o');
-
-            };
-
             board.findMoveForO = function (gameBoard) {
 
                 var littleResult, bigResult;
@@ -47,7 +31,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
                 littleResult = Y.siftBoards.againstOneToWin(bigResult, 'x');
                 bigResult = littleResult.length ? littleResult : bigResult;
 
-                littleResult = this.filterAgainstOppositeCornerHazardForO(bigResult);
+                littleResult = Y.siftBoards.againstOppositeCornerHazard(bigResult, 'x', 'o');
                 bigResult = littleResult[0] ? littleResult : bigResult;
 
                 littleResult = Y.siftBoards.againstHighestTwoToWin(bigResult, 'x');
