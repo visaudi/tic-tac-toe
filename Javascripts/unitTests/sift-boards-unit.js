@@ -104,4 +104,42 @@ YUI.add('sift-boards-unit', function (Y) {
 
     });
 
+    Y.siftBoardsUnit.againstOppositeCornerHazard = new Y.Test.Case({
+        name: 'should make sure that the opposite corner board are the only returned',
+
+        'siftBoard.againstOppositeCornerHazard should take an array of boards where xs are in opposite corners and should only return the board that forces a move out of the corner': function () {
+            var dangerousArray;
+
+            dangerousArray = [[['x', 'o', 'n'],
+                               ['n', 'o', 'n'],
+                               ['n', 'n', 'x']],
+
+                              [['x', 'n', 'o'],
+                               ['n', 'o', 'n'],
+                               ['n', 'n', 'x']],
+
+                              [['x', 'n', 'n'],
+                               ['o', 'o', 'n'],
+                               ['n', 'n', 'x']],
+
+                              [['x', 'n', 'n'],
+                               ['n', 'o', 'o'],
+                               ['n', 'n', 'x']],
+
+                              [['x', 'n', 'n'],
+                               ['n', 'o', 'n'],
+                               ['o', 'n', 'x']],
+
+                              [['x', 'n', 'n'],
+                               ['n', 'o', 'n'],
+                               ['n', 'o', 'x']]];
+
+console.log("yes");
+console.log(Y.siftBoards.againstOppositeCornerHazard(dangerousArray, 'x', 'o'));
+            Y.Assert.areSame('o', Y.siftBoards.againstOppositeCornerHazard(dangerousArray, 'x', 'o')[0][0][1]);
+
+        } 
+
+    });
+
 }, '0.0.1', { requires: ['test', 'sift-boards', 'project-board'] });

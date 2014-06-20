@@ -52,19 +52,6 @@ YUI({
 
             name: 'test',
 
-            'filterAgainstOppositeCornerHazardForO should take an array of boards where xs are in opposite corners and should only return the board that forces a move out of the corner': function () {
-
-                var dangerousArraySeed,
-                    testGame = new Y.ticTacToeBoard();
-
-                dangerousArraySeed = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'n'],
-                                                                            ['n', 'o', 'n'],
-                                                                            ['n', 'n', 'x']]);
-
-                Y.Assert.areSame('o', dangerousArraySeed.filterAgainstOppositeCornerHazardForO(dangerousArraySeed.projectAllPossibleBoardsThisTurn())[0][0][1]);
-
-            },
-
             'findMoveForO should take a board near the end and choose the winning move': function () {
 
                 var endGame,
