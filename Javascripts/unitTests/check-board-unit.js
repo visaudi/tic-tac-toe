@@ -54,6 +54,18 @@ YUI.add('check-board-unit', function (Y) {
 
                 Y.Assert.areSame(true, Y.checkBoard.forOppositeCornerHazard(doubleCornerXBoard, 'x', 'o'));
 
+            },
+
+            'checkBoard.forOppositeCornerHazard should take a board with an x move in the top left corner, an o move in the center, an x move in the opposite corner and return true, when the left of the middle row is an o move and there are five turns left in the game': function () {
+
+
+                var doubleCornerXBoard;
+
+                doubleCornerXBoard = [['x', 'n', 'n'],
+                                      ['o', 'o', 'n'],
+                                      ['n', 'n', 'x']];
+
+                Y.Assert.areSame(true, Y.checkBoard.forOppositeCornerHazard(doubleCornerXBoard, 'x', 'o'));
             }
 
     });

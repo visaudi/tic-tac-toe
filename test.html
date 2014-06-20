@@ -50,21 +50,6 @@ YUI({
     var filteringForAI = new Y.Test.Case({
 
 
-            'checkOppositeCornerHazardAgainstO should take a board with an x move in the top left corner, an o move in the center, an x move in the opposite corner and return true, when the left of the middle row is an o move and there are five turns left in the game': function () {
-
-
-                var doubleCornerXBoard,
-                    testGame = new Y.ticTacToeBoard();
-
-                doubleCornerXBoard = testGame.makeBoardArrayFromSquareAttrs([['x', 'n', 'n'],
-                                                                             ['o', 'o', 'n'],
-                                                                             ['n', 'n', 'x']]);
-
-                Y.Assert.areSame(true, doubleCornerXBoard.checkOppositeCornerHazardAgainstO(doubleCornerXBoard));
-                Y.Assert.areSame(5, Y.checkBoard.possibleMoveLocations(doubleCornerXBoard).length);
-            },
-
-
             'checkOppositeCornerHazardAgainstO should take a board with an x move in the top right corner and in the opposite corner and return true when an o move is the middle of the bottom row': function () {
 
                 var doubleCornerXBoard,
