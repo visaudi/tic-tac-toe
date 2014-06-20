@@ -158,4 +158,38 @@ YUI.add('sift-boards', function (Y) {
         
     };
 
+    Y.siftBoards.forStrongestBoard = function (gameBoard, playerStrengthened, playerUnderminded) {
+
+                var littleResult, bigResult;
+
+                bigResult = Y.projectBoard.forNextTurnPossibilities(gameBoard, playerStrengthened);
+
+                littleResult = Y.siftBoards.forWin(bigResult, playerStrengthened);
+                bigResult = littleResult.length ? littleResult : bigResult;
+
+
+                littleResult = Y.siftBoards.againstWin(bigResult, playerUnderminded);
+                bigResult = littleResult.length ? littleResult : bigResult;
+
+                littleResult = Y.siftBoards.againstOneToWin(bigResult, playerUnderminded);
+                bigResult = littleResult.length ? littleResult : bigResult;
+
+                littleResult = Y.siftBoards.againstOppositeCornerHazard(bigResult, playerUnderminded, playerStrengthened);
+                bigResult = littleResult[0] ? littleResult : bigResult;
+
+                littleResult = Y.siftBoards.againstHighestTwoToWin(bigResult, playerUnderminded);
+                bigResult = littleResult.length ? littleResult : bigResult;
+
+
+                littleResult = Y.siftBoards.forHighestOneToWin(bigResult, playerStrengthened);
+                bigResult = littleResult.length ? littleResult : bigResult;
+
+                littleResult = Y.siftBoards.forHighestTwoToWins(bigResult, playerStrengthened);
+                bigResult = littleResult.length ? littleResult : bigResult;
+
+
+                return bigResult[0];
+
+    };
+
 }, '0.0.1', { requires: ['check-board'] });

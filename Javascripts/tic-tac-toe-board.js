@@ -17,36 +17,7 @@ YUI.add('tic-tac-toe-board', function (Y) {
 
             board.findMoveForO = function (gameBoard) {
 
-                var littleResult, bigResult;
-
-                bigResult = Y.projectBoard.forNextTurnPossibilities(gameBoard, 'o');
-
-                littleResult = Y.siftBoards.forWin(bigResult, 'o');
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-
-                littleResult = Y.siftBoards.againstWin(bigResult, 'x');
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-                littleResult = Y.siftBoards.againstOneToWin(bigResult, 'x');
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-                littleResult = Y.siftBoards.againstOppositeCornerHazard(bigResult, 'x', 'o');
-                bigResult = littleResult[0] ? littleResult : bigResult;
-
-                littleResult = Y.siftBoards.againstHighestTwoToWin(bigResult, 'x');
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-
-                littleResult = Y.siftBoards.forHighestOneToWin(bigResult, 'o');
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-                littleResult = Y.siftBoards.forHighestTwoToWins(bigResult, 'o');
-                bigResult = littleResult.length ? littleResult : bigResult;
-
-
-                return bigResult[0];
-
+                return Y.siftBoards.forStrongestBoard(gameBoard, 'o', 'x');
             };
 
             board.findMoveToMaximizeOsPerRow = function () {
