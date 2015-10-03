@@ -19,9 +19,9 @@ modTest.html is my new approach at bringing order to my tests. Although it is fa
 Some tests may be run in modTest.html and the rest are in test.html.
 
 ##Wish List
-1. Clean Up Conditionals - Polymorphism
-2. Allow for more absorbtion of variation (multiple board sizes)
-3. Complete breaking apart the code into clairifying modules
-4. Remove needless duplication
-5. Introduce a responsive design
-6. Modify the board widget to allow for many visual presentations of different board sizes.
+1. Allow for more absorbtion of variation (multiple board sizes)
+2. Complete breaking apart the code into clairifying modules
+3. Remove needless duplication
+4. Introduce a responsive design
+5. Modify the board widget to allow for many visual presentations of different board sizes.
+6. Add a restart button
